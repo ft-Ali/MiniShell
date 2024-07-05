@@ -1,5 +1,8 @@
  # MiniShell
-# Fonctionnalités et Utilités
+# Road map : Lexing / parsing / Execution
+
+
+# LEXER :
 
 ## Catégories et Utilités des Fonctions
 
