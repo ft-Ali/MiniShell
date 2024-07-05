@@ -1,4 +1,4 @@
-                                                                                                                        # MiniShell
+ # MiniShell
 # Fonctionnalités et Utilités
 
 ## Catégories et Utilités des Fonctions
