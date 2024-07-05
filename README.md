@@ -1,8 +1,16 @@
  # MiniShell
-# Road map : Lexing / parsing / Execution
+# Road map :
 
+| Catégorie              | Étape                              | Description                                                                                                                                                     |
+|------------------------|------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Shell Subsystems**   | **Boucle principale du Shell**     | Implémente une boucle infinie pour lire et exécuter les commandes de l'utilisateur. Utilise `readline` pour obtenir les commandes et gère l'historique avec `add_history`. |
+| **Lexer**              | **Tokenisation**                   | Divise la commande en tokens (mots, redirections, pipes) et les stocke dans une structure adaptée (comme une liste chaînée).                                      |
+| **Syntax Analyzer**    | **Vérification de syntaxe**        | Analyse les tokens pour détecter et signaler les erreurs de syntaxe. Assure que les commandes sont correctement formées avant l'exécution.                        |
+| **Parser**             | **Création de la liste de commandes** | Transforme les tokens en structures de commandes avec gestion des redirections et des descripteurs de fichiers. Assure que chaque commande est prête pour l'exécution. |
+| **Executor**           | **Exécution des commandes**        | Crée des processus avec `fork`, utilise `execve` pour exécuter les commandes et gère les redirections et les pipes avec `dup2`.                                  |
+| **Built-in Commands**  | **Implémentation des commandes internes** | Implémente des fonctions pour les commandes intégrées comme `cd`, `exit`, `echo`, `env`. Gère ces commandes directement sans lancer de nouveaux processus.         |
+| **Signal Handling**    | **Gestion des signaux**            | Configure les gestionnaires de signaux pour gérer les interruptions comme `SIGINT` (Ctrl+C) avec `sigaction`. Assure une interruption propre et reprise du shell. |
 
-# LEXER :
 
 ## Catégories et Utilités des Fonctions
 
