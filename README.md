@@ -11,6 +11,33 @@
 | **Built-in Commands**  | **Implémentation des commandes internes** | Implémente des fonctions pour les commandes intégrées comme `cd`, `exit`, `echo`, `env`. Gère ces commandes directement sans lancer de nouveaux processus.         |
 | **Signal Handling**    | **Gestion des signaux**            | Configure les gestionnaires de signaux pour gérer les interruptions comme `SIGINT` (Ctrl+C) avec `sigaction`. Assure une interruption propre et reprise du shell. |
 
+#### Lexer :
+- **Entrée** : Sortie de Readline
+- **Sortie** : Liste chaînée tokenisée
+- **Objectif** : Diviser la sortie de Readline en tokens à l'aide de macros définies.
+- **Tokens utilisés** : WORD, REDIRECTION, PIPE, AND, SEMI, PARENTHESIS
+
+#### Syntax Analyzer :
+- **Entrée** : Liste chaînée tokenisée
+- **Sortie** :
+  - En cas d'absence d'erreur de syntaxe : Même liste chaînée tokenisée.
+  - En cas d'erreur de syntaxe : Affichage du type d'erreur.
+- **Objectif** : Vérifier tous les types possibles d'erreurs de syntaxe des commandes en référençant Bash comme modèle.
+
+#### Parser :
+- **Entrée** : Liste chaînée tokenisée
+- **Sortie** : Liste chaînée de commandes
+- **Sous-étapes** :
+  - Gestion des redirections (entrée, sortie, ajout, heredoc).
+  - Ajout des commandes à la liste chaînée avec leurs descripteurs de fichiers (entrée et sortie).
+
+#### Execution :
+- **Entrée** : Liste chaînée de commandes
+- **Cas possibles** :
+  - Si tout s'est bien passé dans les étapes précédentes, il existe deux cas pour la communication entre les commandes (processus) :
+    - Si N commandes sont présentes, initialisation de N-1 pipes pour la communication.
+    - En cas de redirection, celle-ci prend la priorité.
+  - Dernière étape : Vérification de la disponibilité de la commande selon le chemin (relatif ou absolu).
 
 ## Catégories et Utilités des Fonctions
 
