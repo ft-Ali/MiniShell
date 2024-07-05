@@ -7,7 +7,7 @@
 |-------------------------------|--------------------|------------------------------------------------------------------------|-------------------------------|
 | **Manipulation de chaînes**   |                    |                                                                        |                               |
 |                               | `strerror`         | Retourne une chaîne décrivant une erreur                               | `<string.h>`                  |
-|                               | `strtok`           | Divise une chaîne en tokens basés sur des délimiteurs                  | `<string.h>`                  |
+|                               | `ft_strtok`           | Divise une chaîne en tokens basés sur des délimiteurs               | `<string.h>`                  |
 | **Entrées/sorties standards** |                    |                                                                        |                               |
 |                               | `printf`           | Affiche une chaîne formatée sur la sortie standard                     | `<stdio.h>`                   |
 |                               | `write`            | Écrit des données dans un descripteur de fichier                       | `<unistd.h>`                  |
