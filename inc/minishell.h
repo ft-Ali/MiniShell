@@ -6,7 +6,7 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 13:19:16 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/07/08 15:41:03 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/07/08 16:39:06 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,5 +44,23 @@
 # define PURPLE "\033[0;35m"
 # define BOLD_PURPLE "\033[1;35m"
 
+typedef enum e_token
+{
+	NOT_A_TOKEN = 0,
+	PIPE,
+	GREATER,
+	D_GREATER,
+	LOWER,
+	D_LOWER
+}					t_token;
+
+typedef struct s_lexer
+{
+	int				i;
+	char			*str;
+	t_token			token;
+	struct s_lexer	*next;
+	struct s_lexer	*prev;
+}					t_lexer;
 
 #endif
