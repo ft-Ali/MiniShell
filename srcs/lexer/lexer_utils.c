@@ -6,7 +6,7 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 13:50:48 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/07/09 17:14:10 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/07/09 19:19:37 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,13 +46,13 @@ void	special_check(t_lexer **lexer, char *input, int *i)
 }
 void	word_string(t_lexer **lexer, char *input, int *i)
 {
-	int start;
-	char *str;
+	int		start;
+	char	*str;
 
 	if (input[*i] == '"')
 	{
 		start = ++(*i);
-		while (lexer[*i] && input[*i] != '"')
+		while (input[*i] && input[*i] != '"')
 			i++;
 		str = ft_strndup(&input[start], *i - start);
 		add_token(lexer, STRING, str);
@@ -60,8 +60,12 @@ void	word_string(t_lexer **lexer, char *input, int *i)
 	else
 	{
 		start = *i;
-		while (input[*i] && !ft_isspace(input[*i]))
+		while (input[*i] && !isspace(input[*i]))
 			(*i)++;
-		str = ft_strndup(&input[start], *i - start);
+		str = strndup(&input[start], *i - start);
+		add_token(lexer, WORD, str);
+		(*i)--;
 	}
 }
+
+
