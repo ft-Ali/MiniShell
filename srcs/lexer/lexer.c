@@ -6,7 +6,7 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 16:38:16 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/07/09 14:27:41 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/07/09 17:17:52 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ t_lexer	*new_token(t_token token, char *str)
 	new->next = NULL;
 	return (new);
 }
-
+kkjhoiuhiyyg
 void	add_token(t_lexer **lexer, t_token token, char *str)
 {
 	t_lexer	*new;

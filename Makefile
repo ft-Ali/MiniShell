@@ -14,7 +14,7 @@ MINISHELL_OBJ	=	$(MINISHELL_SRC:.c=.o)
 
 
 .c.o:
-	@printf "\r\033[K[so_long] \033[0;32mBuilding : $<\033[0m"
+	@printf "\r\033[K[so_long] \033[0;32mBuilding : $<\033[0m\n"
 	@$(CC) $(FLAG) -c $< -o $@
 
 all:	$(MINISHELL_NAME)
