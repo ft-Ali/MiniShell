@@ -6,7 +6,7 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 11:06:52 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/07/09 14:15:21 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/07/09 15:48:34 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ typedef enum e_token
 	D_GREATER, // >>
 	LOWER,     // <
 	D_LOWER,   // <<
-	
+
 }					t_token;
 
 typedef struct s_lexer
@@ -40,5 +40,7 @@ void				tokenize(t_lexer **lexer, char *input);
 void				print_tokens(t_lexer *lexer);
 int					isRedirection(char c);
 int					isPipe(char c);
-int					isSemiColon(char c);
+void				word_string(t_lexer **lexer, char *input, int *i);
+void				special_check(t_lexer **lexer, char *input, int *i);
+
 #endif

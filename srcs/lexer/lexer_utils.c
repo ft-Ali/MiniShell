@@ -6,7 +6,7 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 13:50:48 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/07/09 15:06:56 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/07/09 15:50:24 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,10 @@ void	special_check(t_lexer **lexer, char *input, int *i)
 			(*i)++;
 		}
 		else if (input[*i] == '<')
-			add_token(lexer, LOWER, ft_strdup('<'));
+			add_token(lexer, LOWER, ft_strdup("<"));
 	}
 	else if (input[*i] == '|')
-		add_token(lexer, PIPE, ft_strdup('|'));
+		add_token(lexer, PIPE, ft_strdup("|"));
 }
 void word_string(t_lexer **lexer, char *input, int *i)
 {
@@ -53,7 +53,18 @@ void word_string(t_lexer **lexer, char *input, int *i)
 	if(input[*i] == '"')
 	{
 		start = ++(*i);
-		while(input[*i] != '"')
-			zebi je suis perdu
+		while(input[*i] && input[*i] != '"')
+			i++;
+		str = ft_strndup(&input[start], *i - start);
+		add_token(lexer, STRING, str);
 	}
+	else 
+	{
+        start = *i;
+        while (input[*i] && !ft_isspace(input[*i]))
+            (*i)++;
+        str = ft_strndup(&input[start], *i - start);
+        add_token(lexer, WORD, str);
+        (*i)--;
+    }
 }

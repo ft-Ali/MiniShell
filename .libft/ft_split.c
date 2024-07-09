@@ -6,7 +6,7 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 08:50:50 by alsiavos          #+#    #+#             */
-/*   Updated: 2023/11/16 13:41:14 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/07/09 15:45:27 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,24 +26,6 @@ static size_t	ft_countwords(char const *s, char c)
 		i++;
 	}
 	return (words + 1);
-}
-
-static char	*ft_strndup(char *s, size_t len)
-{
-	size_t	i;
-	char	*dst;
-
-	i = 0;
-	dst = malloc(sizeof(char) * (len + 1));
-	if (!dst)
-		return (NULL);
-	while (i < len)
-	{
-		dst[i] = s[i];
-		i++;
-	}
-	dst[i] = '\0';
-	return (dst);
 }
 
 char	**ft_split(char const *s, char c)

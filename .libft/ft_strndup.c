@@ -1,40 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strndup.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/08 13:29:41 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/07/09 15:49:21 by alsiavos         ###   ########.fr       */
+/*   Created: 2024/07/09 15:37:42 by alsiavos          #+#    #+#             */
+/*   Updated: 2024/07/09 15:45:40 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "libft.h"
 
-int	main(void)
+char	*ft_strndup(char *s, size_t len)
 {
-	char	*input;
-	t_lexer	*lexer;
-	t_lexer	*tmp;
+	size_t	i;
+	char	*dst;
 
-	while (1)
+	i = 0;
+	dst = malloc(sizeof(char) * (len + 1));
+	if (!dst)
+		return (NULL);
+	while (i < len)
 	{
-		input = readline(BOLD_PURPLE "[SumimaShell (づ ◕‿◕ )づ] --> " RESET);
-		if (input)
-		{
-			add_history(input);
-			lexer = NULL;
-			tokenize(&lexer, input);
-			print_tokens(lexer);
-			while (lexer)
-			{
-				tmp = lexer;
-				lexer = lexer->next;
-				free(tmp->str);
-				free(tmp);
-			}
-			free(input);
-		}
+		dst[i] = s[i];
+		i++;
 	}
+	dst[i] = '\0';
+	return (dst);
 }

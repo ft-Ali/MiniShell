@@ -6,7 +6,7 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 13:15:29 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/07/09 13:44:21 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/07/09 15:47:17 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,5 +78,6 @@ void				ft_lstiter(t_list *lst, void (*f)(void *));
 t_list				*ft_lstmap(t_list *lst, void *(*f)(void *),
 						void (*del)(void *));
 int					ft_isspace(char c);
+char				*ft_strndup(char *s, size_t len);
 
 #endif
