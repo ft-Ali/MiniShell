@@ -6,7 +6,7 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 13:29:41 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/07/09 18:47:32 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/07/10 13:08:05 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	main(void)
 
 	while (1)
 	{
-		input = readline(BOLD_PURPLE "[UN TRUC QUI S'APPEL MINISHELL (づ ◕‿◕ )づ] --> " RESET);
+		input = readline(CYAN "[UN TRUC QUI S'APPEL MINISHELL (づ ◕‿◕ )づ] --> " RESET);
 		if (input)
 		{
 			add_history(input);

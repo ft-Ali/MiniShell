@@ -6,7 +6,7 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 13:50:48 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/07/09 19:19:37 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/07/10 14:16:29 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	isPipe(char c)
 	return (c == '|');
 }
 
-void	special_check(t_lexer **lexer, char *input, int *i)
+int	special_check(t_lexer **lexer, char *input, int *i)
 {
 	if (isRedirection(input[*i]))
 	{
@@ -40,32 +40,29 @@ void	special_check(t_lexer **lexer, char *input, int *i)
 		}
 		else if (input[*i] == '<')
 			add_token(lexer, LOWER, ft_strdup("<"));
+		return (1);
 	}
 	else if (input[*i] == '|')
+	{
 		add_token(lexer, PIPE, ft_strdup("|"));
+		return (1);
+	}
+	return (0);
 }
-void	word_string(t_lexer **lexer, char *input, int *i)
+void	word(t_lexer **lexer, char *input, int *i)
 {
 	int		start;
 	char	*str;
 
-	if (input[*i] == '"')
-	{
-		start = ++(*i);
-		while (input[*i] && input[*i] != '"')
-			i++;
-		str = ft_strndup(&input[start], *i - start);
-		add_token(lexer, STRING, str);
-	}
-	else
-	{
-		start = *i;
-		while (input[*i] && !isspace(input[*i]))
-			(*i)++;
-		str = strndup(&input[start], *i - start);
-		add_token(lexer, WORD, str);
-		(*i)--;
-	}
+	start = (*i);
+	while (input[*i] && !ft_isspace(input[*i]) && !isRedirection(input[*i])
+		&& !isPipe(input[*i]))
+		(*i)++;
+	ft_printf("start 1 = %d \n", start);
+	str = ft_strndup(&input[start], *i - start);
+	ft_printf("start 2 = %d \n", start);
+	add_token(lexer, WORD, str);
+	ft_printf("start 3 = %d \n", start);
+	(*i)--;
+	ft_printf("start 4 = %d \n", start);
 }
-
-

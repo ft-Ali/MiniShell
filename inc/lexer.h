@@ -6,7 +6,7 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 11:06:52 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/07/09 19:13:06 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/07/10 14:05:10 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,13 @@ typedef struct s_lexer
 	struct s_lexer	*next;
 }					t_lexer;
 
-t_lexer				*new_token(t_token token, char *str);
 void				add_token(t_lexer **lexer, t_token token, char *str);
 void				tokenize(t_lexer **lexer, char *input);
 void				print_tokens(t_lexer *lexer);
 int					isRedirection(char c);
 int					isPipe(char c);
-void				word_string(t_lexer **lexer, char *input, int *i);
-void				special_check(t_lexer **lexer, char *input, int *i);
+void				word(t_lexer **lexer, char *input, int *i);
+int					special_check(t_lexer **lexer, char *input, int *i);
+t_lexer				*new_token(t_token token, char *str);
 
 #endif
