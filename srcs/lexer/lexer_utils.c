@@ -3,28 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jules <jules@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 13:50:48 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/07/11 16:46:34 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/07/11 20:53:38 by jules            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/lexer.h"
+#include "minishell.h"
 
-int	isredirection(char c)
+int	is_or_not(char c, t_comp comp)
 {
-	return (c == '>' || c == '<');
-}
-
-int	ispipe(char c)
-{
-	return (c == '|');
+	if (comp == REDIR)
+		return (c == '<' || c == '>');
+	else if (comp == PIPE)
+		return (c == '|');
+	return (0);
 }
 
 int	special_check(t_lexer **lexer, char *input, int *i)
 {
-	if (isredirection(input[*i]))
+	if (is_or_not(input[*i], REDIR))
 	{
 		if (input[*i] == '>' && input[*i + 1] == '>')
 		{
@@ -48,22 +47,4 @@ int	special_check(t_lexer **lexer, char *input, int *i)
 		return (1);
 	}
 	return (0);
-}
-
-void	word(t_lexer **lexer, char *input, int *i)
-{
-	int		start;
-	char	*str;
-
-	start = (*i);
-	while (input[*i] && !ft_isspace(input[*i]) && !isredirection(input[*i])
-		&& !ispipe(input[*i]))
-		(*i)++;
-	ft_printf("start 1 = %d \n", start);
-	str = ft_strndup(&input[start], *i - start);
-	ft_printf("start 2 = %d \n", start);
-	add_token(lexer, WORD, str);
-	ft_printf("start 3 = %d \n", start);
-	(*i)--;
-	ft_printf("start 4 = %d \n", start);
 }

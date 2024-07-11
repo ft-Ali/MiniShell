@@ -6,14 +6,20 @@
 /*   By: jules <jules@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 11:06:52 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/07/11 18:01:09 by jules            ###   ########.fr       */
+/*   Updated: 2024/07/11 20:57:05 by jules            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LEXER_H
 # define LEXER_H
 
-typedef enum e_tokentype
+typedef enum e_comp
+{
+	REDIR,
+	PIPE,
+}					t_comp;
+
+typedef enum e_type
 {
 	WORD,
 	STRING,
@@ -22,23 +28,24 @@ typedef enum e_tokentype
 	D_GREATER,
 	LOWER,
 	D_LOWER,
-}					t_tokentype;
+}					t_type;
 
 typedef struct s_token
 {
-	int				i;
+	int				index;
 	char			*str;
-	t_tokentype		type;
+	t_type			type;
+	struct s_token	*prev;
 	struct s_token	*next;
 }					t_token;
 
-void				add_token(t_token **lexer, t_tokentype type, char *str);
+void				add_token(t_token **lexer, t_type type, char *str);
 void				tokenize(t_token **lexer, char *input);
 void				print_tokens(t_token *lexer);
 int					isredirection(char c);
 int					ispipe(char c);
 void				word(t_token **lexer, char *input, int *i);
 int					special_check(t_token **lexer, char *input, int *i);
-t_token				*new_token(t_tokentype type, char *str);
+t_token				*new_token(t_type type, char *str);
 
 #endif
