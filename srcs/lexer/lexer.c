@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jules <jules@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 16:38:16 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/07/11 16:47:20 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/07/11 18:10:11 by jules            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/lexer.h"
+#include "../../inc/minishell.h"
 
-t_lexer	*new_token(t_token token, char *str)
+t_token	*new_token(t_token token, char *str)
 {
-	t_lexer	*new;
+	t_token	*new;
 
-	new = malloc(sizeof(t_lexer));
+	new = malloc(sizeof(t_token));
 	if (!new)
 		return (NULL);
 	new->str = str;
@@ -25,9 +25,9 @@ t_lexer	*new_token(t_token token, char *str)
 	return (new);
 }
 
-void	add_token(t_lexer **lexer, t_token token, char *str)
+void	add_token(t_token **lexer, t_token token, char *str)
 {
-	t_lexer	*new;
+	t_token	*new;
 
 	new = new_token(token, str);
 	if (!new)
@@ -39,7 +39,7 @@ void	add_token(t_lexer **lexer, t_token token, char *str)
 	*lexer = new;
 }
 
-void	tokenize(t_lexer **lexer, char *input)
+void	tokenize(t_token **lexer, char *input)
 {
 	int	i;
 
@@ -54,7 +54,7 @@ void	tokenize(t_lexer **lexer, char *input)
 	}
 }
 
-/* void	print_tokens(t_lexer *lexer)
+/* void	print_tokens(t_token *lexer)
 {
 	const char	**token_names;
 

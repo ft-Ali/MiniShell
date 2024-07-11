@@ -6,18 +6,26 @@
 /*   By: jules <jules@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 13:19:16 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/07/11 17:05:29 by jules            ###   ########.fr       */
+/*   Updated: 2024/07/11 18:04:36 by jules            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+/*--------------libft----------------*/
+
 # include "../.libft/gnl/get_next_line.h"
 # include "../.libft/libft.h"
 # include "../.libft/printf/ft_printf.h"
+
+/*---------minishell headers---------*/
+
 # include "expander.h"
 # include "lexer.h"
+
+/*-------------libraries-------------*/
+
 # include <dirent.h>
 # include <errno.h>
 # include <fcntl.h>
@@ -36,6 +44,8 @@
 # include <termcap.h>
 # include <termios.h>
 # include <unistd.h>
+
+/*---------------colors--------------*/
 
 # define GREEN "\033[0;32m"
 # define RED "\033[1;31m"

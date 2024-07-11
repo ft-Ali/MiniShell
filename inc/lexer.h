@@ -6,15 +6,14 @@
 /*   By: jules <jules@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 11:06:52 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/07/11 17:05:44 by jules            ###   ########.fr       */
+/*   Updated: 2024/07/11 18:01:09 by jules            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LEXER_H
 # define LEXER_H
-# include "minishell.h"
 
-typedef enum e_token
+typedef enum e_tokentype
 {
 	WORD,
 	STRING,
@@ -23,23 +22,23 @@ typedef enum e_token
 	D_GREATER,
 	LOWER,
 	D_LOWER,
-}					t_token;
+}					t_tokentype;
 
-typedef struct s_lexer
+typedef struct s_token
 {
 	int				i;
 	char			*str;
-	t_token			token;
-	struct s_lexer	*next;
-}					t_lexer;
+	t_tokentype		type;
+	struct s_token	*next;
+}					t_token;
 
-void				add_token(t_lexer **lexer, t_token token, char *str);
-void				tokenize(t_lexer **lexer, char *input);
-void				print_tokens(t_lexer *lexer);
+void				add_token(t_token **lexer, t_tokentype type, char *str);
+void				tokenize(t_token **lexer, char *input);
+void				print_tokens(t_token *lexer);
 int					isredirection(char c);
 int					ispipe(char c);
-void				word(t_lexer **lexer, char *input, int *i);
-int					special_check(t_lexer **lexer, char *input, int *i);
-t_lexer				*new_token(t_token token, char *str);
+void				word(t_token **lexer, char *input, int *i);
+int					special_check(t_token **lexer, char *input, int *i);
+t_token				*new_token(t_tokentype type, char *str);
 
 #endif
