@@ -6,7 +6,7 @@
 /*   By: jules <jules@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 13:19:16 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/07/11 16:01:12 by jules            ###   ########.fr       */
+/*   Updated: 2024/07/11 17:05:29 by jules            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "../.libft/gnl/get_next_line.h"
 # include "../.libft/libft.h"
 # include "../.libft/printf/ft_printf.h"
+# include "expander.h"
 # include "lexer.h"
 # include <dirent.h>
 # include <errno.h>
@@ -44,7 +45,5 @@
 # define YELLOW "\033[0;33m"
 # define PURPLE "\033[0;35m"
 # define BOLD_PURPLE "\033[1;35m"
-
-
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: jules <jules@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 11:06:52 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/07/11 16:04:51 by jules            ###   ########.fr       */
+/*   Updated: 2024/07/11 17:05:44 by jules            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,12 @@
 typedef enum e_token
 {
 	WORD,
-	STRING,    // chaine de char
-	PIPE,      // |
-	GREATER,   // >
-	D_GREATER, // >>
-	LOWER,     // <
-	D_LOWER,   // <<
-
+	STRING,
+	PIPE,
+	GREATER,
+	D_GREATER,
+	LOWER,
+	D_LOWER,
 }					t_token;
 
 typedef struct s_lexer
@@ -37,8 +36,8 @@ typedef struct s_lexer
 void				add_token(t_lexer **lexer, t_token token, char *str);
 void				tokenize(t_lexer **lexer, char *input);
 void				print_tokens(t_lexer *lexer);
-int					isRedirection(char c);
-int					isPipe(char c);
+int					isredirection(char c);
+int					ispipe(char c);
 void				word(t_lexer **lexer, char *input, int *i);
 int					special_check(t_lexer **lexer, char *input, int *i);
 t_lexer				*new_token(t_token token, char *str);
