@@ -6,25 +6,25 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 13:50:48 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/07/10 14:16:29 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/07/11 16:46:34 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/lexer.h"
 
-int	isRedirection(char c)
+int	isredirection(char c)
 {
 	return (c == '>' || c == '<');
 }
 
-int	isPipe(char c)
+int	ispipe(char c)
 {
 	return (c == '|');
 }
 
 int	special_check(t_lexer **lexer, char *input, int *i)
 {
-	if (isRedirection(input[*i]))
+	if (isredirection(input[*i]))
 	{
 		if (input[*i] == '>' && input[*i + 1] == '>')
 		{
@@ -49,14 +49,15 @@ int	special_check(t_lexer **lexer, char *input, int *i)
 	}
 	return (0);
 }
+
 void	word(t_lexer **lexer, char *input, int *i)
 {
 	int		start;
 	char	*str;
 
 	start = (*i);
-	while (input[*i] && !ft_isspace(input[*i]) && !isRedirection(input[*i])
-		&& !isPipe(input[*i]))
+	while (input[*i] && !ft_isspace(input[*i]) && !isredirection(input[*i])
+		&& !ispipe(input[*i]))
 		(*i)++;
 	ft_printf("start 1 = %d \n", start);
 	str = ft_strndup(&input[start], *i - start);

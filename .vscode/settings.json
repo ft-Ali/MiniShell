@@ -2,7 +2,8 @@
 	"files.associations": {
 		"minishell.h": "c",
 		"stdbool.h": "c",
-		"ioctl.h": "c"
+		"ioctl.h": "c",
+		"expander.h": "c"
 	},
 	"C_Cpp.errorSquiggles": "disabled"
 }
