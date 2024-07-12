@@ -6,7 +6,7 @@
 /*   By: jpointil <jpointil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 13:29:41 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/07/12 13:39:19 by jpointil         ###   ########.fr       */
+/*   Updated: 2024/07/12 15:44:58 by jpointil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,7 @@
 int	main(void)
 {
 	char	*input;
-	t_token	*token;
-	t_token	*tmp;
-
+	
 	while (1)
 	{
 		input = readline(CYAN "[UN TRUC QUI S'APPEL MINISHELL (づ ◕‿◕ )づ] --> " RESET);
