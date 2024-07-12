@@ -6,7 +6,7 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 13:29:41 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/07/11 16:47:33 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/07/12 11:34:24 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 int	main(void)
 {
 	char	*input;
-	t_lexer	*lexer;
-	t_lexer	*tmp;
+	t_token	*lexer;
+	t_token	*tmp;
 
 	while (1)
 	{
@@ -26,7 +26,7 @@ int	main(void)
 			add_history(input);
 			lexer = NULL;
 			tokenize(&lexer, input);
-			// print_tokens(lexer);
+			print_tokens(lexer);
 			while (lexer)
 			{
 				tmp = lexer;

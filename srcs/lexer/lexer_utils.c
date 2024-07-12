@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jules <jules@student.42.fr>                +#+  +:+       +#+        */
+/*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 13:50:48 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/07/11 20:53:38 by jules            ###   ########.fr       */
+/*   Updated: 2024/07/12 11:40:21 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../inc/minishell.h"
 
-int	is_or_not(char c, t_comp comp)
+int	is_or_not(char c, t_type comp)
 {
 	if (comp == REDIR)
 		return (c == '<' || c == '>');
@@ -21,7 +21,7 @@ int	is_or_not(char c, t_comp comp)
 	return (0);
 }
 
-int	special_check(t_lexer **lexer, char *input, int *i)
+int	special_check(t_token **lexer, char *input, int *i)
 {
 	if (is_or_not(input[*i], REDIR))
 	{
