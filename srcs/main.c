@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpointil <jpointil@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 13:29:41 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/07/12 15:44:58 by jpointil         ###   ########.fr       */
+/*   Updated: 2024/07/12 15:59:54 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ int	main(void)
 		if (input)
 		{
 			add_history(input);
+<<<<<<< HEAD
 			token = NULL;
 			tokenize(&token, input);
 			// print_tokens(token);

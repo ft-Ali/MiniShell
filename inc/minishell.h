@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jules <jules@student.42.fr>                +#+  +:+       +#+        */
+/*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 13:19:16 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/07/11 18:04:36 by jules            ###   ########.fr       */
+/*   Updated: 2024/07/12 15:56:45 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,21 @@
 # include <termcap.h>
 # include <termios.h>
 # include <unistd.h>
+
+typedef struct s_shell
+{
+	t_cmd			*cmds;
+	// env
+	//
+}					t_shell;
+
+typedef struct s_cmd
+{
+	char			**commands;
+	t_redir			*redir;
+	struct s_cmd	*prev;
+	struct s_cmd	*next;
+}					t_cmd;
 
 /*---------------colors--------------*/
 
