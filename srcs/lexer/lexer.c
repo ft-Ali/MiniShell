@@ -6,11 +6,11 @@
 /*   By: jpointil <jpointil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 16:38:16 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/07/12 13:32:11 by jpointil         ###   ########.fr       */
+/*   Updated: 2024/07/12 13:38:25 by jpointil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../inc/minishell.h"
 
 t_token	*new_token(t_type type, char *str)
 {
@@ -20,13 +20,13 @@ t_token	*new_token(t_type type, char *str)
 	if (!new)
 		return (NULL);
 	new->str = str;
-	new->type = NULL;
+	new->token = token;
     new->prev =  NULL;
 	new->next = NULL;
 	return (new);
 }
 
-void	add_token(t_token **lexer, t_type token, char *str)
+/* void	add_token(t_token **lexer, t_type token, char *str)
 {
 	t_token	*new;
 
@@ -37,11 +37,31 @@ void	add_token(t_token **lexer, t_type token, char *str)
 		return ;
 	}
 	new->next = *lexer;
-    *lexer->prev = new;
+	*lexer->prev = new;
 	*lexer = new;
+} */
+void	add_token(t_token **lexer, t_type token, char *str)
+{
+	t_token	*new;
+
+	new = new_token(token, str);
+	if (!new)
+	{
+		perror("Failed to allocate memory for new token");
+		return ;
+	}
+	if (*lexer == NULL)
+		*lexer = new;
+	else
+	{
+		new->next = *lexer;
+		if (*lexer)
+			(*lexer)->prev = new;
+		*lexer = new;
+	}
 }
 
-void	word(t_lexer **lexer, char *input, int *i)
+void	word(t_token **lexer, char *input, int *i)
 {
 	int		start;
 	char	*str;
@@ -74,16 +94,15 @@ void	tokenize(t_token **lexer, char *input)
 	}
 }
 
-/* void	print_tokens(t_token *lexer)
+void	print_tokens(t_token *tokens)
 {
-	const char	**token_names;
+	const char	*token_names[] = {"WORD", "REDIR", "STRING", "PIPE", "GREATER",
+			"D_GREATER", "LOWER", "D_LOWER"};
 
-	token_names = "WORD", "STRING", "PIPE", "GREATER", "D_GREATER", "LOWER",
-		"D_LOWER";
-	while (lexer)
+	while (tokens)
 	{
-		ft_printf(RED "Token: [%s] && Value [%s]\n", token_names[lexer->token],
-			lexer->str);
-		lexer = lexer->next;
+		printf("Token: [%s] && Value [%s]\n", token_names[tokens->type],
+			tokens->str);
+		tokens = tokens->next;
 	}
-} */
+}
