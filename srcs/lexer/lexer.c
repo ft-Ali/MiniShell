@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jules <jules@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jpointil <jpointil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 16:38:16 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/07/11 20:57:57 by jules            ###   ########.fr       */
+/*   Updated: 2024/07/12 13:32:11 by jpointil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_token	*new_token(t_type type, char *str)
 	if (!new)
 		return (NULL);
 	new->str = str;
-	new->token = token;
+	new->type = NULL;
     new->prev =  NULL;
 	new->next = NULL;
 	return (new);

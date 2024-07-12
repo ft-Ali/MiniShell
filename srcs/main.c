@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jpointil <jpointil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 13:29:41 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/07/11 16:47:33 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/07/12 13:36:27 by jpointil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 int	main(void)
 {
 	char	*input;
-	t_lexer	*lexer;
-	t_lexer	*tmp;
+	t_token	*token;
+	t_token	*tmp;
 
 	while (1)
 	{
@@ -24,13 +24,13 @@ int	main(void)
 		if (input)
 		{
 			add_history(input);
-			lexer = NULL;
-			tokenize(&lexer, input);
-			// print_tokens(lexer);
-			while (lexer)
+			token = NULL;
+			tokenize(&token, input);
+			// print_tokens(token);
+			while (token)
 			{
-				tmp = lexer;
-				lexer = lexer->next;
+				tmp = token;
+				token = token->next;
 				free(tmp->str);
 				free(tmp);
 			}
