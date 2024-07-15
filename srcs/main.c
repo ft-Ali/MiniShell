@@ -6,7 +6,7 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 13:59:28 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/07/15 14:09:35 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/07/15 14:36:28 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,19 @@
 
 int	main(void)
 {
-	char	*input;
-	t_lexer	*lexer;
-	t_lexer	*tmp;
+	char		*input;
+	t_lexer		*lexer;
+	t_lexer		*tmp;
 
+
+	syntax_tree = NULL;
 	while (1)
 	{
-		input = readline(CYAN "[UN TRUC QUI S'APPEL MINISHELL (づ ◕‿◕ )づ] --> " RESET);
+		input = readline(CYAN "[づ ◕‿◕ )づ] --> " RESET);
 		if (input)
 		{
 			add_history(input);
 			lexer = NULL;
-			tokenize(&lexer, input);
-			expander(lexer);
 			print_tokens(lexer);
 			while (lexer)
 			{

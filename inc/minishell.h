@@ -6,7 +6,7 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 13:59:41 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/07/15 14:13:33 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/07/15 14:34:43 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,38 +39,46 @@
 # include <termios.h>
 # include <unistd.h>
 
-// typedef struct s_cmd
-// {
-// 	char			**commands;
-// 	t_redir			*redir;
-// 	struct s_cmd	*prev;
-// 	struct s_cmd	*next;
-// }					t_cmd;
+# define TRUE 0
+# define FALSE -1
+# define ERR_QUOTE "Error QUOTE\n"
 
-// typedef struct s_shell
-// {
-// 	t_cmd			*cmds;
-// }					t_shell;
+typedef struct s_cmd
+{
+	char			**commands;
+	t_redir			*redir;
+	struct s_cmd	*prev;
+	struct s_cmd	*next;
+}					t_cmd;
+
+typedef struct s_shell
+{
+	t_env	*env;
+	t_path	*path;
+	t_cmd	*cmd;
+}			t_shell;
 
 typedef enum e_token
 {
-	WORD,
-	STRING,
+	NOT_TOKEN,
 	PIPE,
 	GREATER,
 	D_GREATER,
-	REDIR,
 	LOWER,
 	D_LOWER,
 }					t_token;
 
-typedef struct s_lexer
+typedef struct s_lex
 {
+	char			*word;
+	bool			token;
+	bool			redir;
+	bool			quote;
 	int				i;
-	char			*str;
 	t_token			token;
-	struct s_lexer	*next;
-}					t_lexer;
+	struct s_lex	*next;
+	struct s_lex	*prev;
+}					t_lex;
 
 typedef struct s_syntax
 {
