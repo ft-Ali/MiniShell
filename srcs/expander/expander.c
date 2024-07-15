@@ -3,14 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 14:13:43 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/07/15 14:13:47 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/07/16 00:01:19 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+char *ft_strjoinchar(char *s, char c)
+{
+    size_t len = strlen(s);
+    char *result = (char *)malloc(len + 2);
+    if (!result)
+    {
+        free(s);
+        return NULL;
+	}
+    strcpy(result, s); 
+    result[len] = c;
+    result[len + 1] = '\0'; 
+
+    free(s);
+    return result;
+}
 
 char	*strjoinfree(char *s1, char *s2)
 {
@@ -53,6 +70,10 @@ static char	*expand_var(t_expand *exp)
 	char	*variable_value;
 	char	*temp;
 
+	// ft_printf("INPUT2 [%s]\n", exp->input);
+	
+	if (exp == NULL || exp->input == NULL)
+        	return NULL;
 	result = ft_strdup("");
 	while (exp->input[exp->pos])
 	{
@@ -75,19 +96,22 @@ static char	*expand_var(t_expand *exp)
 			result = expand_char(result, exp);
 		exp->pos++;
 	}
+	
 	return (result);
 }
-void	expander(t_lexer *token)
+void	expander(t_lex *token)
 {
 	t_expand	exp;
 
 	while (token)
 	{
-		exp.input = token->str;
+		ft_printf("INPUT4 [%s]\n", exp.input);
+		exp.input = token->word;
 		exp.pos = 0;
 		exp.output = expand_var(&exp);
-		free(token->str);
-		token->str = exp.output;
+		free(token->word);
+		token->word = exp.output;
+		// ft_printf("INPUT3 [%s]\n", exp.output);
 		token = token->next;
 	}
 }

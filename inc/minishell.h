@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 13:59:41 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/07/15 14:34:43 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/07/15 23:54:31 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,24 @@
 # define FALSE -1
 # define ERR_QUOTE "Error QUOTE\n"
 
+typedef struct s_env
+{
+	char			*content;
+	char			*var_name;
+	bool			exported;
+	struct s_env	*next;
+}					t_env;
+
+typedef struct s_path
+{
+	char			*path;
+	struct s_path	*next;
+}					t_path;
+
 typedef struct s_cmd
 {
 	char			**commands;
-	t_redir			*redir;
+	// t_redir			*redir;
 	struct s_cmd	*prev;
 	struct s_cmd	*next;
 }					t_cmd;
@@ -60,7 +74,6 @@ typedef struct s_shell
 
 typedef enum e_token
 {
-	NOT_TOKEN,
 	PIPE,
 	GREATER,
 	D_GREATER,
@@ -71,13 +84,9 @@ typedef enum e_token
 typedef struct s_lex
 {
 	char			*word;
-	bool			token;
-	bool			redir;
-	bool			quote;
-	int				i;
-	t_token			token;
+	int				token;
+	int				ignore;
 	struct s_lex	*next;
-	struct s_lex	*prev;
 }					t_lex;
 
 typedef struct s_syntax
@@ -88,14 +97,6 @@ typedef struct s_syntax
 	char			*content;
 	char			*type;
 }					t_syntax;
-
-typedef struct s_env
-{
-	char			*content;
-	char			*var_name;
-	bool			exported;
-	struct s_env	*next;
-}					t_env;
 
 typedef struct s_expand
 {
@@ -118,15 +119,18 @@ typedef struct s_expand
 /*------------- UTILS -------------*/
 
 char				*strjoinfree(char *s1, char *s2);
-void				expander(t_lexer *token);
+void				expander(t_lex *token);
 
-void				add_token(t_lexer **lexer, t_token token, char *str);
-void				tokenize(t_lexer **lexer, char *input);
-void				print_tokens(t_lexer *lexer);
-int					isredirection(char c);
-int					ispipe(char c);
-void				word(t_lexer **lexer, char *input, int *i);
-int					special_check(t_lexer **lexer, char *input, int *i);
-t_lexer				*new_token(t_token token, char *str);
+void	process_quote(char *string, int *index, int *count, int *quote_state);
+t_lex	*tokenize(t_shell *shell, char *string);
+int	ft_token(char *str, int i);
+int	ft_quote(char quote);
+int	enclosure_checker(char *string);
+void	print_tokens(t_lex *lexer);
+void add_new_word(t_shell *shell, t_lex **lexer, char *str, int indices[2]);
+void add_new_token(t_shell *shell, t_lex **lexer, int token_type);
+void	exit_shell(t_shell *shell, char *error_msg);
+
+
 
 #endif
