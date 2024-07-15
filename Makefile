@@ -8,8 +8,13 @@ LIBFT_FILE	=	libft.a
 LIBFT_LIB	=	$(LIBFT_PATH)/$(LIBFT_FILE)
 LIBS = -lreadline
 
+<<<<<<< HEAD
 MINISHELL_SRC	=	srcs/main.c srcs/lexer/lexer.c srcs/lexer/lexer_utils.c \
 srcs/expander/expander.c
+=======
+MINISHELL_SRC	=	srcs/main.c srcs/lexer/lexer.c srcs/lexer/lexer_utils.c srcs/expander/expander.c \
+					srcs/expander/expander_utils.c
+>>>>>>> 6d34ad8ab7b6ad3e6b64b72696d3c0b20122e87a
 
 MINISHELL_OBJ	=	$(MINISHELL_SRC:.c=.o)
 

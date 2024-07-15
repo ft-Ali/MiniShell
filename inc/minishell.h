@@ -6,18 +6,35 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 13:19:16 by alsiavos          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2024/07/15 11:42:08 by alsiavos         ###   ########.fr       */
+=======
+/*   Updated: 2024/07/12 15:56:45 by alsiavos         ###   ########.fr       */
+>>>>>>> 6d34ad8ab7b6ad3e6b64b72696d3c0b20122e87a
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+/*--------------libft----------------*/
+
 # include "../.libft/gnl/get_next_line.h"
 # include "../.libft/libft.h"
 # include "../.libft/printf/ft_printf.h"
+<<<<<<< HEAD
 // # include "expander.h"
 // # include "lexer.h"
+=======
+
+/*---------minishell headers---------*/
+
+# include "expander.h"
+# include "lexer.h"
+
+/*-------------libraries-------------*/
+
+>>>>>>> 6d34ad8ab7b6ad3e6b64b72696d3c0b20122e87a
 # include <dirent.h>
 # include <errno.h>
 # include <fcntl.h>
@@ -36,6 +53,23 @@
 # include <termcap.h>
 # include <termios.h>
 # include <unistd.h>
+
+typedef struct s_shell
+{
+	t_cmd			*cmds;
+	// env
+	//
+}					t_shell;
+
+typedef struct s_cmd
+{
+	char			**commands;
+	t_redir			*redir;
+	struct s_cmd	*prev;
+	struct s_cmd	*next;
+}					t_cmd;
+
+/*---------------colors--------------*/
 
 # define GREEN "\033[0;32m"
 # define RED "\033[1;31m"

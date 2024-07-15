@@ -1,20 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expander.c                                         :+:      :+:    :+:   */
+/*   expander_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/11 14:21:43 by alsiavos          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/07/15 11:41:58 by alsiavos         ###   ########.fr       */
-=======
-/*   Updated: 2024/07/12 14:27:20 by alsiavos         ###   ########.fr       */
->>>>>>> 6d34ad8ab7b6ad3e6b64b72696d3c0b20122e87a
+/*   Created: 2024/07/12 13:40:08 by alsiavos          #+#    #+#             */
+/*   Updated: 2024/07/12 15:44:13 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/minishell.h"
+#include "../../inc/expander.h"
 
 char	*strjoinfree(char *s1, char *s2)
 {
@@ -23,6 +19,18 @@ char	*strjoinfree(char *s1, char *s2)
 	new_str = ft_strjoin(s1, s2);
 	free(s1);
 	return (new_str);
+}
+
+char	*join_char(char *result, char char_to_join)
+{
+	char	*new_result;
+	char	temp[2];
+
+	temp[0] = char_to_join;
+	temp[1] = '\0';
+	new_result = ft_strjoin(result, temp);
+	free(result);
+	return (new_result);
 }
 
 static char	*extract_var_name(t_expand *exp)
@@ -62,7 +70,7 @@ static char	*expand_var(t_expand *exp)
 	{
 		if (exp->input[exp->pos] == '$')
 		{
-			variable_name = extract_var_name(exp);
+			variable_name = extract_variable_name(exp);
 			if (variable_name)
 			{
 				variable_value = getenv(variable_name);
@@ -81,17 +89,21 @@ static char	*expand_var(t_expand *exp)
 	}
 	return (result);
 }
-void	expander(t_lexer *token)
+void	expander(t_token *token)
 {
 	t_expand	exp;
 
 	while (token)
 	{
-		exp.input = token->str;
-		exp.pos = 0;
-		exp.output = expand_var(&exp);
-		free(token->str);
-		token->str = exp.output;
-		token = token->next;
+		if (token->type == WORD || token->type == STRING)
+		{
+			exp.input = token->str;       
+				// Initialise l'entrée avec le mot ou la chaîne
+			exp.output = expand_var(&exp); // Expande la variable dans exp.input
+			free(token->str);              // Libère l'ancienne chaîne
+			token->str = exp.output;      
+				// Remplace par la nouvelle chaîne expandue
+		}
+		token = token->next; // Passe au token suivant
 	}
 }
