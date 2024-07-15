@@ -6,11 +6,11 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 13:40:08 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/07/12 15:44:13 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/07/15 13:59:01 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/expander.h"
+#include "../../inc/minishell.h"
 
 char	*strjoinfree(char *s1, char *s2)
 {

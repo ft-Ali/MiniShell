@@ -5,12 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/08 13:19:16 by alsiavos          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/07/15 11:42:08 by alsiavos         ###   ########.fr       */
-=======
-/*   Updated: 2024/07/12 15:56:45 by alsiavos         ###   ########.fr       */
->>>>>>> 6d34ad8ab7b6ad3e6b64b72696d3c0b20122e87a
+/*   Created: 2024/07/15 13:59:41 by alsiavos          #+#    #+#             */
+/*   Updated: 2024/07/15 14:13:33 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,19 +18,8 @@
 # include "../.libft/gnl/get_next_line.h"
 # include "../.libft/libft.h"
 # include "../.libft/printf/ft_printf.h"
-<<<<<<< HEAD
 // # include "expander.h"
 // # include "lexer.h"
-=======
-
-/*---------minishell headers---------*/
-
-# include "expander.h"
-# include "lexer.h"
-
-/*-------------libraries-------------*/
-
->>>>>>> 6d34ad8ab7b6ad3e6b64b72696d3c0b20122e87a
 # include <dirent.h>
 # include <errno.h>
 # include <fcntl.h>
@@ -54,31 +39,18 @@
 # include <termios.h>
 # include <unistd.h>
 
-typedef struct s_shell
-{
-	t_cmd			*cmds;
-	// env
-	//
-}					t_shell;
+// typedef struct s_cmd
+// {
+// 	char			**commands;
+// 	t_redir			*redir;
+// 	struct s_cmd	*prev;
+// 	struct s_cmd	*next;
+// }					t_cmd;
 
-typedef struct s_cmd
-{
-	char			**commands;
-	t_redir			*redir;
-	struct s_cmd	*prev;
-	struct s_cmd	*next;
-}					t_cmd;
-
-/*---------------colors--------------*/
-
-# define GREEN "\033[0;32m"
-# define RED "\033[1;31m"
-# define GREY "\033[0;90m"
-# define CYAN "\033[1;96m"
-# define RESET "\033[0m"
-# define YELLOW "\033[0;33m"
-# define PURPLE "\033[0;35m"
-# define BOLD_PURPLE "\033[1;35m"
+// typedef struct s_shell
+// {
+// 	t_cmd			*cmds;
+// }					t_shell;
 
 typedef enum e_token
 {
@@ -87,6 +59,7 @@ typedef enum e_token
 	PIPE,
 	GREATER,
 	D_GREATER,
+	REDIR,
 	LOWER,
 	D_LOWER,
 }					t_token;
@@ -122,6 +95,17 @@ typedef struct s_expand
 	char			*output;
 	int				pos;
 }					t_expand;
+
+/*---------------colors--------------*/
+
+# define GREEN "\033[0;32m"
+# define RED "\033[1;31m"
+# define GREY "\033[0;90m"
+# define CYAN "\033[1;96m"
+# define RESET "\033[0m"
+# define YELLOW "\033[0;33m"
+# define PURPLE "\033[0;35m"
+# define BOLD_PURPLE "\033[1;35m"
 
 /*------------- UTILS -------------*/
 
