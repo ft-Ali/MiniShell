@@ -6,11 +6,11 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 16:38:16 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/07/11 16:47:20 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/07/11 18:04:57 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/lexer.h"
+#include "../../inc/minishell.h"
 
 t_lexer	*new_token(t_token token, char *str)
 {
@@ -54,16 +54,14 @@ void	tokenize(t_lexer **lexer, char *input)
 	}
 }
 
-/* void	print_tokens(t_lexer *lexer)
+void	print_tokens(t_lexer *lexer)
 {
-	const char	**token_names;
-
-	token_names = "WORD", "STRING", "PIPE", "GREATER", "D_GREATER", "LOWER",
-		"D_LOWER";
+	const char	*token_names[] = {"WORD", "STRING", "PIPE", "GREATER", "D_GREATER", "LOWER",
+		"D_LOWER"};
 	while (lexer)
 	{
 		ft_printf(RED "Token: [%s] && Value [%s]\n", token_names[lexer->token],
 			lexer->str);
 		lexer = lexer->next;
 	}
-} */
+}

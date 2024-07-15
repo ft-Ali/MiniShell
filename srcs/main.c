@@ -6,7 +6,7 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 13:29:41 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/07/11 16:47:33 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/07/15 11:29:30 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ int	main(void)
 			add_history(input);
 			lexer = NULL;
 			tokenize(&lexer, input);
-			// print_tokens(lexer);
+			expander(lexer);
+			print_tokens(lexer);
 			while (lexer)
 			{
 				tmp = lexer;

@@ -6,7 +6,7 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 13:19:16 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/07/11 14:20:56 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/07/15 11:42:08 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 # include "../.libft/gnl/get_next_line.h"
 # include "../.libft/libft.h"
 # include "../.libft/printf/ft_printf.h"
-# include "expander.h"
-# include "lexer.h"
+// # include "expander.h"
+// # include "lexer.h"
 # include <dirent.h>
 # include <errno.h>
 # include <fcntl.h>
@@ -45,5 +45,62 @@
 # define YELLOW "\033[0;33m"
 # define PURPLE "\033[0;35m"
 # define BOLD_PURPLE "\033[1;35m"
+
+typedef enum e_token
+{
+	WORD,
+	STRING,
+	PIPE,
+	GREATER,
+	D_GREATER,
+	LOWER,
+	D_LOWER,
+}					t_token;
+
+typedef struct s_lexer
+{
+	int				i;
+	char			*str;
+	t_token			token;
+	struct s_lexer	*next;
+}					t_lexer;
+
+typedef struct s_syntax
+{
+	struct s_syntax	*left;
+	struct s_syntax	*right;
+	struct s_syntax	*parent;
+	char			*content;
+	char			*type;
+}					t_syntax;
+
+typedef struct s_env
+{
+	char			*content;
+	char			*var_name;
+	bool			exported;
+	struct s_env	*next;
+}					t_env;
+
+typedef struct s_expand
+{
+	char			*input;
+	char			*output;
+	int				pos;
+}					t_expand;
+
+/*------------- UTILS -------------*/
+
+char				*strjoinfree(char *s1, char *s2);
+void				expander(t_lexer *token);
+
+void				add_token(t_lexer **lexer, t_token token, char *str);
+void				tokenize(t_lexer **lexer, char *input);
+void				print_tokens(t_lexer *lexer);
+int					isredirection(char c);
+int					ispipe(char c);
+void				word(t_lexer **lexer, char *input, int *i);
+int					special_check(t_lexer **lexer, char *input, int *i);
+t_lexer				*new_token(t_token token, char *str);
 
 #endif

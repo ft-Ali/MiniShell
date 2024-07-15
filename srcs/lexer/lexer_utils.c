@@ -6,11 +6,11 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 13:50:48 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/07/11 16:46:34 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/07/15 11:29:49 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/lexer.h"
+#include "../../inc/minishell.h"
 
 int	isredirection(char c)
 {
