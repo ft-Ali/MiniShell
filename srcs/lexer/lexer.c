@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 16:38:16 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/07/16 00:03:20 by marvin           ###   ########.fr       */
+/*   Updated: 2024/07/16 11:28:42 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ void	process_quote(char *string, int *index, int *count, int *quote_state)
 	{
 		if (ft_quote(string[*index]) == *quote_state)
 		{
-			while ((*quote_state == ft_quote(string[(*index)])) && string[(*index)])
+			while ((*quote_state == ft_quote(string[(*index)]))
+				&& string[(*index)])
 			{
 				(*index)++;
 				(*count)++;
@@ -38,7 +39,8 @@ static void	process_word(char *string, int *index, int *length)
 	int	quote_state;
 
 	quote_state = 0;
-	while ((string[*index] != ' ') && (ft_token(string, *index) == FALSE) && string[*index])
+	while ((string[*index] != ' ') && (ft_token(string, *index) == FALSE)
+		&& string[*index])
 	{
 		quote_state = ft_quote(string[*index]);
 		if (quote_state != 0)
@@ -66,7 +68,8 @@ static void	process_string(t_shell *shell, t_lex **lex, char *string)
 	quote_state = 0;
 	while (string[index])
 	{
-		while (string[index] && (string[index] == ' ' || (string[index] >= 7 && string[index] <= 13)))
+		while (string[index] && (string[index] == ' ' || (string[index] >= 7
+					&& string[index] <= 13)))
 			index++;
 		length = 0;
 		if ((string[index] == '\'') || (string[index] == '\"'))
@@ -74,11 +77,11 @@ static void	process_string(t_shell *shell, t_lex **lex, char *string)
 		else
 			process_word(string, &index, &length);
 		if (length > 0)
-			add_new_word(shell, lex, string, (int [2]){index, length});
+			add_new_word(shell, lex, string, (int[2]){index, length});
 		if (ft_token(string, index) != FALSE)
 			(add_new_token(shell, lex, ft_token(string, index)), index++);
-		if (ft_token(string, index - 1) == D_GREATER
-			|| ft_token(string, index - 1) == D_LOWER)
+		if (ft_token(string, index - 1) == D_GREATER || ft_token(string, index
+				- 1) == D_LOWER)
 			index++;
 	}
 }
@@ -96,13 +99,16 @@ t_lex	*tokenize(t_shell *shell, char *string)
 	return (lex);
 }
 
-void print_tokens(t_lex *lexer)
+void	print_tokens(t_lex *lexer)
 {
-    const char *token_names[] = {"WORD", "GREATER", "PIPE", "D_GREATER", "LOWER", "D_LOWER"};
+	const char	*token_names[] = {"WORD", "GREATER", "PIPE", "D_GREATER",
+			"LOWER", "D_LOWER"};
 
-    while (lexer)
-    {
-        ft_printf("Token: [%s] Value [%s]\n", token_names[lexer->token], lexer->word);
-        lexer = lexer->next;
-    }
+	while (lexer)
+	{
+		if (lexer->word)
+			ft_printf("Token: [%s] Value [%s]\n", token_names[lexer->token],
+				lexer->word);
+		lexer = lexer->next;
+	}
 }

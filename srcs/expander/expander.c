@@ -3,30 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 14:13:43 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/07/16 00:01:19 by marvin           ###   ########.fr       */
+/*   Updated: 2024/07/16 11:23:19 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-char *ft_strjoinchar(char *s, char c)
+char	*ft_strjoinchar(char *s, char c)
 {
-    size_t len = strlen(s);
-    char *result = (char *)malloc(len + 2);
-    if (!result)
-    {
-        free(s);
-        return NULL;
-	}
-    strcpy(result, s); 
-    result[len] = c;
-    result[len + 1] = '\0'; 
+	size_t	len;
+	char	*result;
 
-    free(s);
-    return result;
+	len = strlen(s);
+	result = (char *)malloc(len + 2);
+	if (!result)
+	{
+		free(s);
+		return (NULL);
+	}
+	strcpy(result, s);
+	result[len] = c;
+	result[len + 1] = '\0';
+	free(s);
+	return (result);
 }
 
 char	*strjoinfree(char *s1, char *s2)
@@ -70,33 +72,34 @@ static char	*expand_var(t_expand *exp)
 	char	*variable_value;
 	char	*temp;
 
-	// ft_printf("INPUT2 [%s]\n", exp->input);
-	
 	if (exp == NULL || exp->input == NULL)
-        	return NULL;
+		return (NULL);
 	result = ft_strdup("");
 	while (exp->input[exp->pos])
 	{
 		if (exp->input[exp->pos] == '$')
 		{
 			variable_name = extract_var_name(exp);
+			ft_printf("temp = %s\n", variable_name);
 			if (variable_name)
 			{
 				variable_value = getenv(variable_name);
+				ft_printf("get var env = %s\n", variable_name);
 				free(variable_name);
 				if (variable_value)
 				{
 					temp = ft_strjoin(result, variable_value);
+					ft_printf("after join = %s\n", temp);
 					free(result);
 					result = temp;
 				}
+				ft_printf("result = %s\n", result);
 			}
 		}
 		else
 			result = expand_char(result, exp);
 		exp->pos++;
 	}
-	
 	return (result);
 }
 void	expander(t_lex *token)
@@ -105,13 +108,11 @@ void	expander(t_lex *token)
 
 	while (token)
 	{
-		ft_printf("INPUT4 [%s]\n", exp.input);
 		exp.input = token->word;
 		exp.pos = 0;
 		exp.output = expand_var(&exp);
 		free(token->word);
 		token->word = exp.output;
-		// ft_printf("INPUT3 [%s]\n", exp.output);
 		token = token->next;
 	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 13:59:28 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/07/16 00:04:11 by marvin           ###   ########.fr       */
+/*   Updated: 2024/07/16 11:29:56 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	main(void)
 {
 	char		*input;
 	t_lex		*lexer;
-	t_lex		*tmp;
+	// t_lex		*tmp;
  	t_shell shell;
 
 	shell.cmd = NULL;
@@ -31,13 +31,13 @@ int	main(void)
 			lexer = tokenize(&shell ,input);
 			expander(lexer);
  			print_tokens(lexer);
-			while (lexer)
-			{
-				tmp = lexer;
-				lexer = lexer->next;
-				free(tmp->word);
-				free(tmp);
-			}
+			// while (lexer)
+			// {
+			// 	tmp = lexer;
+			// 	lexer = lexer->next;
+			// 	free(tmp->word);
+			// 	free(tmp);
+			// }
 			free(input);
 		}
 	}

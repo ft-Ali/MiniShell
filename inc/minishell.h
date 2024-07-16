@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 13:59:41 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/07/15 23:54:31 by marvin           ###   ########.fr       */
+/*   Updated: 2024/07/16 11:24:50 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,10 @@ typedef struct s_cmd
 
 typedef struct s_shell
 {
-	t_env	*env;
-	t_path	*path;
-	t_cmd	*cmd;
-}			t_shell;
+	t_env			*env;
+	t_path			*path;
+	t_cmd			*cmd;
+}					t_shell;
 
 typedef enum e_token
 {
@@ -121,16 +121,17 @@ typedef struct s_expand
 char				*strjoinfree(char *s1, char *s2);
 void				expander(t_lex *token);
 
-void	process_quote(char *string, int *index, int *count, int *quote_state);
-t_lex	*tokenize(t_shell *shell, char *string);
-int	ft_token(char *str, int i);
-int	ft_quote(char quote);
-int	enclosure_checker(char *string);
-void	print_tokens(t_lex *lexer);
-void add_new_word(t_shell *shell, t_lex **lexer, char *str, int indices[2]);
-void add_new_token(t_shell *shell, t_lex **lexer, int token_type);
-void	exit_shell(t_shell *shell, char *error_msg);
-
-
+void				process_quote(char *string, int *index, int *count,
+						int *quote_state);
+t_lex				*tokenize(t_shell *shell, char *string);
+int					ft_token(char *str, int i);
+int					ft_quote(char quote);
+int					enclosure_checker(char *string);
+void				print_tokens(t_lex *lexer);
+void				add_new_word(t_shell *shell, t_lex **lexer, char *str,
+						int indices[2]);
+void				add_new_token(t_shell *shell, t_lex **lexer,
+						int token_type);
+void				exit_shell(t_shell *shell, char *error_msg);
 
 #endif

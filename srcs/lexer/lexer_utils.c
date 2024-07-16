@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 14:02:17 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/07/15 23:35:58 by marvin           ###   ########.fr       */
+/*   Updated: 2024/07/16 11:04:17 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,8 @@ int	ft_token(char *str, int i)
 	return (FALSE);
 }
 
-static void	check_enclosure(char *string, char delimiter, int *index, int *enclosed)
+static void	check_enclosure(char *string, char delimiter, int *index,
+		int *enclosed)
 {
 	int	begin;
 
@@ -52,7 +53,8 @@ static void	check_enclosure(char *string, char delimiter, int *index, int *enclo
 	{
 		if (*enclosed == 0)
 			*enclosed = -1;
-		while (string[*index] && string[*index + 1] && string[++(*index)] != delimiter)
+		while (string[*index] && string[*index + 1]
+			&& string[++(*index)] != delimiter)
 			continue ;
 		if (string[*index] == delimiter && *enclosed == -1 && begin != *index)
 			*enclosed = 0;
@@ -61,9 +63,9 @@ static void	check_enclosure(char *string, char delimiter, int *index, int *enclo
 
 int	enclosure_checker(char *string)
 {
-	int	index;
-	int	single_quote_open;
-	int	double_quote_open;
+	int index;
+	int single_quote_open;
+	int double_quote_open;
 
 	index = 0;
 	single_quote_open = 0;
