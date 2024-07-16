@@ -6,7 +6,7 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 13:59:41 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/07/16 11:24:50 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/07/16 12:01:00 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,21 +43,13 @@
 # define FALSE -1
 # define ERR_QUOTE "Error QUOTE\n"
 
-typedef struct s_env
-{
-	char			*content;
-	char			*var_name;
-	bool			exported;
-	struct s_env	*next;
-}					t_env;
-
-typedef struct s_path
+typedef struct s_path 
 {
 	char			*path;
 	struct s_path	*next;
 }					t_path;
 
-typedef struct s_cmd
+typedef struct s_cmd // exec part 
 {
 	char			**commands;
 	// t_redir			*redir;
@@ -65,12 +57,14 @@ typedef struct s_cmd
 	struct s_cmd	*next;
 }					t_cmd;
 
-typedef struct s_shell
+typedef struct s_expand
 {
-	t_env			*env;
-	t_path			*path;
-	t_cmd			*cmd;
-}					t_shell;
+	char			*input; // ce que readline lit = $HOME
+	char			*output; // ce qu'on va lui sortir $HOME = /home/alsiavos
+	int				pos; // pour join et delete le $HOME et prendre que /home/alsiavos
+}					t_expand;
+
+/*------------- LEXER PART -------------*/
 
 typedef enum e_token
 {
@@ -89,21 +83,21 @@ typedef struct s_lex
 	struct s_lex	*next;
 }					t_lex;
 
-typedef struct s_syntax
-{
-	struct s_syntax	*left;
-	struct s_syntax	*right;
-	struct s_syntax	*parent;
-	char			*content;
-	char			*type;
-}					t_syntax;
+// typedef struct s_syntax
+// {
+// 	struct s_syntax	*left;
+// 	struct s_syntax	*right;
+// 	struct s_syntax	*parent;
+// 	char			*content;
+// 	char			*type;
+// }					t_syntax;
 
-typedef struct s_expand
+typedef struct s_shell // init shell a mettre les autres list ici puor tout set a 0 ?
 {
-	char			*input;
-	char			*output;
-	int				pos;
-}					t_expand;
+	t_expand *env;
+	t_path *path;
+	t_cmd *cmd;
+}					t_shell;
 
 /*---------------colors--------------*/
 
@@ -116,10 +110,13 @@ typedef struct s_expand
 # define PURPLE "\033[0;35m"
 # define BOLD_PURPLE "\033[1;35m"
 
-/*------------- UTILS -------------*/
+/*------------- EXPANDER -------------*/
 
 char				*strjoinfree(char *s1, char *s2);
 void				expander(t_lex *token);
+
+
+/*------------- LEXER -------------*/
 
 void				process_quote(char *string, int *index, int *count,
 						int *quote_state);

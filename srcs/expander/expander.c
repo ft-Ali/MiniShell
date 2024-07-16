@@ -6,7 +6,7 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 14:13:43 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/07/16 11:23:19 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/07/16 11:38:24 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,7 @@ void	expander(t_lex *token)
 
 	while (token)
 	{
+		ft_printf("word %s \n", token->word);
 		exp.input = token->word;
 		exp.pos = 0;
 		exp.output = expand_var(&exp);
