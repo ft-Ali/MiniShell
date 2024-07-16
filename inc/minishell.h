@@ -6,7 +6,7 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 13:59:41 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/07/16 15:22:01 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/07/16 16:01:09 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ typedef struct s_lex
 {
 	char			*word;
 	int				token;
-	int				ignore;
+	//int				ignore;
 	struct s_lex	*next;
 }					t_lex;
 

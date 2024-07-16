@@ -26,7 +26,6 @@ void	add_new_token(t_shell *shell, t_lex **lexer, int token_type)
 		exit_shell(shell, "lexer malloc");
 	new_token->word = NULL;
 	new_token->token = token_type;
-	new_token->ignore = 0;
 	if (!*lexer)
 	{
 		*lexer = new_token;
@@ -52,7 +51,6 @@ void	add_new_word(t_shell *shell, t_lex **lexer, char *str, int indices[2])
 		exit_shell(shell, "lexer malloc");
 	new_word->word = ft_strndup(str + indices[0] - indices[1], indices[1]);
 	new_word->token = 0;
-	new_word->ignore = 0;
 	if (!*lexer)
 	{
 		*lexer = new_word;
