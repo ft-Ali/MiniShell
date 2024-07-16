@@ -6,13 +6,13 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 14:02:17 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/07/16 11:04:17 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/07/16 15:20:43 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int	ft_quote(char quote)
+int	is_quote(char quote)
 {
 	if (quote == '\'')
 		return (1);
@@ -22,7 +22,7 @@ int	ft_quote(char quote)
 		return (0);
 }
 
-int	ft_token(char *str, int i)
+int	is_token(char *str, int i)
 {
 	if (str[i] == '|')
 		return (PIPE);
@@ -43,7 +43,7 @@ int	ft_token(char *str, int i)
 	return (FALSE);
 }
 
-static void	check_enclosure(char *string, char delimiter, int *index,
+static void	check_closed_quote(char *string, char delimiter, int *index,
 		int *enclosed)
 {
 	int	begin;
@@ -61,7 +61,7 @@ static void	check_enclosure(char *string, char delimiter, int *index,
 	}
 }
 
-int	enclosure_checker(char *string)
+int	check_opened_quote(char *string)
 {
 	int index;
 	int single_quote_open;
@@ -73,9 +73,9 @@ int	enclosure_checker(char *string)
 	while (string && string[index])
 	{
 		if (string[index] == '\'')
-			check_enclosure(string, '\'', &index, &single_quote_open);
+			check_closed_quote(string, '\'', &index, &single_quote_open);
 		else if (string[index] == '\"')
-			check_enclosure(string, '\"', &index, &double_quote_open);
+			check_closed_quote(string, '\"', &index, &double_quote_open);
 		index++;
 	}
 	if (single_quote_open || double_quote_open)

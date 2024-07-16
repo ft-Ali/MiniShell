@@ -6,13 +6,13 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 14:13:43 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/07/16 11:38:24 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/07/16 15:52:37 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-char	*ft_strjoinchar(char *s, char c)
+char	*ft_strjoin_char(char *s, char c)
 {
 	size_t	len;
 	char	*result;
@@ -31,7 +31,7 @@ char	*ft_strjoinchar(char *s, char c)
 	return (result);
 }
 
-char	*strjoinfree(char *s1, char *s2)
+char	*strjoin_free(char *s1, char *s2)
 {
 	char	*new_str;
 
@@ -46,7 +46,7 @@ static char	*extract_var_name(t_expand *exp)
 	char	*var_name;
 
 	start = ++exp->pos;
-	while (exp->input[exp->pos] && ft_isalnum(exp->input[exp->pos]))
+	while (exp->input[exp->pos] && ft_isalpha(exp->input[exp->pos]))
 		exp->pos++;
 	var_name = ft_strndup(&exp->input[start], exp->pos - start);
 	exp->pos--;
@@ -96,7 +96,6 @@ static char	*expand_var(t_expand *exp)
 				ft_printf("result = %s\n", result);
 			}
 		}
-		else
 			result = expand_char(result, exp);
 		exp->pos++;
 	}
@@ -108,7 +107,7 @@ void	expander(t_lex *token)
 
 	while (token)
 	{
-		ft_printf("word %s \n", token->word);
+		ft_printf("word %d \n", token->token);
 		exp.input = token->word;
 		exp.pos = 0;
 		exp.output = expand_var(&exp);
