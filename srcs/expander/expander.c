@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 14:13:43 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/07/17 16:10:31 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/07/17 20:48:06 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,7 @@ static char	*expand_char(char *result, t_expand *exp)
 	char	*joined_result;
 
 	temp = ft_substr(exp->input, exp->pos, 1);
-	joined_result = ft_strjoin(result, temp);
-	free(result);
+	joined_result = strjoin_free(result, temp);
 	free(temp);
 	return (joined_result);
 }
