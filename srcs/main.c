@@ -6,7 +6,7 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 13:59:28 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/07/16 15:24:27 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/07/17 11:48:00 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,13 @@ int	main(void)
     shell.path = NULL;
 	while (1)
 	{
-		input = readline(CYAN "[づ ◕‿◕ )づ] --> " RESET);
+		input = readline("$->");
 		if (input)
 		{
 			add_history(input);
 			lex = lexer(&shell ,input);
  			// print_list(&shell);
-			expander(lex);
+			expander(lex); 
 			// print_tokens(lexer);
 			// while (lexer)
 			// {

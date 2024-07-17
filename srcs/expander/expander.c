@@ -6,7 +6,7 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 14:13:43 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/07/16 15:52:37 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/07/17 14:35:33 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,14 @@ char	*ft_strjoin_char(char *s, char c)
 	size_t	len;
 	char	*result;
 
-	len = strlen(s);
+	len = ft_strlen(s);
 	result = (char *)malloc(len + 2);
 	if (!result)
 	{
 		free(s);
 		return (NULL);
 	}
-	strcpy(result, s);
+	ft_strcpy(result, s);
 	result[len] = c;
 	result[len + 1] = '\0';
 	free(s);
@@ -49,7 +49,7 @@ static char	*extract_var_name(t_expand *exp)
 	while (exp->input[exp->pos] && ft_isalpha(exp->input[exp->pos]))
 		exp->pos++;
 	var_name = ft_strndup(&exp->input[start], exp->pos - start);
-	exp->pos--;
+	
 	return (var_name);
 }
 
@@ -70,7 +70,6 @@ static char	*expand_var(t_expand *exp)
 	char	*result;
 	char	*variable_name;
 	char	*variable_value;
-	char	*temp;
 
 	if (exp == NULL || exp->input == NULL)
 		return (NULL);
@@ -80,7 +79,6 @@ static char	*expand_var(t_expand *exp)
 		if (exp->input[exp->pos] == '$')
 		{
 			variable_name = extract_var_name(exp);
-			ft_printf("temp = %s\n", variable_name);
 			if (variable_name)
 			{
 				variable_value = getenv(variable_name);
@@ -88,17 +86,15 @@ static char	*expand_var(t_expand *exp)
 				free(variable_name);
 				if (variable_value)
 				{
-					temp = ft_strjoin(result, variable_value);
-					ft_printf("after join = %s\n", temp);
-					free(result);
-					result = temp;
+					result = strjoin_free(result, variable_value);
+					continue ;
 				}
-				ft_printf("result = %s\n", result);
 			}
 		}
-			result = expand_char(result, exp);
+		result = expand_char(result, exp);
 		exp->pos++;
 	}
+	ft_printf("result = %s\n", result);
 	return (result);
 }
 void	expander(t_lex *token)

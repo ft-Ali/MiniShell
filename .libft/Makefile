@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jules <jules@student.42.fr>                +#+  +:+       +#+         #
+#    By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/10 16:29:26 by alsiavos          #+#    #+#              #
-#    Updated: 2024/07/11 16:21:36 by jules            ###   ########.fr        #
+#    Updated: 2024/07/17 14:35:02 by alsiavos         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -66,6 +66,7 @@ FILES = 	ft_tolower.c \
 		ft_putchar.c \
 		ft_isspace.c \
 		ft_strndup.c \
+		ft_strcpy.c \
 		\
 		./printf/ft_printf.c \
 		./printf/ft_print_hexa.c \
