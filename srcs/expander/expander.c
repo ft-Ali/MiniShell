@@ -6,7 +6,7 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 14:13:43 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/07/17 14:35:33 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/07/17 16:10:31 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,9 @@ static char	*extract_var_name(t_expand *exp)
 	char	*var_name;
 
 	start = ++exp->pos;
-	while (exp->input[exp->pos] && ft_isalpha(exp->input[exp->pos]))
+	while (exp->input[exp->pos] && ft_isalnum(exp->input[exp->pos]))
 		exp->pos++;
 	var_name = ft_strndup(&exp->input[start], exp->pos - start);
-	
 	return (var_name);
 }
 
@@ -78,17 +77,26 @@ static char	*expand_var(t_expand *exp)
 	{
 		if (exp->input[exp->pos] == '$')
 		{
-			variable_name = extract_var_name(exp);
-			if (variable_name)
+			if (exp->input[exp->pos + 1] && ft_isalpha(exp->input[exp->pos
+					+ 1]))
 			{
-				variable_value = getenv(variable_name);
-				ft_printf("get var env = %s\n", variable_name);
-				free(variable_name);
-				if (variable_value)
+				variable_name = extract_var_name(exp);
+				if (variable_name)
 				{
-					result = strjoin_free(result, variable_value);
-					continue ;
+					variable_value = getenv(variable_name);
+					ft_printf("get var env = %s\n", variable_name);
+					free(variable_name);
+					if (variable_value)
+					{
+						result = strjoin_free(result, variable_value);
+						continue ;
+					}
 				}
+			}
+			else
+			{
+				exp->pos++;
+				continue ;
 			}
 		}
 		result = expand_char(result, exp);
