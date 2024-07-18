@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 14:13:43 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/07/17 20:48:06 by marvin           ###   ########.fr       */
+/*   Updated: 2024/07/18 15:02:00 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,17 +86,11 @@ static char	*expand_var(t_expand *exp)
 					ft_printf("get var env = %s\n", variable_name);
 					free(variable_name);
 					if (variable_value)
-					{
 						result = strjoin_free(result, variable_value);
-						continue ;
-					}
 				}
 			}
 			else
-			{
 				exp->pos++;
-				continue ;
-			}
 		}
 		result = expand_char(result, exp);
 		exp->pos++;
