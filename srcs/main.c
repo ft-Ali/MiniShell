@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jpointil <jpointil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 13:59:28 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/07/17 11:48:00 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/07/18 16:27:01 by jpointil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ int	main(void)
 {
 	char		*input;
 	t_lex		*lex;
-	// t_lex		*tmp;
  	t_shell shell;
 
 	shell.cmd = NULL;
@@ -29,18 +28,14 @@ int	main(void)
 		{
 			add_history(input);
 			lex = lexer(&shell ,input);
- 			// print_list(&shell);
-			expander(lex); 
-			// print_tokens(lexer);
-			// while (lexer)
-			// {
-			// 	tmp = lexer;
-			// 	lexer = lexer->next;
-			// 	free(tmp->word);
-			// 	free(tmp);
-			// }
+			expander(lex);
+			while (lex)
+			{
+				printf("word : %s, token : %d\n", lex->word, lex->token);
+				lex = lex->next;
+			}
+			//parser(&shell, lex);
 			free(input);
 		}
 	}
 }
-

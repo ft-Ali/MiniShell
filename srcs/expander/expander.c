@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jpointil <jpointil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 14:13:43 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/07/17 20:48:06 by marvin           ###   ########.fr       */
+/*   Updated: 2024/07/18 11:53:20 by jpointil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,25 +83,17 @@ static char	*expand_var(t_expand *exp)
 				if (variable_name)
 				{
 					variable_value = getenv(variable_name);
-					ft_printf("get var env = %s\n", variable_name);
 					free(variable_name);
 					if (variable_value)
-					{
 						result = strjoin_free(result, variable_value);
-						continue ;
-					}
 				}
 			}
 			else
-			{
 				exp->pos++;
-				continue ;
-			}
 		}
 		result = expand_char(result, exp);
 		exp->pos++;
 	}
-	ft_printf("result = %s\n", result);
 	return (result);
 }
 void	expander(t_lex *token)
@@ -110,7 +102,6 @@ void	expander(t_lex *token)
 
 	while (token)
 	{
-		ft_printf("word %d \n", token->token);
 		exp.input = token->word;
 		exp.pos = 0;
 		exp.output = expand_var(&exp);

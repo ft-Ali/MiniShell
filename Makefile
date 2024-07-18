@@ -9,7 +9,7 @@ LIBFT_LIB	=	$(LIBFT_PATH)/$(LIBFT_FILE)
 LIBS = -lreadline
 
 MINISHELL_SRC	=	srcs/main.c srcs/lexer/lexer.c srcs/lexer/lexer_utils.c srcs/lexer/tokenize.c  \
-srcs/expander/expander.c 
+srcs/expander/expander.c #srcs/parser/parser.c
 
 MINISHELL_OBJ	=	$(MINISHELL_SRC:.c=.o)
 

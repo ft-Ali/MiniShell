@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jpointil <jpointil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 13:59:41 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/07/16 16:01:09 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/07/18 15:06:16 by jpointil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,16 +43,32 @@
 # define FALSE -1
 # define ERR_QUOTE "Error QUOTE\n"
 
+typedef enum e_token
+{
+	WORD,
+	PIPE,
+	GREATER,
+	D_GREATER,
+	LOWER,
+	D_LOWER,
+}					t_token;
+
 typedef struct s_path
 {
 	char			*path;
 	struct s_path	*next;
 }					t_path;
 
+typedef struct s_redir
+{
+	t_token			token;
+	char			*file;
+}					t_redir;
+
 typedef struct s_cmd // exec part
 {
 	char **commands;
-	// t_redir			*redir;
+	t_redir *redir;
 	struct s_cmd *prev;
 	struct s_cmd *next;
 }					t_cmd;
@@ -66,21 +82,11 @@ typedef struct s_expand
 
 /*------------- LEXER PART -------------*/
 
-typedef enum e_token
-{
-	WORD,
-	PIPE,
-	GREATER,
-	D_GREATER,
-	LOWER,
-	D_LOWER,
-}					t_token;
-
 typedef struct s_lex
 {
 	char			*word;
-	int				token;
-	//int				ignore;
+	t_token			token;
+	// int				ignore;
 	struct s_lex	*next;
 }					t_lex;
 
@@ -132,4 +138,9 @@ void				add_new_token(t_shell *shell, t_lex **lexer,
 						int token_type);
 void				exit_shell(t_shell *shell, char *error_msg);
 // void				print_tokens(t_token *tokens);
+
+/*---------------PARSER------------*/
+
+void				parser(t_shell shell, t_lex *lex);
+
 #endif
