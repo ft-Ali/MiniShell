@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpointil <jpointil@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 13:59:41 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/07/18 15:06:16 by jpointil         ###   ########.fr       */
+/*   Updated: 2024/07/18 18:05:47 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,6 +137,7 @@ void				add_new_word(t_shell *shell, t_lex **lexer, char *str,
 void				add_new_token(t_shell *shell, t_lex **lexer,
 						int token_type);
 void				exit_shell(t_shell *shell, char *error_msg);
+void				free_tokens(t_lex *lexer);
 // void				print_tokens(t_token *tokens);
 
 /*---------------PARSER------------*/

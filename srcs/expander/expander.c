@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpointil <jpointil@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 14:13:43 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/07/18 16:39:44 by jpointil         ###   ########.fr       */
+/*   Updated: 2024/07/18 18:10:19 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,10 +86,9 @@ static char	*expand_var(t_expand *exp)
 					free(variable_name);
 					if (variable_value)
 						result = strjoin_free(result, variable_value);
+					continue ;
 				}
 			}
-			else
-				exp->pos++;
 		}
 		result = expand_char(result, exp);
 		exp->pos++;

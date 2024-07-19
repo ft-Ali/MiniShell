@@ -2,9 +2,12 @@
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   tokenize.c                                         :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
+/*                                                    +:+ +:+
+	+:+     */
+/*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+
+	+#+        */
+/*                                                +#+#+#+#+#+
+	+#+           */
 /*   Created: 2024/07/17 14:25:17 by alsiavos          #+#    #+#             */
 /*   Updated: 2024/07/17 14:25:17 by alsiavos         ###   ########.fr       */
 /*                                                                            */
@@ -63,10 +66,27 @@ void	add_new_word(t_shell *shell, t_lex **lexer, char *str, int indices[2])
 	}
 }
 
+void	free_tokens(t_lex *lexer)
+{
+	t_lex *temp;
+
+	while (lexer)
+	{
+		temp = lexer;
+		lexer = lexer->next;
+		if (temp->word)
+			free(temp->word);
+		free(temp);
+	}
+}
+
 void	exit_shell(t_shell *shell, char *error_msg)
 {
 	if (shell->path)
 		free(shell->path);
+	if (shell->lex)
+		free_tokens(shell->lex);
 	perror(error_msg);
 	free(shell);
+	exit(EXIT_FAILURE);
 }
