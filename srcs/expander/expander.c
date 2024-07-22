@@ -6,7 +6,7 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 14:13:43 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/07/22 14:38:21 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/07/22 14:44:19 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ static char	*expand_var(t_expand *exp)
 					free(variable_name);
 					if (variable_value)
 						result = strjoin_free(result, variable_value);
+					continue ;
 				}
 			}
 		}
