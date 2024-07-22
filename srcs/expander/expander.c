@@ -6,39 +6,11 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 14:13:43 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/07/18 18:10:19 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/07/22 14:38:21 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
-char	*ft_strjoin_char(char *s, char c)
-{
-	size_t	len;
-	char	*result;
-
-	len = ft_strlen(s);
-	result = (char *)malloc(len + 2);
-	if (!result)
-	{
-		free(s);
-		return (NULL);
-	}
-	ft_strcpy(result, s);
-	result[len] = c;
-	result[len + 1] = '\0';
-	free(s);
-	return (result);
-}
-
-char	*strjoin_free(char *s1, char *s2)
-{
-	char	*new_str;
-
-	new_str = ft_strjoin(s1, s2);
-	free(s1);
-	return (new_str);
-}
 
 static char	*extract_var_name(t_expand *exp)
 {
@@ -77,7 +49,7 @@ static char	*expand_var(t_expand *exp)
 		if (exp->input[exp->pos] == '$')
 		{
 			if (exp->input[exp->pos + 1] && ft_isalpha(exp->input[exp->pos
-					+ 1]))
+						+ 1]))
 			{
 				variable_name = extract_var_name(exp);
 				if (variable_name)
@@ -86,7 +58,6 @@ static char	*expand_var(t_expand *exp)
 					free(variable_name);
 					if (variable_value)
 						result = strjoin_free(result, variable_value);
-					continue ;
 				}
 			}
 		}
@@ -95,6 +66,7 @@ static char	*expand_var(t_expand *exp)
 	}
 	return (result);
 }
+
 void	expander(t_lex *token)
 {
 	t_expand	exp;

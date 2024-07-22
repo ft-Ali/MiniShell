@@ -6,7 +6,7 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 14:02:17 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/07/16 15:20:43 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/07/22 14:38:44 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,9 @@ static void	check_closed_quote(char *string, char delimiter, int *index,
 
 int	check_opened_quote(char *string)
 {
-	int index;
-	int single_quote_open;
-	int double_quote_open;
+	int	index;
+	int	single_quote_open;
+	int	double_quote_open;
 
 	index = 0;
 	single_quote_open = 0;

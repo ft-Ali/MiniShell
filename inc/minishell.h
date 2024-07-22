@@ -6,7 +6,7 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 13:59:41 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/07/18 18:05:47 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/07/22 14:37:43 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,17 +67,17 @@ typedef struct s_redir
 
 typedef struct s_cmd // exec part
 {
-	char **commands;
-	t_redir *redir;
-	struct s_cmd *prev;
-	struct s_cmd *next;
+	char			**commands;
+	t_redir			*redir;
+	struct s_cmd	*prev;
+	struct s_cmd	*next;
 }					t_cmd;
 
 typedef struct s_expand
 {
-	char *input;  // ce que readline lit = $HOME
-	char *output; // ce qu'on va lui sortir $HOME = /home/alsiavos
-	int pos;      // pour join et delete le $HOME et prendre que /home/alsiavos
+	char	*input;
+	char	*output;
+	int		pos;
 }					t_expand;
 
 /*------------- LEXER PART -------------*/
@@ -86,7 +86,6 @@ typedef struct s_lex
 {
 	char			*word;
 	t_token			token;
-	// int				ignore;
 	struct s_lex	*next;
 }					t_lex;
 
@@ -100,7 +99,6 @@ typedef struct s_lex
 // }					t_syntax;
 
 typedef struct s_shell
-// init shell a mettre les autres list ici puor tout set a 0 ?
 {
 	t_expand		*env;
 	t_lex			*lex;
@@ -121,8 +119,9 @@ typedef struct s_shell
 
 /*------------- EXPANDER -------------*/
 
-char				*strjoin_free(char *s1, char *s2);
 void				expander(t_lex *token);
+char				*strjoin_free(char *s1, char *s2);
+char				*ft_strjoin_char(char *s, char c);
 
 /*------------- LEXER -------------*/
 

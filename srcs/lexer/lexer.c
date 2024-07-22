@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpointil <jpointil@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 16:38:16 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/07/18 11:48:41 by jpointil         ###   ########.fr       */
+/*   Updated: 2024/07/22 14:41:04 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ static void	process_input(t_shell *shell, t_lex **lex, char *string)
 		else
 			process_word(string, &index, &length);
 		if (length > 0)
-			add_new_word(shell, lex, string, (int[2]){index, length});
+			add_new_word(shell, lex, string, (int [2]){index, length});
 		if (is_token(string, index) != FALSE)
 			(add_new_token(shell, lex, is_token(string, index)), index++);
 		if (is_token(string, index - 1) == D_GREATER || is_token(string, index
@@ -85,6 +85,7 @@ static void	process_input(t_shell *shell, t_lex **lex, char *string)
 			index++;
 	}
 }
+
 t_lex	*lexer(t_shell *shell, char *string)
 {
 	t_lex	*lex;

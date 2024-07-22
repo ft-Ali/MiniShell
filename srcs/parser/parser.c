@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpointil <jpointil@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 12:04:22 by jpointil          #+#    #+#             */
-/*   Updated: 2024/07/18 16:37:30 by jpointil         ###   ########.fr       */
+/*   Updated: 2024/07/22 13:47:21 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ t_redir *void add_redir_node(t_token token, char *file)
 
 	redir = NULL;
 	redir = ft_calloc(sizeof(t_redir));
-    if (!redir)
-        perror()
+	if (!redir)
+		perror();
 	redir->file = ft_strdup(file);
 	redir->token = token;
 	redir->next = NULL;
@@ -27,7 +27,7 @@ t_redir *void add_redir_node(t_token token, char *file)
 
 void	add_cmd_node(t_cmd *cmd, char **, char flag)
 {
-	//oui
+	// oui
 }
 
 t_cmd	*rec_parse(t_lex *lex, t_cmd *prev, t_cmd *cmd, int i)
@@ -35,19 +35,19 @@ t_cmd	*rec_parse(t_lex *lex, t_cmd *prev, t_cmd *cmd, int i)
 	if (!lex)
 		return (cmd);
 	cmd = ft_calloc(sizeof(t_cmd));
-    if (!cmd)
-        //error
-	cmd->prev = prev;
+	if (!cmd)
+		// error
+		cmd->prev = prev;
 	while (lex)
 	{
 		if (lex->token == WORD)
-        {
+		{
 			cmd->commands[i] = ft_strdup(lexer->word);
-            if (!cmd->commands[i])
-                //secu
-            i++;
-        }
-        else if (lex->token == PIPE)
+			if (!cmd->commands[i])
+				// secu
+				i++;
+		}
+		else if (lex->token == PIPE)
 		{
 			cmd->commands[i] = NULL;
 			cmd->next = rec_parse(lex->next, cmd, NULL, 0);
