@@ -6,23 +6,23 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 13:59:28 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/07/22 14:38:05 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/07/23 18:25:36 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-// void	print_lexer_list(t_lex *head)
-// {
-// 	t_lex *current = head;
-// 	while (current != NULL)
-// 	{
-// 		printf("Token: %d\n", current->token);
-// 		printf("Word: %s\n", current->word);
-// 		printf("\n");
-// 		current = current->next;
-// 	}
-// }
+void	print_lexer_list(t_lex *head)
+{
+	t_lex *current = head;
+	while (current != NULL)
+	{
+		printf("Token: %d\n", current->token);
+		printf("Word: %s\n", current->word);
+		printf("\n");
+		current = current->next;
+	}
+}
 int	main(void)
 {
 	char	*input;
@@ -40,6 +40,7 @@ int	main(void)
 			add_history(input);
 			lex = lexer(&shell, input);
 			expander(lex);
+			print_lexer_list(lex);
 			free_tokens(lex);
 			free(input);
 		}
