@@ -6,7 +6,7 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 13:59:41 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/07/22 14:37:43 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/07/24 13:51:54 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,9 +75,9 @@ typedef struct s_cmd // exec part
 
 typedef struct s_expand
 {
-	char	*input;
-	char	*output;
-	int		pos;
+	char			*input;
+	char			*output;
+	int				pos;
 }					t_expand;
 
 /*------------- LEXER PART -------------*/
@@ -122,7 +122,12 @@ typedef struct s_shell
 void				expander(t_lex *token);
 char				*strjoin_free(char *s1, char *s2);
 char				*ft_strjoin_char(char *s, char c);
-
+char				*expand_char(char *result, t_expand *exp);
+int					handle_variable_expansion(t_expand *exp, char **result,
+						char quote);
+char				*expand_var(t_expand *exp);
+void				handle_quotes(t_expand *exp, char *quote);
+char				*extract_var_name(t_expand *exp);
 /*------------- LEXER -------------*/
 
 void				process_quote(char *string, int *index, int *count,
