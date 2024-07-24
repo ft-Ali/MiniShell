@@ -6,7 +6,7 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 13:59:41 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/07/24 16:05:57 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/07/24 16:29:21 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,7 @@ typedef struct s_shell
 void				expander(t_lex *token);
 char				*strjoin_free(char *s1, char *s2);
 char				*ft_strjoin_char(char *s, char c);
+int					is_valid_variable_char(char c, int is_start);
 char				*expand_char(char *result, t_expand *exp);
 int					handle_variable_expansion(t_expand *exp, char **result,
 						char quote);
