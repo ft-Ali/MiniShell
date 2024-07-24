@@ -6,7 +6,7 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 13:40:08 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/07/24 14:02:35 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/07/24 16:06:34 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,19 +42,19 @@ char	*strjoin_free(char *s1, char *s2)
 
 void	handle_quotes(t_expand *exp, char *quote)
 {
-	if (exp->input[exp->pos] == '\0')
-		return ;
 	if (exp->input[exp->pos] == '"' || exp->input[exp->pos] == '\'')
 	{
 		if (*quote == '\0')
 		{
 			*quote = exp->input[exp->pos];
-			exp->pos++;
+			ft_memmove(&exp->input[exp->pos], &exp->input[exp->pos + 1],
+				ft_strlen(exp->input) - exp->pos);
 		}
 		else if (*quote == exp->input[exp->pos])
 		{
 			*quote = '\0';
-			exp->pos++;
+			ft_memmove(&exp->input[exp->pos], &exp->input[exp->pos + 1],
+				ft_strlen(exp->input) - exp->pos);
 		}
 	}
 }
@@ -63,21 +63,19 @@ int	handle_variable_expansion(t_expand *exp, char **result, char quote)
 {
 	char	*variable_name;
 	char	*variable_value;
+	int		start;
 
 	if (exp->input[exp->pos] == '$' && quote != '\'')
 	{
-		if (exp->input[exp->pos + 1] && ft_isalpha(exp->input[exp->pos + 1]))
-		{
-			variable_name = extract_var_name(exp);
-			if (variable_name)
-			{
-				variable_value = getenv(variable_name);
-				free(variable_name);
-				if (variable_value)
-					*result = strjoin_free(*result, variable_value);
-				return (1);
-			}
-		}
+		exp->pos++;
+		start = exp->pos;
+		while (ft_isalnum(exp->input[exp->pos]))
+			exp->pos++;
+		variable_name = ft_strndup(exp->input + start, exp->pos - start);
+		variable_value = getenv(variable_name);
+		*result = strjoin_free(*result, variable_value);
+		free(variable_name);
+		return (1);
 	}
 	return (0);
 }

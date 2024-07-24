@@ -6,7 +6,7 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 13:59:41 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/07/24 13:51:54 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/07/24 16:05:57 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,10 @@ typedef struct s_redir
 
 typedef struct s_cmd // exec part
 {
-	char			**commands;
-	t_redir			*redir;
-	struct s_cmd	*prev;
-	struct s_cmd	*next;
+	char **commands;
+	t_redir *redir;
+	struct s_cmd *prev;
+	struct s_cmd *next;
 }					t_cmd;
 
 typedef struct s_expand
@@ -146,6 +146,6 @@ void				free_tokens(t_lex *lexer);
 
 /*---------------PARSER------------*/
 
-void				parser(t_shell shell, t_lex *lex);
+void				parser(t_shell *shell, t_lex *lex);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 14:13:43 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/07/24 14:02:45 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/07/24 16:07:33 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,14 +52,12 @@ char	*expand_var(t_expand *exp)
 	if (exp == NULL || exp->input == NULL)
 		return (NULL);
 	result = ft_strdup("");
-	while (exp->input[exp->pos])
+	while (exp->pos < (int)ft_strlen(exp->input))
 	{
 		handle_quotes(exp, &quote);
-		if (handle_variable_expansion(exp, &result, quote))
-		{
-			exp->pos++;
+		if (exp->input[exp->pos] && handle_variable_expansion(exp, &result,
+				quote))
 			continue ;
-		}
 		result = expand_char(result, exp);
 		exp->pos++;
 	}
