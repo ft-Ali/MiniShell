@@ -6,7 +6,7 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 13:40:08 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/07/25 14:09:05 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/07/25 14:15:18 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,7 @@ int	handle_variable_expansion(t_expand *exp, char **result, char quote)
 		start = exp->pos;
 		while (ft_isdigit(exp->input[exp->pos]))
 			exp->pos++;
-		if (exp->pos > start)
-			return (1);
-		while (ft_isalnum(exp->input[exp->pos]) || exp->input[exp->pos] == '_')
+		while (ft_isalpha(exp->input[exp->pos]) || exp->input[exp->pos] == '_')
 			exp->pos++;
 		variable_name = ft_strndup(exp->input + start, exp->pos - start);
 		variable_value = getenv(variable_name);

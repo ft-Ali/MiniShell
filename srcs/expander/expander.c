@@ -6,7 +6,7 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 14:13:43 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/07/25 12:17:10 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/07/25 14:13:36 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,26 +23,6 @@ char	*expand_char(char *result, t_expand *exp)
 	return (joined_result);
 }
 
-char	*extract_var_name(t_expand *exp)
-{
-	int		start;
-	int		len;
-	char	*var_name;
-
-	start = exp->pos + 1;
-	len = 0;
-	while (exp->input[start + len] && ft_isdigit(exp->input[start + len]))
-		len++;
-	if (len == 0)
-		return (NULL);
-	var_name = malloc(len + 1);
-	if (!var_name)
-		return (NULL);
-	ft_strlcpy(var_name, &exp->input[start], len + 1);
-	exp->pos += len;
-	return (var_name);
-}
-
 char	*expand_var(t_expand *exp)
 {
 	char	*result;
@@ -52,7 +32,7 @@ char	*expand_var(t_expand *exp)
 	if (exp == NULL || exp->input == NULL)
 		return (NULL);
 	result = ft_strdup("");
-	while (exp->pos < (int)ft_strlen(exp->input) )
+	while (exp->pos < (int)ft_strlen(exp->input))
 	{
 		handle_quotes(exp, &quote);
 		if (exp->input[exp->pos] && handle_variable_expansion(exp, &result,
