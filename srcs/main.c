@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jules <jules@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 13:59:28 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/07/24 15:27:00 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/07/26 00:05:33 by jules            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	main(void)
 			add_history(input);
 			lex = lexer(&shell, input);
 			expander(lex);
-			// parser(&shell, lex);
+			parser(&shell, lex);
 			// print_parser_result(shell.cmd);
 			// print_lexer_list(lex);
 			free_tokens(lex);

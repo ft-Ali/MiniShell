@@ -3,41 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jules <jules@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 12:04:22 by jpointil          #+#    #+#             */
-/*   Updated: 2024/07/24 15:18:24 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/07/26 00:10:51 by jules            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-t_redir *void add_redir_node(t_token token, char *file)
+t_redir *add_redir_node(t_token token, char *file)
 {
 	t_redir	*redir;
 
 	redir = NULL;
-	redir = ft_calloc(sizeof(t_redir));
+	redir = ft_calloc(1, sizeof(t_redir));
 	if (!redir)
-		perror();
+		//gestion erreur : free lex, free cmd;
 	redir->file = ft_strdup(file);
 	redir->token = token;
 	redir->next = NULL;
 }
 
-void	add_cmd_node(t_cmd *cmd, char **, char flag)
-{
-	// oui
-}
+// void	add_cmd_node(t_cmd *cmd, char **, char flag)
+// {
+// 	// oui
+// }
 
-t_cmd	*rec_parse(t_lex *lex, t_cmd *prev, t_cmd *cmd, int i)
+void	lex_loop(t_lex *lex, t_cmd *prev, t_cmd *cmd, int *i)
 {
-	if (!lex)
-		return (cmd);
-	cmd = ft_calloc(sizeof(t_cmd));
-	if (!cmd)
-		// error
-		cmd->prev = prev;
 	while (lex)
 	{
 		if (lex->token == WORD)
@@ -60,9 +54,21 @@ t_cmd	*rec_parse(t_lex *lex, t_cmd *prev, t_cmd *cmd, int i)
 		}
 		lex = lex->next;
 	}
+}
+
+t_cmd	*rec_parse(t_lex *lex, t_cmd *prev, t_cmd *cmd, int *i)
+{
+	if (!lex)
+		return (cmd);
+	cmd = ft_calloc(sizeof(t_cmd));
+	if (!cmd)
+		// gestion erreur : free lex free cmd;
+		cmd->prev = prev;
+	lex_loop(lex, prev, cmd, &i);
 	cmd->next = NULL;
 	cmd->command[i] = NULL;
 }
+
 void	parser(t_shell *shell, t_lex *lex)
 {
 	shell.cmd = rec_parse(lex, NULL, NULL, 0);
