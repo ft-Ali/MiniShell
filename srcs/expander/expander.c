@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jules <jules@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 14:13:43 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/07/24 16:44:39 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/07/26 14:33:52 by jules            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,6 @@ void	expander(t_lex *token)
 		exp.input = token->word;
 		exp.pos = 0;
 		exp.output = expand_var(&exp);
-		ft_printf("exp.output: %s\n", exp.output);
 		free(token->word);
 		token->word = exp.output;
 		token = token->next;

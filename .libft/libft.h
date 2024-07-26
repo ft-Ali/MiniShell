@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jules <jules@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 13:15:29 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/07/17 14:34:21 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/07/26 14:03:26 by jules            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ char				*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 char				*ft_strtrim(char const *s1, char const *set);
 void				ft_striteri(char *s, void (*f)(unsigned int, char *));
 char				*ft_strjoin(char const *s1, char const *s2);
+char				*ft_strjoin_free_n(char *s1, char *s2);
 char				*ft_strtrim(char const *s1, char const *set);
 char				*ft_freejoin(char *s1, char *s2, int sizeS1, int sizeS2);
 char				**ft_split(char const *s, char c);

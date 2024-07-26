@@ -6,7 +6,7 @@
 /*   By: jules <jules@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 13:59:28 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/07/26 00:05:33 by jules            ###   ########.fr       */
+/*   Updated: 2024/07/26 14:32:47 by jules            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	main(void)
 			lex = lexer(&shell, input);
 			expander(lex);
 			parser(&shell, lex);
-			// print_parser_result(shell.cmd);
+			print_parser(shell.cmd);
 			// print_lexer_list(lex);
 			free_tokens(lex);
 			free(input);

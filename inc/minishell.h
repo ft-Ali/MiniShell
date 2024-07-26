@@ -6,7 +6,7 @@
 /*   By: jules <jules@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 13:59:41 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/07/26 00:08:40 by jules            ###   ########.fr       */
+/*   Updated: 2024/07/26 14:19:21 by jules            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ typedef struct s_redir
 {
 	t_token			token;
 	char			*file;
-	struct s_redir 	*next;
+	struct s_redir	*next;
 }					t_redir;
 
 typedef struct s_cmd // exec part
@@ -149,5 +149,7 @@ void				free_tokens(t_lex *lexer);
 /*---------------PARSER------------*/
 
 void				parser(t_shell *shell, t_lex *lex);
+t_cmd				*rec_parse(t_lex *lex, t_cmd *prev, t_cmd *cmd);
+void				print_parser(t_cmd *cmd);
 
 #endif
