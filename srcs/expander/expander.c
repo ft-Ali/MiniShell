@@ -6,7 +6,7 @@
 /*   By: jules <jules@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 14:13:43 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/07/26 14:33:52 by jules            ###   ########.fr       */
+/*   Updated: 2024/07/26 14:55:32 by jules            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,26 +21,6 @@ char	*expand_char(char *result, t_expand *exp)
 	joined_result = strjoin_free(result, temp);
 	free(temp);
 	return (joined_result);
-}
-
-char	*extract_var_name(t_expand *exp)
-{
-	int		start;
-	int		len;
-	char	*var_name;
-
-	start = exp->pos + 1;
-	len = 0;
-	while (exp->input[start + len] && ft_isalnum(exp->input[start + len]))
-		len++;
-	if (len == 0)
-		return (NULL);
-	var_name = malloc(len + 1);
-	if (!var_name)
-		return (NULL);
-	ft_strlcpy(var_name, &exp->input[start], len + 1);
-	exp->pos += len;
-	return (var_name);
 }
 
 char	*expand_var(t_expand *exp)
