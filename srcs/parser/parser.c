@@ -3,87 +3,147 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jules <jules@student.42.fr>                +#+  +:+       +#+        */
+/*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 12:04:22 by jpointil          #+#    #+#             */
-/*   Updated: 2024/07/26 14:49:52 by jules            ###   ########.fr       */
+/*   Updated: 2024/07/29 17:09:26 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-t_redir	*add_redir_node(t_token token, char *file)
+// Fonction pour ajouter un nœud de redirection
+t_redir *add_redir_node(t_token token, char *file)
 {
-	t_redir	*redir;
+    t_redir *redir;
 
-	redir = NULL;
-	redir = ft_calloc(1, sizeof(t_redir));
-	if (!redir)
-		printf("KO4\n");
-	// gestion erreur : free lex, cmd redir;
-	redir->file = ft_strdup(file);
-	redir->token = token;
-	redir->next = NULL;
-	return (redir);
+    redir = ft_calloc(1, sizeof(t_redir));
+    if (!redir)
+    {
+        perror("Allocation failed");
+        return NULL;
+    }
+    redir->file = ft_strdup(file);
+    redir->token = token;
+    redir->next = NULL;
+    return redir;
 }
 
-void	lex_loop(t_lex *lex, char *word, char *commands, t_cmd *cmd)
+
+
+
+// Fonction pour traiter les tokens lexicaux et remplir les commandes et redirections
+void lex_loop(t_lex *lex, t_cmd *cmd, char **commands)
 {
-	while (lex)
-	{
-		if (lex->token == WORD)
-		{
-			word = ft_strdup(lex->word);
-			if (!word)
-				printf("KO3\n");
-			// erreur : free lex, cmd;
-		}
-		else if (lex->token == PIPE)
-		{
-			commands = ft_strjoin_free_n(commands, word);
-			cmd->next = rec_parse(lex->next, cmd, NULL);
-		}
-		else
-		{
-			cmd->redir = add_redir_node(lex->token, lex->next->word);
-			lex = lex->next;
-			cmd->redir = cmd->redir->next;
-		}
-		commands = ft_strjoin_free_n(commands, word);
-		printf("%s\n", commands);
-		lex = lex->next;
-	}
-	cmd->next = NULL;
+    t_redir *redir_tail = NULL;
+
+    while (lex)
+    {
+        if (lex->token == WORD)
+        {
+            // Si des commandes existent déjà, ajoutez le mot comme un argument
+            if (*commands && **commands)
+            {
+                char *temp = ft_strjoin(*commands, " ");
+                free(*commands);
+                *commands = ft_strjoin(temp, lex->word);
+                free(temp);
+            }
+            else
+            {
+                *commands = ft_strdup(lex->word);
+            }
+        }
+        else if (lex->token == PIPE)
+        {
+            // Finalisez la commande actuelle
+            if (*commands && **commands)
+            {
+                cmd->commands = ft_split(*commands, ' ');
+                free(*commands);
+                *commands = NULL;
+            }
+            else
+            {
+                cmd->commands = ft_calloc(1, sizeof(char *));
+            }
+            
+            // Passez à la commande suivante après le pipe
+            cmd->next = rec_parse(lex->next, cmd, NULL);
+            return;
+        }
+        else
+        {
+            // Ajout des redirections
+            t_redir *redir = add_redir_node(lex->token, lex->next->word);
+            if (!redir)
+            {
+                perror("Allocation failed");
+                return;
+            }
+            if (!cmd->redir)
+            {
+                cmd->redir = redir;
+                redir_tail = redir;
+            }
+            else
+            {
+                redir_tail->next = redir;
+                redir_tail = redir;
+            }
+            lex = lex->next; // Skip the file name token
+        }
+        lex = lex->next;
+    }
+    // Finalisez la dernière commande
+    if (*commands && **commands)
+    {
+        cmd->commands = ft_split(*commands, ' ');
+    }
+    else
+    {
+        cmd->commands = ft_calloc(1, sizeof(char *));
+    }
+    free(*commands);
 }
 
-t_cmd	*rec_parse(t_lex *lex, t_cmd *prev, t_cmd *cmd)
+// Fonction récursive pour créer les commandes et les redirections
+t_cmd *rec_parse(t_lex *lex, t_cmd *prev, t_cmd *cmd)
 {
-	char	*commands;
+    char *commands;
 
-	if (!lex)
-		return (cmd);
-	cmd = ft_calloc(1, sizeof(t_cmd));
-	if (!cmd)
-		printf("KO2\n");
-	// gestion erreur : free lex, cmd;
-	commands = ft_calloc(1, sizeof(char));
-	if (!commands)
-		printf("KO1\n");
-	// gestion erreur : free lex, cmd, commands;
-	cmd->prev = prev;
-	lex_loop(lex, 0, commands, cmd);
-	cmd->commands = ft_split(commands, '\n');
-	printf("commands : %s\n", cmd->commands);
-	return (cmd);
+    if (!lex)
+        return NULL;
+
+    cmd = ft_calloc(1, sizeof(t_cmd));
+    if (!cmd)
+    {
+        perror("Allocation failed");
+        return NULL;
+    }
+    cmd->prev = prev;
+
+    commands = ft_strdup("");
+    if (!commands)
+    {
+        perror("Allocation failed");
+        free(cmd);
+        return NULL;
+    }
+
+    lex_loop(lex, cmd, &commands);
+
+    return cmd;
 }
 
-void	parser(t_shell *shell, t_lex *lex)
+
+
+
+// Fonction principale du parser
+void parser(t_shell *shell, t_lex *lex)
 {
-	printf("OK\n");
-	shell->cmd = rec_parse(lex, NULL, NULL);
-	printf("OK2\n");
-	// free(lex);
-	print_parser(shell->cmd);
+    shell->cmd = rec_parse(lex, NULL, NULL);
+    // print_parser(shell->cmd);
 }
 
 /*fonctionnement rec parse :

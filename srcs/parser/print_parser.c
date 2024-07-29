@@ -3,44 +3,50 @@
 /*                                                        :::      ::::::::   */
 /*   print_parser.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jules <jules@student.42.fr>                +#+  +:+       +#+        */
+/*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 14:18:01 by jules             #+#    #+#             */
-/*   Updated: 2024/07/26 14:45:36 by jules            ###   ########.fr       */
+/*   Updated: 2024/07/29 17:11:16 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "../../inc/minishell.h"
 
-void    print_parser(t_cmd *cmd)
+void print_parser(t_cmd *cmd)
 {
-    int     i;
+    int i;
 
     if (!cmd)
     {
-        printf("PKO\n");
-        return ;
+        printf("No commands found\n");
+        return;
     }
+
     while (cmd)
     {
-        printf("POK\n");
+        printf("Command found\n");
+        
+        // Print commands
         if (cmd->commands)
         {
-            printf("POK2\n");
+            printf("Commands:\n");
             i = -1;
             while (cmd->commands[++i])
-                printf("cmd : %s\n", cmd->commands[i]);
+                printf("cmd: %s\n", cmd->commands[i]);
         }
+
+        // Print redirections
         if (cmd->redir)
         {
-            printf("POK3\n");
+            printf("Redirections:\n");
             while (cmd->redir)
             {
-                printf("token : %d, file : %s\n", cmd->redir->token, cmd->redir->file);
+                printf("token: %d, file: %s\n", cmd->redir->token, cmd->redir->file);
                 cmd->redir = cmd->redir->next;
             }
         }
-        printf("POK4\n");
+
         cmd = cmd->next;
     }
 }
+
