@@ -6,7 +6,7 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 14:18:01 by jules             #+#    #+#             */
-/*   Updated: 2024/07/29 17:11:16 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/07/30 10:25:19 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void print_parser(t_cmd *cmd)
             printf("Commands:\n");
             i = -1;
             while (cmd->commands[++i])
-                printf("cmd: %s\n", cmd->commands[i]);
+                printf("cmd[%d]: %s\n",i, cmd->commands[i]);
         }
 
         // Print redirections
