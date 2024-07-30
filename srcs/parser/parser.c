@@ -6,7 +6,7 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 12:04:22 by jpointil          #+#    #+#             */
-/*   Updated: 2024/07/30 10:36:15 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/07/30 10:53:52 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,13 +96,9 @@ void	lex_loop(t_lex *lex, t_cmd *cmd, char **commands)
 	}
 	// Finalisez la dernière commande
 	if (*commands && **commands)
-	{
 		cmd->commands = ft_split(*commands, ' ');
-	}
 	else
-	{
 		cmd->commands = ft_calloc(1, sizeof(char *));
-	}
 	free(*commands);
 }
 
@@ -139,17 +135,15 @@ void	syntaxe(t_lex *lex, t_shell *shell)
 	tmp = lex;
 	while (tmp)
 	{
-	
 		if (tmp->token == PIPE && (!tmp->next || tmp->next->token == PIPE))
 		{
 			printf("Error : syntax error near unexpected token");
-            exit(1);
-
+			exit(1);
 		}
 		if (tmp->token != 0 && (!tmp->next || tmp->next->token != 0))
 		{
 			printf("Error : syntax error near unexpected token");
-            exit(1);
+			exit(1);
 		}
 		tmp = tmp->next;
 	}
