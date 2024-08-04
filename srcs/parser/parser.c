@@ -6,7 +6,7 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 12:04:22 by jpointil          #+#    #+#             */
-/*   Updated: 2024/08/01 16:36:23 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/08/04 19:04:56 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,9 @@ void	handle_redirections(t_lex **lex, t_cmd *cmd, t_redir **redir_tail)
 
 	redir = add_redir_node((*lex)->token, (*lex)->next->word);
 	if (!cmd->redir)
-	{
 		cmd->redir = redir;
-	}
 	else
-	{
 		(*redir_tail)->next = redir;
-	}
 	*redir_tail = redir;
 	*lex = (*lex)->next; // Skip the file name token
 }
@@ -53,45 +49,36 @@ void	append_command(t_cmd *cmd, char *word)
 	int		i;
 	char	**new_commands;
 
-	// Compter les arguments actuels
 	i = 0;
 	while (cmd->commands && cmd->commands[i])
 		i++;
-	// Allouer de la mémoire pour un nouvel argument
 	new_commands = (char **)malloc(sizeof(char *) * (i + 2));
 	if (!new_commands)
 	{
 		perror("Allocation failed");
 		return ;
 	}
-	// Copier les anciens arguments
 	i = 0;
 	while (cmd->commands && cmd->commands[i])
 	{
 		new_commands[i] = cmd->commands[i];
 		i++;
 	}
-	// Ajouter le nouveau mot et terminer par NULL
 	new_commands[i] = strdup(word);
 	new_commands[i + 1] = NULL;
-	// Libérer l'ancienne liste et remplacer par la nouvelle
 	if (cmd->commands)
 		free(cmd->commands);
 	cmd->commands = new_commands;
 }
 
-void	lex_loop(t_lex *lex, t_cmd *cmd, t_cmd *prev_cmd)
+void	lex_loop(t_lex *lex, t_cmd *cmd)
 {
-	t_redir	*redir_tail;
+	t_redir	*redir_tail = NULL;
 
-	(void)prev_cmd;
-	redir_tail = NULL;
 	while (lex)
 	{
 		if (lex->token == WORD)
-		{
 			append_command(cmd, lex->word);
-		}
 		else if (lex->token == PIPE)
 		{
 			if (cmd->commands)
@@ -108,29 +95,30 @@ void	lex_loop(t_lex *lex, t_cmd *cmd, t_cmd *prev_cmd)
 		}
 		else if (lex->token == GREATER || lex->token == D_GREATER
 			|| lex->token == LOWER || lex->token == D_LOWER)
-		{
 			handle_redirections(&lex, cmd, &redir_tail);
-		}
+		else if (lex->token != WORD)
+			append_command(cmd, lex->word); // Cas pour |>F| ou autres tokens spéciaux
 		lex = lex->next;
 	}
 }
 
-void	syntaxe(t_lex *lex, t_shell *shell)
+void	syntax_analyser(t_lex *lex)
 {
 	t_lex	*tmp;
 
-	(void)shell;
 	tmp = lex;
 	while (tmp)
 	{
 		if (tmp->token == PIPE && (!tmp->next || tmp->next->token == PIPE))
 		{
-			printf("Error : syntax error near unexpected token\n");
+			printf("Error: syntax error near unexpected token '|'\n");
 			exit(1);
 		}
-		if (tmp->token != 0 && (!tmp->next || tmp->next->token != 0))
+		if ((tmp->token == GREATER || tmp->token == D_GREATER ||
+				tmp->token == LOWER || tmp->token == D_LOWER) &&
+				(!tmp->next || tmp->next->token != WORD))
 		{
-			printf("Error : syntax errooooooooor near unexpected token\n");
+			printf("Error: syntax error near unexpected token '%s'\n", tmp->word);
 			exit(1);
 		}
 		tmp = tmp->next;
@@ -148,12 +136,13 @@ t_cmd	*rec_parse(t_lex *lex, t_cmd *prev)
 		return (NULL);
 	}
 	cmd->prev = prev;
-	lex_loop(lex, cmd, prev);
+	lex_loop(lex, cmd);
 	return (cmd);
 }
 
 void	parser(t_cmd **cmd, t_lex *lex)
 {
+	syntax_analyser(lex);
 	*cmd = rec_parse(lex, NULL);
 }
 
