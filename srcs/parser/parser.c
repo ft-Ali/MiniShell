@@ -6,7 +6,7 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 12:04:22 by jpointil          #+#    #+#             */
-/*   Updated: 2024/08/04 19:04:56 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/08/20 13:57:20 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,14 +112,14 @@ void	syntax_analyser(t_lex *lex)
 		if (tmp->token == PIPE && (!tmp->next || tmp->next->token == PIPE))
 		{
 			printf("Error: syntax error near unexpected token '|'\n");
-			exit(1);
+			exit(1); // On peut aussi free les tokens et sortir de la boucle et non pas exit
 		}
 		if ((tmp->token == GREATER || tmp->token == D_GREATER ||
 				tmp->token == LOWER || tmp->token == D_LOWER) &&
 				(!tmp->next || tmp->next->token != WORD))
 		{
 			printf("Error: syntax error near unexpected token '%s'\n", tmp->word);
-			exit(1);
+			exit(1); // On peut aussi free les tokens et sortir de la boucle et non pas exit
 		}
 		tmp = tmp->next;
 	}

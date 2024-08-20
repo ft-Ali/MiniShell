@@ -6,7 +6,7 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 13:59:28 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/08/04 19:30:17 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/08/20 10:19:45 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,9 @@ int	main(void)
 			lex = lexer(&shell, input);
 			expander(lex);
 			parser(&shell.cmd, lex);
-			if(shell.cmd)
-				execute_commands(&shell);
-			// print_parser(shell.cmd);
+			// if(shell.cmd)
+			// 	execute_commands(&shell);
+			 print_parser(shell.cmd);
 			// print_lexer_list(lex);
 			free_tokens(lex);
 			free_cmd(shell.cmd);
