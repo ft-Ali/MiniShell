@@ -6,7 +6,7 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 13:59:28 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/08/21 14:40:49 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/08/21 15:03:27 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int	main(int c, char **v, char **envp)
 	shell.cmd = NULL;
 	shell.env = NULL;
 	shell.path = NULL;
-	get_environment(&shell, envp);
+	load_environment(&shell, envp);
 	print_env_list(shell.env);
 	while (1)
 	{

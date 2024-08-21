@@ -6,109 +6,114 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 14:15:35 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/08/21 14:31:06 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/08/21 15:11:53 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-char	*find_env_value(char *key, t_env *envp)
+// Get the value associated with a given key from the environment list
+char	*get_value_by_key(char *key, t_env *env_list)
 {
-	int		len;
-	t_env	*tmp_envp;
+	int		key_len;
+	t_env	*node;
 
-	tmp_envp = envp;
-	len = ft_strlen(key);
-	while (tmp_envp)
+	node = env_list;
+	key_len = ft_strlen(key);
+	while (node)
 	{
-		if (!ft_strncmp(key, tmp_envp->key, len) && tmp_envp->key[len] == '\0')
-			return (tmp_envp->value);
-		tmp_envp = tmp_envp->next;
+		if (!ft_strncmp(key, node->key, key_len) && node->key[key_len] == '\0')
+			return (node->value);
+		node = node->next;
 	}
 	return (NULL);
 }
 
-void	get_environment(t_shell *shell, char **envp)
+// Load the environment list from the provided environment variables
+void	load_environment(t_shell *shell, char **env_vars)
 {
-	int		index;
-	t_env	*new_env_node;
+	int		i;
+	t_env	*node;
 
-	index = 0;
-	if (!envp || !envp[0])
+	i = 0;
+	if (!env_vars || !env_vars[0])
 	{
-		handle_empty_environment(shell);
+		handle_no_env_vars(shell);
 		return ;
 	}
-	while (envp[index])
+	while (env_vars[i])
 	{
-		new_env_node = ft_calloc(1, sizeof(t_env));
-		if (!new_env_node)
-			exit_shell(shell, "Error: malloc failed get_environment");
-		update_env_node(shell, new_env_node, envp, index);
-		index++;
+		node = ft_calloc(1, sizeof(t_env));
+		if (!node)
+			exit_shell(shell, "Error: malloc failed load_environment");
+		add_env_entry(shell, node, env_vars, i);
+		i++;
 	}
 }
 
-void	initialize_oldpwd(t_shell *shell)
+// Create the OLDPWD environment variable
+void	create_oldpwd(t_shell *shell)
 {
-	t_env	*current_entry;
-	t_env	*new_entry;
+	t_env	*last_node;
+	t_env	*new_node;
 
-	current_entry = shell->env;
-	while (current_entry->next)
-		current_entry = current_entry->next;
-	new_entry = ft_calloc(1, sizeof(t_env));
-	if (!new_entry)
-		exit_shell(shell, "Error: malloc failed initialize_oldpwd");
-	new_entry->key = ft_strdup("OLDPWD");
-	if (!new_entry->key)
-		exit_shell(shell, "Error: malloc failed initialize_oldpwd");
-	new_entry->value = ft_strdup("OLDPWD");
-	if (!new_entry->value)
-		exit_shell(shell, "Error: malloc failed initialize_oldpwd");
-	new_entry->index = 4;
-	current_entry->next = new_entry;
-	new_entry->prev = current_entry;
-	new_entry->next = NULL;
+	last_node = shell->env;
+	while (last_node->next)
+		last_node = last_node->next;
+	new_node = ft_calloc(1, sizeof(t_env));
+	if (!new_node)
+		exit_shell(shell, "Error: malloc failed create_oldpwd");
+	new_node->key = ft_strdup("OLDPWD");
+	if (!new_node->key)
+		exit_shell(shell, "Error: malloc failed create_oldpwd");
+	new_node->value = ft_strdup("OLDPWD");
+	if (!new_node->value)
+		exit_shell(shell, "Error: malloc failed create_oldpwd");
+	new_node->index = 4;
+	last_node->next = new_node;
+	new_node->prev = last_node;
+	new_node->next = NULL;
 }
-void	update_env_node(t_shell *shell, t_env *new_env_node, char **envp,
-		int index)
+
+// Add a new environment entry to the list
+void	add_env_entry(t_shell *shell, t_env *node, char **env_vars, int idx)
 {
 	t_env	*current;
 
 	current = shell->env;
-	new_env_node->index = index;
-	set_env_key_value(shell, new_env_node, envp, index);
-	new_env_node->next = NULL;
-	new_env_node->prev = NULL;
+	node->index = idx;
+	set_env_vars(shell, node, env_vars, idx);
+	node->next = NULL;
+	node->prev = NULL;
 	if (!current)
-		shell->env = new_env_node;
+		shell->env = node;
 	else
 	{
 		while (current->next)
 			current = current->next;
-		current->next = new_env_node;
-		new_env_node->prev = current;
+		current->next = node;
+		node->prev = current;
 	}
 }
 
-void	initialize_current_directory(t_shell *shell)
+// Create the PWD environment variable with the current directory
+void	create_pwd(t_shell *shell)
 {
-	char	*current_directory;
-	t_env	*new_entry;
+	char	*current_dir;
+	t_env	*node;
 
-	new_entry = ft_calloc(1, sizeof(t_env));
-	current_directory = getcwd(NULL, 0);
-	if (!new_entry || !current_directory)
-		exit_shell(shell, "Error: malloc failed initialize_current_directory");
-	new_entry->index = 1;
-	new_entry->key = ft_strdup("PWD");
-	if (!new_entry->key)
-		exit_shell(shell, "Error: malloc failed initialize_current_directory");
-	new_entry->value = ft_strdup(current_directory);
-	if (!new_entry->value)
-		exit_shell(shell, "Error: malloc failed initialize_current_directory");
-	new_entry->prev = NULL;
-	new_entry->next = NULL;
-	shell->env = new_entry;
+	node = ft_calloc(1, sizeof(t_env));
+	current_dir = getcwd(NULL, 0);
+	if (!node || !current_dir)
+		exit_shell(shell, "Error: malloc failed create_pwd");
+	node->index = 1;
+	node->key = ft_strdup("PWD");
+	if (!node->key)
+		exit_shell(shell, "Error: malloc failed create_pwd");
+	node->value = ft_strdup(current_dir);
+	if (!node->value)
+		exit_shell(shell, "Error: malloc failed create_pwd");
+	node->prev = NULL;
+	node->next = NULL;
+	shell->env = node;
 }

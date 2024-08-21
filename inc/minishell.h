@@ -6,7 +6,7 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 13:59:41 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/08/21 14:27:50 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/08/21 15:02:48 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,15 +155,14 @@ t_cmd				*rec_parse(t_lex *lex, t_cmd *prev);
 void				print_parser(t_cmd *cmd);
 
 /*---------------ENV------------------*/
-void				handle_empty_environment(t_shell *shell);
-void				get_environment(t_shell *shell, char **envp);
-void				update_env_node(t_shell *shell, t_env *new_env_node,
-						char **envp, int index);
-void				initialize_oldpwd(t_shell *shell);
-void				initialize_current_directory(t_shell *shell);
-void				set_env_key_value(t_shell *shell, t_env *new, char **envp,
-						int i);
-char				*find_env_value(char *key, t_env *envp);
-void				print_env_list(t_env *env);
+void				handle_no_env_vars(t_shell *shell);
+void				set_env_vars(t_shell *shell, t_env *entry, char **envp,
+						int index);
+void				create_pwd(t_shell *shell);
+void				add_env_entry(t_shell *shell, t_env *node, char **env_vars,
+						int idx);
+void				create_oldpwd(t_shell *shell);
+void				load_environment(t_shell *shell, char **env_vars);
+char				*get_value_by_key(char *key, t_env *env_list);
 
 #endif
