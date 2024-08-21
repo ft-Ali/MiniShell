@@ -6,7 +6,7 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 12:04:22 by jpointil          #+#    #+#             */
-/*   Updated: 2024/08/21 11:48:27 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/08/21 16:16:40 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,13 @@ void	append_command(t_cmd *cmd, char *word)
 		new_commands[i] = cmd->commands[i];
 		i++;
 	}
-	new_commands[i] = strdup(word);
+	if(!word)
+	{
+		new_commands[i] = NULL;
+		return ;
+	}
+		
+	new_commands[i] = ft_strdup(word);
 	new_commands[i + 1] = NULL;
 	if (cmd->commands)
 		free(cmd->commands);
@@ -97,9 +103,6 @@ void	lex_loop(t_lex *lex, t_cmd *cmd)
 		else if (lex->token == GREATER || lex->token == D_GREATER
 			|| lex->token == LOWER || lex->token == D_LOWER)
 			handle_redirections(&lex, cmd, &redir_tail);
-		else if (lex->token != WORD)
-			append_command(cmd, lex->word);
-		// Cas pour |>F| ou autres tokens spéciaux
 		lex = lex->next;
 	}
 }
