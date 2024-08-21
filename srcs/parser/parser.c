@@ -6,7 +6,7 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 12:04:22 by jpointil          #+#    #+#             */
-/*   Updated: 2024/08/20 13:57:20 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/08/21 11:48:27 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,9 @@ void	append_command(t_cmd *cmd, char *word)
 
 void	lex_loop(t_lex *lex, t_cmd *cmd)
 {
-	t_redir	*redir_tail = NULL;
+	t_redir	*redir_tail;
 
+	redir_tail = NULL;
 	while (lex)
 	{
 		if (lex->token == WORD)
@@ -97,7 +98,8 @@ void	lex_loop(t_lex *lex, t_cmd *cmd)
 			|| lex->token == LOWER || lex->token == D_LOWER)
 			handle_redirections(&lex, cmd, &redir_tail);
 		else if (lex->token != WORD)
-			append_command(cmd, lex->word); // Cas pour |>F| ou autres tokens spéciaux
+			append_command(cmd, lex->word);
+		// Cas pour |>F| ou autres tokens spéciaux
 		lex = lex->next;
 	}
 }
@@ -112,14 +114,17 @@ void	syntax_analyser(t_lex *lex)
 		if (tmp->token == PIPE && (!tmp->next || tmp->next->token == PIPE))
 		{
 			printf("Error: syntax error near unexpected token '|'\n");
-			exit(1); // On peut aussi free les tokens et sortir de la boucle et non pas exit
+			exit(1);
+			// On peut aussi free les tokens et sortir de la boucle et non pas exit
 		}
-		if ((tmp->token == GREATER || tmp->token == D_GREATER ||
-				tmp->token == LOWER || tmp->token == D_LOWER) &&
-				(!tmp->next || tmp->next->token != WORD))
+		if ((tmp->token == GREATER || tmp->token == D_GREATER
+				|| tmp->token == LOWER || tmp->token == D_LOWER) && (!tmp->next
+				|| tmp->next->token != WORD))
 		{
-			printf("Error: syntax error near unexpected token '%s'\n", tmp->word);
-			exit(1); // On peut aussi free les tokens et sortir de la boucle et non pas exit
+			printf("Error: syntax error near unexpected token '%s'\n",
+				tmp->word);
+			exit(1);
+			// On peut aussi free les tokens et sortir de la boucle et non pas exit
 		}
 		tmp = tmp->next;
 	}

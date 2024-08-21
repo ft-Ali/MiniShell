@@ -6,7 +6,7 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 13:59:41 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/08/04 19:33:24 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/08/21 14:27:50 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@
 # include "../.libft/gnl/get_next_line.h"
 # include "../.libft/libft.h"
 # include "../.libft/printf/ft_printf.h"
-// # include "expander.h"
-// # include "lexer.h"
 # include <dirent.h>
 # include <errno.h>
 # include <fcntl.h>
@@ -66,13 +64,15 @@ typedef struct s_redir
 	struct s_redir	*next;
 }					t_redir;
 
-typedef struct s_cmd // exec part
+typedef struct s_cmd
 {
-	char **commands;
-	t_redir *redir;
-	struct s_cmd *prev;
-	struct s_cmd *next;
+	char			**commands;
+	t_redir			*redir;
+	struct s_cmd	*prev;
+	struct s_cmd	*next;
 }					t_cmd;
+
+/*------------- EXPANDER PART -------------*/
 
 typedef struct s_expand
 {
@@ -80,6 +80,17 @@ typedef struct s_expand
 	char			*output;
 	int				pos;
 }					t_expand;
+
+/*------------- ENV -------------*/
+
+typedef struct s_env
+{
+	char			*value;
+	char			*key;
+	int				index;
+	struct s_env	*next;
+	struct s_env	*prev;
+}					t_env;
 
 /*------------- LEXER PART -------------*/
 
@@ -90,18 +101,10 @@ typedef struct s_lex
 	struct s_lex	*next;
 }					t_lex;
 
-// typedef struct s_syntax
-// {
-// 	struct s_syntax	*left;
-// 	struct s_syntax	*right;
-// 	struct s_syntax	*parent;
-// 	char			*content;
-// 	char			*type;
-// }					t_syntax;
-
+/*------------- SHELL -------------*/
 typedef struct s_shell
 {
-	t_expand		*env;
+	t_env			*env;
 	t_lex			*lex;
 	t_path			*path;
 	t_cmd			*cmd;
@@ -150,5 +153,17 @@ void				free_tokens(t_lex *lexer);
 void				parser(t_cmd **cmd, t_lex *lex);
 t_cmd				*rec_parse(t_lex *lex, t_cmd *prev);
 void				print_parser(t_cmd *cmd);
+
+/*---------------ENV------------------*/
+void				handle_empty_environment(t_shell *shell);
+void				get_environment(t_shell *shell, char **envp);
+void				update_env_node(t_shell *shell, t_env *new_env_node,
+						char **envp, int index);
+void				initialize_oldpwd(t_shell *shell);
+void				initialize_current_directory(t_shell *shell);
+void				set_env_key_value(t_shell *shell, t_env *new, char **envp,
+						int i);
+char				*find_env_value(char *key, t_env *envp);
+void				print_env_list(t_env *env);
 
 #endif

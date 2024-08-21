@@ -6,7 +6,7 @@
 #    By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/10 16:29:26 by alsiavos          #+#    #+#              #
-#    Updated: 2024/07/17 14:35:02 by alsiavos         ###   ########.fr        #
+#    Updated: 2024/08/21 14:28:44 by alsiavos         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -67,6 +67,7 @@ FILES = 	ft_tolower.c \
 		ft_isspace.c \
 		ft_strndup.c \
 		ft_strcpy.c \
+		ft_strncpy.c \
 		\
 		./printf/ft_printf.c \
 		./printf/ft_print_hexa.c \
