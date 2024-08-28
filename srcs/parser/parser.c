@@ -6,7 +6,7 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 12:04:22 by jpointil          #+#    #+#             */
-/*   Updated: 2024/08/21 16:16:40 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/08/28 15:43:03 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ t_redir	*add_redir_node(t_token token, char *file)
 		return (NULL);
 	}
 	redir->token = token;
-	redir->file = strdup(file);
+	redir->file = ft_strdup(file);
 	redir->next = NULL;
 	return (redir);
 }
@@ -69,7 +69,6 @@ void	append_command(t_cmd *cmd, char *word)
 		new_commands[i] = NULL;
 		return ;
 	}
-		
 	new_commands[i] = ft_strdup(word);
 	new_commands[i + 1] = NULL;
 	if (cmd->commands)

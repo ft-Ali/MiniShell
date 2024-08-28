@@ -6,7 +6,7 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 13:59:41 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/08/21 15:02:48 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/08/28 10:59:10 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,8 +134,6 @@ void				handle_quotes(t_expand *exp, char *quote);
 
 /*------------- LEXER -------------*/
 
-void				process_quote(char *string, int *index, int *count,
-						int *quote_state);
 t_lex				*lexer(t_shell *shell, char *string);
 int					is_token(char *str, int i);
 int					is_quote(char quote);
@@ -162,7 +160,7 @@ void				create_pwd(t_shell *shell);
 void				add_env_entry(t_shell *shell, t_env *node, char **env_vars,
 						int idx);
 void				create_oldpwd(t_shell *shell);
-void				load_environment(t_shell *shell, char **env_vars);
+void				load_env(t_shell *shell, char **env_vars);
 char				*get_value_by_key(char *key, t_env *env_list);
 
 #endif

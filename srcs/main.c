@@ -6,7 +6,7 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 13:59:28 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/08/21 16:15:27 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/08/28 14:50:17 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,8 @@ int	main(int c, char **v, char **envp)
 	shell.cmd = NULL;
 	shell.env = NULL;
 	shell.path = NULL;
-	load_environment(&shell, envp);
-	// print_env_list(shell.env);
+	load_env(&shell, envp);
+	print_env_list(shell.env);
 	while (1)
 	{
 		input = readline(CYAN "$ ->" RESET);
@@ -87,6 +87,7 @@ int	main(int c, char **v, char **envp)
 			lex = lexer(&shell, input);
 			expander(lex);
 			parser(&shell.cmd, lex);
+			print_lexer_list(lex);
 			print_parser(shell.cmd);
 			free_tokens(lex);
 			free_cmd(shell.cmd);

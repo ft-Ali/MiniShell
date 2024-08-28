@@ -6,7 +6,7 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 14:15:35 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/08/21 15:11:53 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/08/28 11:28:21 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char	*get_value_by_key(char *key, t_env *env_list)
 }
 
 // Load the environment list from the provided environment variables
-void	load_environment(t_shell *shell, char **env_vars)
+void	load_env(t_shell *shell, char **env_vars)
 {
 	int		i;
 	t_env	*node;

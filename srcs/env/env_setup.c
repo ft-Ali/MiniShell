@@ -6,7 +6,7 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 13:17:44 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/08/21 15:10:29 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/08/28 14:57:23 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static void	add_shell_level(t_shell *shell)
 	new_entry->key = ft_strdup("SHLVL");
 	if (!new_entry->key)
 		exit_shell(shell, "Error: malloc failed add_shell_level");
-	new_entry->value = ft_strdup("0");
+	new_entry->value = ft_strdup("1");
 	if (!new_entry->value)
 		exit_shell(shell, "Error: malloc failed add_shell_level");
 	last_entry->next = new_entry;
