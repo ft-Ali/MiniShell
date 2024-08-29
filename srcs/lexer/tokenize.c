@@ -2,23 +2,21 @@
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   tokenize.c                                         :+:      :+:    :+:   */
-/*                                                    +:+ +:+
-	+:+     */
-/*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+
-	+#+        */
-/*                                                +#+#+#+#+#+
-	+#+           */
-/*   Created: 2024/07/17 14:25:17 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/07/17 14:25:17 by alsiavos         ###   ########.fr       */
+/*                                                    +:+ +:+         +:+     */
+/*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/08/29 13:27:25 by alsiavos          #+#    #+#             */
+/*   Updated: 2024/08/29 13:27:25 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
+
 void	add_new_token(t_shell *shell, t_lex **lexer, int token_type)
 {
-	t_lex	*new_token;
-	t_lex	*current;
+	t_lex *new_token;
+	t_lex *current;
 
 	new_token = ft_calloc(1, sizeof(t_lex));
 	if (!new_token)
@@ -42,8 +40,8 @@ void	add_new_token(t_shell *shell, t_lex **lexer, int token_type)
 
 void	add_new_word(t_shell *shell, t_lex **lexer, char *str, int indices[2])
 {
-	t_lex	*new_word;
-	t_lex	*current;
+	t_lex *new_word;
+	t_lex *current;
 
 	new_word = ft_calloc(1, sizeof(t_lex));
 	if (!new_word)
@@ -67,7 +65,7 @@ void	add_new_word(t_shell *shell, t_lex **lexer, char *str, int indices[2])
 
 void	free_tokens(t_lex *lexer)
 {
-	t_lex	*temp;
+	t_lex *temp;
 
 	while (lexer)
 	{

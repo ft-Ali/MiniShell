@@ -6,7 +6,7 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 13:59:28 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/08/28 14:50:17 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/08/29 14:51:59 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,18 @@ void	print_env_list(t_env *env_list)
 	{
 		printf(" %s: %s\n", current->key, current->value);
 		current = current->next;
+	}
+}
+
+void	print_envp(char **envp)
+{
+	int	i;
+
+	i = 0;
+	while (envp[i])
+	{
+		printf("envp[%d]: %s\n", i, envp[i]);
+		i++;
 	}
 }
 
@@ -71,13 +83,15 @@ int	main(int c, char **v, char **envp)
 	t_lex	*lex;
 	t_shell	shell;
 
+	char **env;
+	load_env(&shell, envp);            // Charge envp dans shell.env
+	env = env_list_to_envp(shell.env); // Charge shell.env dans env
+	print_envp(env);                   // Affiche env
 	(void)c;
 	(void)v;
 	shell.cmd = NULL;
 	shell.env = NULL;
 	shell.path = NULL;
-	load_env(&shell, envp);
-	print_env_list(shell.env);
 	while (1)
 	{
 		input = readline(CYAN "$ ->" RESET);
@@ -87,8 +101,8 @@ int	main(int c, char **v, char **envp)
 			lex = lexer(&shell, input);
 			expander(lex);
 			parser(&shell.cmd, lex);
-			print_lexer_list(lex);
-			print_parser(shell.cmd);
+			// if (shell.cmd)
+			// 	exec_cmds(&shell, shell.cmd);
 			free_tokens(lex);
 			free_cmd(shell.cmd);
 			free(input);

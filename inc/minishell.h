@@ -6,7 +6,7 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 13:59:41 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/08/28 10:59:10 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/08/29 14:28:43 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,5 +162,11 @@ void				add_env_entry(t_shell *shell, t_env *node, char **env_vars,
 void				create_oldpwd(t_shell *shell);
 void				load_env(t_shell *shell, char **env_vars);
 char				*get_value_by_key(char *key, t_env *env_list);
+char				**env_list_to_envp(t_env *env_list);
+int					count_env_entries(t_env *env_list);
 
+void				exec(t_shell *shell, t_cmd *cmd);
+void				exec_cmds(t_shell *shell, t_cmd *cmd);
+
+void				print_envp(char **envp);
 #endif
