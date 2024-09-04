@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jpointil <jpointil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 12:04:22 by jpointil          #+#    #+#             */
-/*   Updated: 2024/08/28 15:43:03 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/09/04 14:13:37 by jpointil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,17 +54,11 @@ void	append_command(t_cmd *cmd, char *word)
 		i++;
 	new_commands = (char **)malloc(sizeof(char *) * (i + 2));
 	if (!new_commands)
-	{
-		perror("Allocation failed");
-		return ;
-	}
-	i = 0;
-	while (cmd->commands && cmd->commands[i])
-	{
+		(perror("Allocation failed"), return ());
+	i = -1;
+	while (cmd->commands && cmd->commands[++i])
 		new_commands[i] = cmd->commands[i];
-		i++;
-	}
-	if(!word)
+	if (!word)
 	{
 		new_commands[i] = NULL;
 		return ;
@@ -91,10 +85,7 @@ void	lex_loop(t_lex *lex, t_cmd *cmd)
 			{
 				cmd->next = (t_cmd *)calloc(1, sizeof(t_cmd));
 				if (!cmd->next)
-				{
-					perror("Allocation failed");
-					return ;
-				}
+					(perror("Allocation failed"), return ());
 				cmd->next->prev = cmd;
 				cmd = cmd->next;
 			}

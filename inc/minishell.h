@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jpointil <jpointil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 13:59:41 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/08/29 14:28:43 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/09/04 23:00:34 by jpointil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,17 @@ typedef enum e_token
 	LOWER,
 	D_LOWER,
 }					t_token;
+
+typedef enum e_type
+{
+	P,
+	R,
+	C,
+	E,
+	EN,
+	L,
+	S
+}				t_struct;
 
 typedef struct s_path
 {
