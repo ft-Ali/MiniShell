@@ -6,16 +6,33 @@
 /*   By: jules <jules@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 14:44:58 by jpointil          #+#    #+#             */
-/*   Updated: 2024/09/09 10:18:08 by jules            ###   ########.fr       */
+/*   Updated: 2024/09/09 11:49:24 by jules            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+void    free_cmd(t_cmd *cmd)
+{
+    if (!cmd)
+        return ;
+    if (cmd->commands)
+        free_dbltab(cmd->commands);
+    if (cmd->redir)
+        free_redir(cmd->redir);
+    if (cmd->next)
+        free_cmd(cmd->next);
+/*     if (cmd->prev)
+        free_cmd(cmd->prev); */
+    free(cmd);
+}
+
 void    free_path(t_path *path)
 {
+    if (!path)
+        return ;
     if (path->path_str)
-        free_str(path->path_str);
+        free(path->path_str);
     if (path->next)
         free_path(path->next);
     free(path);
@@ -23,10 +40,12 @@ void    free_path(t_path *path)
 
 void free_lex(t_lex *lex)
 {
+    if (!lex)
+        return ;
     if (lex->word)
-        free_str(lex->word);
-    if (lex->token)
-        free(lex->token);
+        free(lex->word);
+/*     if (lex->token)
+        free(lex->token); */
     if (lex->next)
         free_lex(lex->next);
     free(lex);
@@ -34,21 +53,25 @@ void free_lex(t_lex *lex)
 
 void free_env(t_env *env)
 {
+    if (!env)
+        return ;
     if (env->value)
-        free_str(env->value)
+        free(env->value)
     if (env->key)
-        free_str(env->key);
-    if (env->index)
-        free(env->index);
+        free(env->key);
+/*     if (env->index)
+        free(env->index); */
     if (env->next)
         free_env(env->next);
-    if (env->prev)
-        free_env(env->prev);
+/*     if (env->prev)
+        free_env(env->prev); */
     free(env);
 }
 
-void    free_shell(t_shell *shell)
+void    free_shell(t_shell *s   hell)
 {
+    if (!shell)
+        return ;
     if (shell->env)
         free_env(shell->env);
     if (shell->lex)

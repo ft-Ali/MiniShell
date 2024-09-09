@@ -6,17 +6,17 @@
 /*   By: jules <jules@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 09:58:50 by jules             #+#    #+#             */
-/*   Updated: 2024/09/09 10:00:58 by jules            ###   ########.fr       */
+/*   Updated: 2024/09/09 11:36:28 by jules            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void    free_str(char *str)
+void    free_dbltab(char **tab)
 {
     int i;
 
     i = -1;
-    while (str[++i])
-        free(str[i]);
+    while (tab[++i])
+        free(tab[i]);
 }
