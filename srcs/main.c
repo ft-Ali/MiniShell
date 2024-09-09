@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jules <jules@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 13:59:28 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/08/29 14:51:59 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/09/09 15:00:46 by jules            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,33 +50,6 @@ void	print_envp(char **envp)
 	}
 }
 
-void	free_cmd(t_cmd *cmd)
-{
-	t_cmd	*tmp;
-	t_redir	*redir;
-	int		i;
-
-	while (cmd)
-	{
-		if (cmd->commands)
-		{
-			i = -1;
-			while (cmd->commands[++i])
-				free(cmd->commands[i]);
-			free(cmd->commands);
-		}
-		while (cmd->redir)
-		{
-			redir = cmd->redir;
-			free(redir->file);
-			cmd->redir = cmd->redir->next;
-			free(redir);
-		}
-		tmp = cmd;
-		cmd = cmd->next;
-		free(tmp);
-	}
-}
 int	main(int c, char **v, char **envp)
 {
 	char	*input;
@@ -103,7 +76,7 @@ int	main(int c, char **v, char **envp)
 			parser(&shell.cmd, lex);
 			// if (shell.cmd)
 			// 	exec_cmds(&shell, shell.cmd);
-			free_tokens(lex);
+			free_lex(lex);
 			free_cmd(shell.cmd);
 			free(input);
 		}

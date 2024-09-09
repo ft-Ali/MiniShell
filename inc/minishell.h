@@ -6,7 +6,7 @@
 /*   By: jules <jules@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 13:59:41 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/09 10:16:47 by jules            ###   ########.fr       */
+/*   Updated: 2024/09/09 15:37:40 by jules            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ typedef enum e_type
 	EN,
 	L,
 	S
-}				t_struct;
+}					t_struct;
 
 typedef struct s_path
 {
@@ -162,6 +162,12 @@ void				free_tokens(t_lex *lexer);
 void				parser(t_cmd **cmd, t_lex *lex);
 t_cmd				*rec_parse(t_lex *lex, t_cmd *prev);
 void				print_parser(t_cmd *cmd);
+void				append_command(t_cmd *cmd, char *word);
+void				handle_redirections(t_lex **lex, t_cmd *cmd,
+						t_redir **redir_tail);
+t_redir				*add_redir_node(t_token token, char *file);
+void				syntax_analyser(t_lex *lex);
+void				lex_loop(t_lex *lex, t_cmd *cmd);
 
 /*---------------ENV------------------*/
 void				handle_no_env_vars(t_shell *shell);
@@ -178,6 +184,17 @@ int					count_env_entries(t_env *env_list);
 
 void				exec(t_shell *shell, t_cmd *cmd);
 void				exec_cmds(t_shell *shell, t_cmd *cmd);
-
 void				print_envp(char **envp);
+
+/*---------------ERROR-&-FREE------------------*/
+
+void				free_lex(t_lex *lex);
+void				free_path(t_path *path);
+void				free_cmd(t_cmd *cmd);
+void				free_exp(t_expand *expand);
+void				free_redir(t_redir *redir);
+void				free_shell(t_shell *shell);
+void				free_env(t_env *env);
+void				global_free_error(void *ptr, t_type type);
+
 #endif
