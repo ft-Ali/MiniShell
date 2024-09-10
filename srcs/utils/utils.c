@@ -6,11 +6,11 @@
 /*   By: jules <jules@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 09:42:09 by jules             #+#    #+#             */
-/*   Updated: 2024/09/10 09:42:47 by jules            ###   ########.fr       */
+/*   Updated: 2024/09/10 12:16:13 by jules            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../inc/minishell.h"
 
 char	*strjoin_free(char *s1, char *s2)
 {

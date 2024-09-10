@@ -6,18 +6,18 @@
 /*   By: jules <jules@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 09:55:05 by jules             #+#    #+#             */
-/*   Updated: 2024/09/10 10:01:40 by jules            ###   ########.fr       */
+/*   Updated: 2024/09/10 12:18:52 by jules            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../inc/minishell.h"
 
 void	print_tokens(t_lex *lexer)
 {
-	t_token while (lexer)
+	while (lexer)
 	{
 		if (lexer->word)
-			ft_printf("Token: [%s] Value [%d]\n", , lexer->word);
+			ft_printf("Token: [%s] Value [%d]\n", lexer->word);
 		lexer = lexer->next;
 	}
 }
@@ -28,7 +28,10 @@ void	print_parser(t_cmd *cmd)
 	t_redir	*current_redir;
 
 	if (!cmd)
-		(printf("PKO\n"), return ());
+	{
+		printf("PKO\n");
+		return ;
+	}
 	while (cmd)
 	{
 		if (cmd->commands)

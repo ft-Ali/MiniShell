@@ -6,7 +6,7 @@
 /*   By: jules <jules@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 16:38:16 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/10 09:55:24 by jules            ###   ########.fr       */
+/*   Updated: 2024/09/10 11:56:35 by jules            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,9 @@ void	process_quote(char *string, int *index, int *count, int *quote_state)
 
 static void	process_word(char *string, int *index, int *length)
 {
-	int	quote_state;
+	// int	quote_state;
 
-	quote_state = 0;
+	// quote_state = 0;
 	while ((string[*index] != ' ') && (is_token(string, *index) == FALSE)
 		&& string[*index])
 	{

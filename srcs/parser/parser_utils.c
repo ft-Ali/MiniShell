@@ -6,11 +6,11 @@
 /*   By: jules <jules@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 15:32:13 by jules             #+#    #+#             */
-/*   Updated: 2024/09/10 09:58:48 by jules            ###   ########.fr       */
+/*   Updated: 2024/09/10 12:10:57 by jules            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../inc/minishell.h"
 
 // Fonction pour ajouter un nœud de redirection
 t_redir	*add_redir_node(t_token token, char *file)
@@ -53,7 +53,7 @@ void	append_command(t_cmd *cmd, char *word)
 		i++;
 	new_commands = (char **)malloc(sizeof(char *) * (i + 2));
 	if (!new_commands)
-		(perror("Allocation failed"), return ());
+		return ;
 	i = -1;
 	while (cmd->commands && cmd->commands[++i])
 		new_commands[i] = cmd->commands[i];

@@ -6,7 +6,7 @@
 /*   By: jules <jules@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 13:59:41 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/10 10:02:12 by jules            ###   ########.fr       */
+/*   Updated: 2024/09/10 12:17:15 by jules            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ typedef enum e_token
 	D_LOWER,
 }					t_token;
 
-typedef enum e_type
+typedef enum e_struct
 {
 	P,
 	R,
@@ -59,7 +59,8 @@ typedef enum e_type
 	E,
 	EN,
 	L,
-	S
+	S,
+	PA
 }					t_struct;
 
 typedef struct s_path
@@ -199,13 +200,13 @@ void				free_exp(t_expand *expand);
 void				free_redir(t_redir *redir);
 void				free_shell(t_shell *shell);
 void				free_env(t_env *env);
-void				gfree_error(void *ptr, t_type type);
+void				gfree_error(void *ptr, t_struct flag);
 
 /*--------------- PRINTS ------------------*/
 
 void				print_envp(char **envp);
 void				print_env_list(t_env *env_list);
-void				print_tokens(t_token *tokens);
+void				print_tokens(t_lex *lex);
 void				print_parser(t_cmd *cmd);
 void				print_lexer_list(t_lex *head);
 

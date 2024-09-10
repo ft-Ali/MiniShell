@@ -6,11 +6,11 @@
 /*   By: jules <jules@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 09:58:50 by jules             #+#    #+#             */
-/*   Updated: 2024/09/09 14:53:07 by jules            ###   ########.fr       */
+/*   Updated: 2024/09/10 12:15:16 by jules            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../inc/minishell.h"
 
 void	free_redir(t_redir *redir)
 {
