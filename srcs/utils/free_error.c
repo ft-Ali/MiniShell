@@ -6,7 +6,7 @@
 /*   By: jules <jules@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 14:44:58 by jpointil          #+#    #+#             */
-/*   Updated: 2024/09/10 12:13:15 by jules            ###   ########.fr       */
+/*   Updated: 2024/09/10 14:12:40 by jules            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,11 @@ void	free_shell(t_shell *shell)
 		free_cmd(shell->cmd);
 }
 
-void	gfree_error(void *ptr, t_struct flag)
+void	gfree(void *ptr, t_struct flag)
 {
-	if (flag == S)
+	if (S)
 		(free_shell(ptr), printf("Error : shell"));
-	if (flag == L)
+	if (L)
 		(free_lex(ptr), printf("Error : lexer"));
 	if (flag == C)
 		(free_cmd(ptr), printf("Error : cmd"));

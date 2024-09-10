@@ -6,7 +6,7 @@
 /*   By: jules <jules@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 13:59:41 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/10 12:17:15 by jules            ###   ########.fr       */
+/*   Updated: 2024/09/10 14:12:48 by jules            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,7 +200,7 @@ void				free_exp(t_expand *expand);
 void				free_redir(t_redir *redir);
 void				free_shell(t_shell *shell);
 void				free_env(t_env *env);
-void				gfree_error(void *ptr, t_struct flag);
+void				gfree(void *ptr, t_struct flag);
 
 /*--------------- PRINTS ------------------*/
 

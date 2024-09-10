@@ -6,7 +6,7 @@
 /*   By: jules <jules@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 12:04:22 by jpointil          #+#    #+#             */
-/*   Updated: 2024/09/10 12:05:32 by jules            ###   ########.fr       */
+/*   Updated: 2024/09/10 14:24:07 by jules            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	lex_loop(t_lex *lex, t_cmd *cmd)
 			{
 				cmd->next = (t_cmd *)calloc(1, sizeof(t_cmd));
 				if (!cmd->next)
-					(gfree_error(cmd, C), gfree_error(lex, L));
+					(gfree(cmd, C), gfree(lex, L));
 				cmd->next->prev = cmd;
 				cmd = cmd->next;
 			}
