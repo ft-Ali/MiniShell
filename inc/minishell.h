@@ -6,7 +6,7 @@
 /*   By: jules <jules@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 13:59:41 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/10 14:12:48 by jules            ###   ########.fr       */
+/*   Updated: 2024/09/10 16:32:46 by jules            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,7 @@ typedef struct s_shell
 
 /*------------- MAIN -------------*/
 
-void				exit_shell(t_shell *shell, char *error_msg);
+void				exit_shell(t_shell *shell, const char *error_msg);
 
 /*------------- UTILS -------------*/
 

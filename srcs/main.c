@@ -6,15 +6,16 @@
 /*   By: jules <jules@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 13:59:28 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/10 14:30:34 by jules            ###   ########.fr       */
+/*   Updated: 2024/09/10 16:47:08 by jules            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-void	exit_shell(t_shell *shell, char *error_msg)
+void	exit_shell(t_shell *shell, const char *error_msg)
 {
-	perror(error_msg);
+	if (error_msg)
+		perror(error_msg);
 	free_shell(shell);
 	exit(EXIT_FAILURE);
 }
@@ -27,7 +28,7 @@ int	main(int c, char **v, char **envp)
 	//char	**env;
 
 	if (c != 1)
-		return (1);
+		return (printf("Error : no args needed\n"), 0);
 	(void)v;
 	(void)envp;
 	//load_env(&shell, envp);            // Charge envp dans shell.env
