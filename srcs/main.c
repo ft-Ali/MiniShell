@@ -6,48 +6,21 @@
 /*   By: jules <jules@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 13:59:28 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/09 15:00:46 by jules            ###   ########.fr       */
+/*   Updated: 2024/09/10 10:01:31 by jules            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-void	print_lexer_list(t_lex *head)
+void	exit_shell(t_shell *shell, char *error_msg)
 {
-	t_lex	*current;
-
-	current = head;
-	while (current != NULL)
-	{
-		printf("Token: %d\n", current->token);
-		printf("Word: %s\n", current->word);
-		printf("\n");
-		current = current->next;
-	}
-}
-
-void	print_env_list(t_env *env_list)
-{
-	t_env	*current;
-
-	current = env_list;
-	while (current)
-	{
-		printf(" %s: %s\n", current->key, current->value);
-		current = current->next;
-	}
-}
-
-void	print_envp(char **envp)
-{
-	int	i;
-
-	i = 0;
-	while (envp[i])
-	{
-		printf("envp[%d]: %s\n", i, envp[i]);
-		i++;
-	}
+	if (shell->path)
+		free(shell->path);
+	if (shell->lex)
+		free_lex(shell->lex);
+	perror(error_msg);
+	free(shell);
+	exit(EXIT_FAILURE);
 }
 
 int	main(int c, char **v, char **envp)

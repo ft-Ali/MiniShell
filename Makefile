@@ -10,9 +10,9 @@ LIBS = -lreadline
 
 MINISHELL_SRC	=	srcs/main.c srcs/lexer/lexer.c srcs/lexer/lexer_utils.c srcs/lexer/tokenize.c  \
 					srcs/expander/expander.c srcs/expander/expander_utils.c srcs/parser/parser.c \
-					srcs/parser/print_parser.c srcs/env/env_setup.c  srcs/env/env_management.c \
+					srcs/env/env_setup.c srcs/env/env_management.c srcs/parser_utils.c \
 					srcs/env/env_list.c srcs/exec/exec.c srcs/free_error.c srcs/free_utils.c \
-					srcs/parser_utils.c 
+					
 					 
 
 MINISHELL_OBJ	=	$(MINISHELL_SRC:.c=.o)

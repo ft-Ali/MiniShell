@@ -6,7 +6,7 @@
 /*   By: jules <jules@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 13:59:41 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/09 15:37:40 by jules            ###   ########.fr       */
+/*   Updated: 2024/09/10 10:02:12 by jules            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,11 +132,18 @@ typedef struct s_shell
 # define PURPLE "\033[0;35m"
 # define BOLD_PURPLE "\033[1;35m"
 
+/*------------- MAIN -------------*/
+
+void				exit_shell(t_shell *shell, char *error_msg);
+
+/*------------- UTILS -------------*/
+
+char				*strjoin_free(char *s1, char *s2);
+char				*ft_strjoin_char(char *s, char c);
+
 /*------------- EXPANDER -------------*/
 
 void				expander(t_lex *token);
-char				*strjoin_free(char *s1, char *s2);
-char				*ft_strjoin_char(char *s, char c);
 char				*expand_char(char *result, t_expand *exp);
 int					handle_variable_expansion(t_expand *exp, char **result,
 						char quote);
@@ -153,11 +160,8 @@ void				add_new_word(t_shell *shell, t_lex **lexer, char *str,
 						int indices[2]);
 void				add_new_token(t_shell *shell, t_lex **lexer,
 						int token_type);
-void				exit_shell(t_shell *shell, char *error_msg);
-void				free_tokens(t_lex *lexer);
-// void				print_tokens(t_token *tokens);
 
-/*---------------PARSER------------*/
+/*--------------- PARSER ------------*/
 
 void				parser(t_cmd **cmd, t_lex *lex);
 t_cmd				*rec_parse(t_lex *lex, t_cmd *prev);
@@ -169,7 +173,8 @@ t_redir				*add_redir_node(t_token token, char *file);
 void				syntax_analyser(t_lex *lex);
 void				lex_loop(t_lex *lex, t_cmd *cmd);
 
-/*---------------ENV------------------*/
+/*--------------- ENV ------------------*/
+
 void				handle_no_env_vars(t_shell *shell);
 void				set_env_vars(t_shell *shell, t_env *entry, char **envp,
 						int index);
@@ -184,9 +189,8 @@ int					count_env_entries(t_env *env_list);
 
 void				exec(t_shell *shell, t_cmd *cmd);
 void				exec_cmds(t_shell *shell, t_cmd *cmd);
-void				print_envp(char **envp);
 
-/*---------------ERROR-&-FREE------------------*/
+/*--------------- ERROR-&-FREE ------------------*/
 
 void				free_lex(t_lex *lex);
 void				free_path(t_path *path);
@@ -195,6 +199,14 @@ void				free_exp(t_expand *expand);
 void				free_redir(t_redir *redir);
 void				free_shell(t_shell *shell);
 void				free_env(t_env *env);
-void				global_free_error(void *ptr, t_type type);
+void				gfree_error(void *ptr, t_type type);
+
+/*--------------- PRINTS ------------------*/
+
+void				print_envp(char **envp);
+void				print_env_list(t_env *env_list);
+void				print_tokens(t_token *tokens);
+void				print_parser(t_cmd *cmd);
+void				print_lexer_list(t_lex *head);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jules <jules@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 16:38:16 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/08/28 17:26:29 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/09/10 09:55:24 by jules            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,14 +87,3 @@ t_lex	*lexer(t_shell *shell, char *string)
 	process_input(shell, &lex, string);
 	return (lex);
 }
-
-// void	print_tokens(t_lex *lexer)
-// {
-// 	t_token
-// 	while (lexer)
-// 	{
-// 		if (lexer->word)
-// 			ft_printf("Token: [%s] Value [%d]\n", ,lexer->word);
-// 		lexer = lexer->next;
-// 	}
-// }

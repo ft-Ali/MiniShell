@@ -6,7 +6,7 @@
 /*   By: jules <jules@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 14:44:58 by jpointil          #+#    #+#             */
-/*   Updated: 2024/09/09 14:14:42 by jules            ###   ########.fr       */
+/*   Updated: 2024/09/10 09:47:57 by jules            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	free_shell(t_shell *shell)
 		free_cmd(shell->cmd)
 }
 
-void	global_free_error(void *ptr, t_type type)
+void	gfree_error(void *ptr, t_type type)
 {
 	if (type == S)
 		(free_shell(ptr), printf("Error : shell"));
