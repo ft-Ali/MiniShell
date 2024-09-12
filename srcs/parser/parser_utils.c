@@ -6,7 +6,7 @@
 /*   By: jules <jules@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 15:32:13 by jules             #+#    #+#             */
-/*   Updated: 2024/09/12 11:32:39 by jules            ###   ########.fr       */
+/*   Updated: 2024/09/12 12:35:41 by jules            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	handle_redirections(t_shell *shell, t_lex **lex, t_cmd *cmd, t_redir **redi
 {
 	t_redir	*redir;
 
-	redir = add_redir_node((*lex)->token, (*lex)->next->word);
+	redir = add_redir_node(shell, (*lex)->token, (*lex)->next->word);
 	if (!cmd->redir)
 		cmd->redir = redir;
 	else

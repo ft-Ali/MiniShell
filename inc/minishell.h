@@ -6,7 +6,7 @@
 /*   By: jules <jules@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 13:59:41 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/12 11:34:08 by jules            ###   ########.fr       */
+/*   Updated: 2024/09/12 12:34:04 by jules            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,15 +165,15 @@ void				add_new_token(t_shell *shell, t_lex **lexer,
 
 /*--------------- PARSER ------------*/
 
-void	parser(t_shell *shell, t_cmd **cmd, t_lex *lex);
-t_cmd				*rec_parse(t_shell *shell, t_lex *lex, t_cmd *prev);
+void				parser(t_shell *shell, t_cmd **cmd, t_lex *lex);
+t_cmd		 		*rec_parse(t_shell *shell, t_lex *lex, t_cmd *prev);
 void				print_parser(t_cmd *cmd);
-void				append_command(t_cmd *cmd, char *word);
-void				handle_redirections(t_lex **lex, t_cmd *cmd,
+void				append_command(t_shell *shell, t_cmd *cmd, char *word);
+void				handle_redirections(t_shell *shell, t_lex **lex, t_cmd *cmd,
 						t_redir **redir_tail);
-t_redir				*add_redir_node(t_token token, char *file);
-void				syntax_analyser(t_lex *lex);
-void				lex_loop(t_lex *lex, t_cmd *cmd);
+t_redir				*add_redir_node(t_shell *shell, t_token token, char *file);
+void				syntax_analyser(t_shell *shell, t_lex *lex);
+void				lex_loop(t_shell *shell, t_lex *lex, t_cmd *cmd);
 
 /*--------------- ENV ------------------*/
 

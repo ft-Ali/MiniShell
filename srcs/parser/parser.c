@@ -6,7 +6,7 @@
 /*   By: jules <jules@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 12:04:22 by jpointil          #+#    #+#             */
-/*   Updated: 2024/09/12 11:30:47 by jules            ###   ########.fr       */
+/*   Updated: 2024/09/12 12:36:02 by jules            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	lex_loop(t_shell *shell, t_lex *lex, t_cmd *cmd)
 	while (lex)
 	{
 		if (lex->token == WORD)
-			append_command(cmd, lex->word);
+			append_command(shell, cmd, lex->word);
 		else if (lex->token == PIPE)
 		{
 			if (cmd->commands)
@@ -34,7 +34,7 @@ void	lex_loop(t_shell *shell, t_lex *lex, t_cmd *cmd)
 		}
 		else if (lex->token == GREATER || lex->token == D_GREATER
 			|| lex->token == LOWER || lex->token == D_LOWER)
-			handle_redirections(&lex, cmd, &redir_tail);
+			handle_redirections(shell, &lex, cmd, &redir_tail);
 		lex = lex->next;
 	}
 }
@@ -48,10 +48,12 @@ void	syntax_analyser(t_shell *shell, t_lex *lex)
 	{
 		if (tmp->token == PIPE && (!tmp->next || tmp->next->token == PIPE))
 			exit_shell(shell, "Error: syntax error near unexpected token");
+			//ou relancer la boucle
 		if ((tmp->token == GREATER || tmp->token == D_GREATER
 				|| tmp->token == LOWER || tmp->token == D_LOWER) && (!tmp->next
 				|| tmp->next->token != WORD))
 			exit_shell(shell, "Error: syntax error near unexpected token");
+			//ou relancer la boucle
 		tmp = tmp->next;
 	}
 }
@@ -62,16 +64,16 @@ t_cmd	*rec_parse(t_shell *shell, t_lex *lex, t_cmd *prev)
 
 	cmd = (t_cmd *)calloc(1, sizeof(t_cmd));
 	if (!cmd)
-		exit_shell(shell, "rec parse\n")
+		exit_shell(shell, "rec parse\n");
 	cmd->prev = prev;
-	lex_loop(lex, cmd);
+	lex_loop(shell, lex, cmd);
 	return (cmd);
 }
 
 void	parser(t_shell *shell, t_cmd **cmd, t_lex *lex)
 {
-	syntax_analyser(lex);
-	*cmd = rec_parse(lex, NULL);
+	syntax_analyser(shell, lex);
+	*cmd = rec_parse(shell, lex, NULL);
 }
 
 /*fonctionnement rec parse :
