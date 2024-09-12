@@ -6,7 +6,7 @@
 /*   By: jules <jules@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 15:32:13 by jules             #+#    #+#             */
-/*   Updated: 2024/09/12 14:54:22 by jules            ###   ########.fr       */
+/*   Updated: 2024/09/12 15:27:53 by jules            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	append_command(t_shell *shell, t_cmd *cmd, char *word)
 	if (!new_commands)
 		exit_shell(shell, A_ERR);
 	i = 0;
-	while (cmd->commands && cmd->commands[++i])
+	while (cmd->commands && cmd->commands[i])
 	{
 			new_commands[i] = cmd->commands[i];
 			i++;

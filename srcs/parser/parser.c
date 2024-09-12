@@ -6,7 +6,7 @@
 /*   By: jules <jules@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 12:04:22 by jpointil          #+#    #+#             */
-/*   Updated: 2024/09/12 15:16:57 by jules            ###   ########.fr       */
+/*   Updated: 2024/09/12 15:27:07 by jules            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,19 +72,21 @@ t_cmd	*rec_parse(t_shell *shell, t_lex *lex, t_cmd *prev)
 
 void	parser(t_shell *shell, t_cmd **cmd, t_lex *lex)
 {
-	int i;
+	// int i;
 
-	i = 0;
+	// i = 0;
 	syntax_analyser(shell, lex);
 	printf("OK SYN\n");
 	*cmd = rec_parse(shell, lex, NULL);
 	if ((*cmd)->commands)
 		printf("cmd->commands\n");
-	while ((*cmd)->commands[i])
-	{
-		printf("%s\n", (*cmd)->commands[i]);
-		i++;
-	}
+	printf("commands [0] : %s\n", (*cmd)->commands[0]);
+	printf("commands [1] : %s\n", (*cmd)->commands[1]);
+	// while ((*cmd)->commands[i])
+	// {
+	// 	printf("%s\n", (*cmd)->commands[i]);
+	// 	i++;
+	// }
 }
 
 /*fonctionnement rec parse :
