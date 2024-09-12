@@ -6,7 +6,7 @@
 /*   By: jules <jules@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 09:55:05 by jules             #+#    #+#             */
-/*   Updated: 2024/09/12 15:07:44 by jules            ###   ########.fr       */
+/*   Updated: 2024/09/12 16:00:59 by jules            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ void	print_parser(t_cmd *cmd)
 	}
 	while (cmd)
 	{
-		printf("test\n");
 		if (cmd->commands)
 		{
 			printf("cmd: ");

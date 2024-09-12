@@ -6,7 +6,7 @@
 /*   By: jules <jules@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 09:58:50 by jules             #+#    #+#             */
-/*   Updated: 2024/09/10 12:15:16 by jules            ###   ########.fr       */
+/*   Updated: 2024/09/12 16:43:14 by jules            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	free_redir(t_redir *redir)
 		free(redir->file);
 	if (redir->next)
 		free_redir(redir->next);
+	free(redir);
 }
 
 void	free_exp(t_expand *expand)
