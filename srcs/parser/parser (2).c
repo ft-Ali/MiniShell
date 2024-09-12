@@ -3,16 +3,80 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jules <jules@student.42.fr>                +#+  +:+       +#+        */
+/*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 12:04:22 by jpointil          #+#    #+#             */
-/*   Updated: 2024/09/12 15:16:57 by jules            ###   ########.fr       */
+/*   Updated: 2024/08/28 15:43:03 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	lex_loop(t_shell *shell, t_lex *lex, t_cmd *cmd)
+// Fonction pour ajouter un nœud de redirection
+
+t_redir	*add_redir_node(t_token token, char *file)
+{
+	t_redir	*redir;
+
+	redir = (t_redir *)malloc(sizeof(t_redir));
+	if (!redir)
+	{
+		perror("Allocation failed");
+		return (NULL);
+	}
+	redir->token = token;
+	redir->file = ft_strdup(file);
+	redir->next = NULL;
+	return (redir);
+}
+
+// Fonction pour traiter les tokens lexicaux et remplir les commandes et redirections
+void	handle_redirections(t_lex **lex, t_cmd *cmd, t_redir **redir_tail)
+{
+	t_redir	*redir;
+
+	redir = add_redir_node((*lex)->token, (*lex)->next->word);
+	if (!cmd->redir)
+		cmd->redir = redir;
+	else
+		(*redir_tail)->next = redir;
+	*redir_tail = redir;
+	*lex = (*lex)->next; // Skip the file name token
+}
+
+void	append_command(t_cmd *cmd, char *word)
+{
+	int		i;
+	char	**new_commands;
+
+	i = 0;
+	while (cmd->commands && cmd->commands[i])
+		i++;
+	new_commands = (char **)malloc(sizeof(char *) * (i + 2));
+	if (!new_commands)
+	{
+		perror("Allocation failed");
+		return ;
+	}
+	i = 0;
+	while (cmd->commands && cmd->commands[i])
+	{
+		new_commands[i] = cmd->commands[i];
+		i++;
+	}
+	if(!word)
+	{
+		new_commands[i] = NULL;
+		return ;
+	}
+	new_commands[i] = ft_strdup(word);
+	new_commands[i + 1] = NULL;
+	if (cmd->commands)
+		free(cmd->commands);
+	cmd->commands = new_commands;
+}
+
+void	lex_loop(t_lex *lex, t_cmd *cmd)
 {
 	t_redir	*redir_tail;
 
@@ -20,26 +84,29 @@ void	lex_loop(t_shell *shell, t_lex *lex, t_cmd *cmd)
 	while (lex)
 	{
 		if (lex->token == WORD)
-			append_command(shell, cmd, lex->word);
+			append_command(cmd, lex->word);
 		else if (lex->token == PIPE)
 		{
 			if (cmd->commands)
 			{
 				cmd->next = (t_cmd *)calloc(1, sizeof(t_cmd));
 				if (!cmd->next)
-					exit_shell(shell, A_ERR);
+				{
+					perror("Allocation failed");
+					return ;
+				}
 				cmd->next->prev = cmd;
 				cmd = cmd->next;
 			}
 		}
 		else if (lex->token == GREATER || lex->token == D_GREATER
 			|| lex->token == LOWER || lex->token == D_LOWER)
-			handle_redirections(shell, &lex, cmd, &redir_tail);
+			handle_redirections(&lex, cmd, &redir_tail);
 		lex = lex->next;
 	}
 }
 
-void	syntax_analyser(t_shell *shell, t_lex *lex)
+void	syntax_analyser(t_lex *lex)
 {
 	t_lex	*tmp;
 
@@ -47,44 +114,43 @@ void	syntax_analyser(t_shell *shell, t_lex *lex)
 	while (tmp)
 	{
 		if (tmp->token == PIPE && (!tmp->next || tmp->next->token == PIPE))
-			exit_shell(shell, "Error: syntax error near unexpected token");
-			//ou relancer la boucle
+		{
+			printf("Error: syntax error near unexpected token '|'\n");
+			exit(1);
+			// On peut aussi free les tokens et sortir de la boucle et non pas exit
+		}
 		if ((tmp->token == GREATER || tmp->token == D_GREATER
 				|| tmp->token == LOWER || tmp->token == D_LOWER) && (!tmp->next
 				|| tmp->next->token != WORD))
-			exit_shell(shell, "Error: syntax error near unexpected token");
-			//ou relancer la boucle
+		{
+			printf("Error: syntax error near unexpected token '%s'\n",
+				tmp->word);
+			exit(1);
+			// On peut aussi free les tokens et sortir de la boucle et non pas exit
+		}
 		tmp = tmp->next;
 	}
 }
 
-t_cmd	*rec_parse(t_shell *shell, t_lex *lex, t_cmd *prev)
+t_cmd	*rec_parse(t_lex *lex, t_cmd *prev)
 {
 	t_cmd	*cmd;
 
 	cmd = (t_cmd *)calloc(1, sizeof(t_cmd));
 	if (!cmd)
-		exit_shell(shell, A_ERR);
+	{
+		perror("Allocation failed");
+		return (NULL);
+	}
 	cmd->prev = prev;
-	lex_loop(shell, lex, cmd);
+	lex_loop(lex, cmd);
 	return (cmd);
 }
 
-void	parser(t_shell *shell, t_cmd **cmd, t_lex *lex)
+void	parser(t_cmd **cmd, t_lex *lex)
 {
-	int i;
-
-	i = 0;
-	syntax_analyser(shell, lex);
-	printf("OK SYN\n");
-	*cmd = rec_parse(shell, lex, NULL);
-	if ((*cmd)->commands)
-		printf("cmd->commands\n");
-	while ((*cmd)->commands[i])
-	{
-		printf("%s\n", (*cmd)->commands[i]);
-		i++;
-	}
+	syntax_analyser(lex);
+	*cmd = rec_parse(lex, NULL);
 }
 
 /*fonctionnement rec parse :

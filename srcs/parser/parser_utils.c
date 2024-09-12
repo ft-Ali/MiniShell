@@ -6,7 +6,7 @@
 /*   By: jules <jules@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 15:32:13 by jules             #+#    #+#             */
-/*   Updated: 2024/09/12 12:35:41 by jules            ###   ########.fr       */
+/*   Updated: 2024/09/12 14:54:22 by jules            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,17 +51,20 @@ void	append_command(t_shell *shell, t_cmd *cmd, char *word)
 	new_commands = (char **)malloc(sizeof(char *) * (i + 2));
 	if (!new_commands)
 		exit_shell(shell, A_ERR);
-	i = -1;
+	i = 0;
 	while (cmd->commands && cmd->commands[++i])
-		new_commands[i] = cmd->commands[i];
+	{
+			new_commands[i] = cmd->commands[i];
+			i++;
+	}
 	if (!word)
 	{
 		new_commands[i] = NULL;
-		exit_shell(shell, A_ERR);
+		return ;
 	}
 	new_commands[i] = ft_strdup(word);
 	new_commands[i + 1] = NULL;
-	if (cmd->commands)
-		free(cmd->commands);
+	// if (cmd->commands)
+	// 	free(cmd->commands);
 	cmd->commands = new_commands;
 }
