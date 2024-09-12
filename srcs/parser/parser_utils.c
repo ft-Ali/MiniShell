@@ -6,23 +6,20 @@
 /*   By: jules <jules@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 15:32:13 by jules             #+#    #+#             */
-/*   Updated: 2024/09/10 12:10:57 by jules            ###   ########.fr       */
+/*   Updated: 2024/09/12 11:32:39 by jules            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-// Fonction pour ajouter un nœud de redirection
-t_redir	*add_redir_node(t_token token, char *file)
+// Fonction pour ajouter un noeud de redirection
+t_redir	*add_redir_node(t_shell *shell, t_token token, char *file)
 {
 	t_redir	*redir;
 
 	redir = (t_redir *)malloc(sizeof(t_redir));
 	if (!redir)
-	{
-		perror("Allocation failed");
-		return (NULL);
-	}
+		exit_shell(shell, A_ERR);
 	redir->token = token;
 	redir->file = ft_strdup(file);
 	redir->next = NULL;
@@ -30,7 +27,7 @@ t_redir	*add_redir_node(t_token token, char *file)
 }
 
 // Fonction pour traiter les tokens lexicaux et remplir les commandes et redirections
-void	handle_redirections(t_lex **lex, t_cmd *cmd, t_redir **redir_tail)
+void	handle_redirections(t_shell *shell, t_lex **lex, t_cmd *cmd, t_redir **redir_tail)
 {
 	t_redir	*redir;
 
@@ -43,7 +40,7 @@ void	handle_redirections(t_lex **lex, t_cmd *cmd, t_redir **redir_tail)
 	*lex = (*lex)->next; // Skip the file name token
 }
 
-void	append_command(t_cmd *cmd, char *word)
+void	append_command(t_shell *shell, t_cmd *cmd, char *word)
 {
 	int		i;
 	char	**new_commands;
@@ -53,14 +50,14 @@ void	append_command(t_cmd *cmd, char *word)
 		i++;
 	new_commands = (char **)malloc(sizeof(char *) * (i + 2));
 	if (!new_commands)
-		return ;
+		exit_shell(shell, A_ERR);
 	i = -1;
 	while (cmd->commands && cmd->commands[++i])
 		new_commands[i] = cmd->commands[i];
 	if (!word)
 	{
 		new_commands[i] = NULL;
-		return ;
+		exit_shell(shell, A_ERR);
 	}
 	new_commands[i] = ft_strdup(word);
 	new_commands[i + 1] = NULL;

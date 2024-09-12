@@ -6,13 +6,13 @@
 /*   By: jules <jules@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 12:04:22 by jpointil          #+#    #+#             */
-/*   Updated: 2024/09/10 14:24:07 by jules            ###   ########.fr       */
+/*   Updated: 2024/09/12 11:30:47 by jules            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	lex_loop(t_lex *lex, t_cmd *cmd)
+void	lex_loop(t_shell *shell, t_lex *lex, t_cmd *cmd)
 {
 	t_redir	*redir_tail;
 
@@ -27,7 +27,7 @@ void	lex_loop(t_lex *lex, t_cmd *cmd)
 			{
 				cmd->next = (t_cmd *)calloc(1, sizeof(t_cmd));
 				if (!cmd->next)
-					(gfree(cmd, C), gfree(lex, L));
+					exit_shell(shell, A_ERR);
 				cmd->next->prev = cmd;
 				cmd = cmd->next;
 			}
@@ -39,7 +39,7 @@ void	lex_loop(t_lex *lex, t_cmd *cmd)
 	}
 }
 
-void	syntax_analyser(t_lex *lex)
+void	syntax_analyser(t_shell *shell, t_lex *lex)
 {
 	t_lex	*tmp;
 
@@ -47,40 +47,28 @@ void	syntax_analyser(t_lex *lex)
 	while (tmp)
 	{
 		if (tmp->token == PIPE && (!tmp->next || tmp->next->token == PIPE))
-		{
-			printf("Error: syntax error near unexpected token '|'\n");
-			exit(1);
-			// On peut aussi free les tokens et sortir de la boucle et non pas exit
-		}
+			exit_shell(shell, "Error: syntax error near unexpected token");
 		if ((tmp->token == GREATER || tmp->token == D_GREATER
 				|| tmp->token == LOWER || tmp->token == D_LOWER) && (!tmp->next
 				|| tmp->next->token != WORD))
-		{
-			printf("Error: syntax error near unexpected token '%s'\n",
-				tmp->word);
-			exit(1);
-			// On peut aussi free les tokens et sortir de la boucle et non pas exit
-		}
+			exit_shell(shell, "Error: syntax error near unexpected token");
 		tmp = tmp->next;
 	}
 }
 
-t_cmd	*rec_parse(t_lex *lex, t_cmd *prev)
+t_cmd	*rec_parse(t_shell *shell, t_lex *lex, t_cmd *prev)
 {
 	t_cmd	*cmd;
 
 	cmd = (t_cmd *)calloc(1, sizeof(t_cmd));
 	if (!cmd)
-	{
-		perror("Allocation failed");
-		return (NULL);
-	}
+		exit_shell(shell, "rec parse\n")
 	cmd->prev = prev;
 	lex_loop(lex, cmd);
 	return (cmd);
 }
 
-void	parser(t_cmd **cmd, t_lex *lex)
+void	parser(t_shell *shell, t_cmd **cmd, t_lex *lex)
 {
 	syntax_analyser(lex);
 	*cmd = rec_parse(lex, NULL);

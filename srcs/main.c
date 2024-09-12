@@ -6,7 +6,7 @@
 /*   By: jules <jules@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 13:59:28 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/10 16:47:08 by jules            ###   ########.fr       */
+/*   Updated: 2024/09/12 11:33:18 by jules            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,13 @@ void	exit_shell(t_shell *shell, const char *error_msg)
 		perror(error_msg);
 	free_shell(shell);
 	exit(EXIT_FAILURE);
+}
+
+void	init_shell(t_shell *shell)
+{
+	shell->cmd = NULL;
+	shell->env = NULL;
+	shell->path = NULL;
 }
 
 int	main(int c, char **v, char **envp)
@@ -33,10 +40,7 @@ int	main(int c, char **v, char **envp)
 	(void)envp;
 	//load_env(&shell, envp);            // Charge envp dans shell.env
 	//env = env_list_to_envp(shell.env); // Charge shell.env dans env
-	//print_envp(env);                   // Affiche env
-	shell.cmd = NULL;
-	shell.env = NULL;
-	shell.path = NULL;
+	//print_envp(env);                   // Affiche env	
 	while (1)
 	{
 		input = readline(CYAN "$ ->" RESET);
@@ -45,7 +49,7 @@ int	main(int c, char **v, char **envp)
 			add_history(input);
 			lex = lexer(&shell, input);
 			expander(lex);
-			parser(&shell.cmd, lex);
+			parser(shell, &shell.cmd, lex);
 			// if (shell.cmd)
 			// 	exec_cmds(&shell, shell.cmd);
 			// free_lex(lex);

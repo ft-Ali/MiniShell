@@ -8,3 +8,8 @@
 	"C_Cpp.errorSquiggles": "disabled",
 	"makefile.configureOnOpen": false
 }
+{
+	"[c]": {
+	  "editor.defaultFormatter": "keyhr.42-c-format"
+	}
+}

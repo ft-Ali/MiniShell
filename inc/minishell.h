@@ -6,7 +6,7 @@
 /*   By: jules <jules@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 13:59:41 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/10 16:32:46 by jules            ###   ########.fr       */
+/*   Updated: 2024/09/12 11:34:08 by jules            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@
 # define TRUE 0
 # define FALSE -1
 # define ERR_QUOTE "Error QUOTE\n"
+# define A_ERR "Allocation error\n"
 
 typedef enum e_token
 {
@@ -164,8 +165,8 @@ void				add_new_token(t_shell *shell, t_lex **lexer,
 
 /*--------------- PARSER ------------*/
 
-void				parser(t_cmd **cmd, t_lex *lex);
-t_cmd				*rec_parse(t_lex *lex, t_cmd *prev);
+void	parser(t_shell *shell, t_cmd **cmd, t_lex *lex);
+t_cmd				*rec_parse(t_shell *shell, t_lex *lex, t_cmd *prev);
 void				print_parser(t_cmd *cmd);
 void				append_command(t_cmd *cmd, char *word);
 void				handle_redirections(t_lex **lex, t_cmd *cmd,
