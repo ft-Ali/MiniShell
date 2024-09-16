@@ -3,18 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jules <jules@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jpointil <jpointil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 13:59:28 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/12 16:56:38 by jules            ###   ########.fr       */
+/*   Updated: 2024/09/16 11:13:28 by jpointil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-void	reset_shell(t_shell *shell)
+void	reset_loop(t_shell *shell)
 {
-	free_lex()
+	if (shell->lex)
+		free_lex(shell->lex);
+	if (shell->cmd)
+		free_cmd(shell->cmd);
+	shell->cmd = NULL;
+	shell->lex = NULL;
 }
 
 void	exit_shell(t_shell *shell, const char *error_msg)
@@ -30,7 +35,7 @@ void	init_shell(t_shell *shell)
 	shell->cmd = NULL;
 	shell->env = NULL;
 	shell->path = NULL;
-	shell
+	shell->lex = NULL;
 }
 
 int	main(int c, char **v, char **envp)
@@ -44,7 +49,7 @@ int	main(int c, char **v, char **envp)
 		return (printf("Error : no args needed\n"), 0);
 	(void)v;
 	(void)envp;
-	init_shell(shell);
+	init_shell(&shell);
 	//load_env(&shell, envp);            // Charge envp dans shell.env
 	//env = env_list_to_envp(shell.env); // Charge shell.env dans env
 	//print_envp(env);                   // Affiche env	
