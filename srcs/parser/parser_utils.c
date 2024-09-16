@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jules <jules@student.42.fr>                +#+  +:+       +#+        */
+/*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 15:32:13 by jules             #+#    #+#             */
-/*   Updated: 2024/09/12 16:43:42 by jules            ###   ########.fr       */
+/*   Updated: 2024/09/16 11:23:23 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	append_command(t_shell *shell, t_cmd *cmd, char *word)
 	}
 	new_commands[i] = ft_strdup(word);
 	new_commands[i + 1] = NULL;
-	// if (cmd->commands)
-	// 	free(cmd->commands);
+	if (cmd->commands)
+		free(cmd->commands);
 	cmd->commands = new_commands;
 }

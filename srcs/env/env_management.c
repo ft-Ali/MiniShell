@@ -6,25 +6,23 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 14:15:35 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/08/28 11:28:21 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/09/16 14:22:58 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
 // Get the value associated with a given key from the environment list
-char	*get_value_by_key(char *key, t_env *env_list)
+char *get_value_by_key(const char *key, t_env *env)
 {
-	int		key_len;
-	t_env	*node;
-
-	node = env_list;
-	key_len = ft_strlen(key);
-	while (node)
+	while (env)
 	{
-		if (!ft_strncmp(key, node->key, key_len) && node->key[key_len] == '\0')
-			return (node->value);
-		node = node->next;
+		if (ft_strncmp(env->key, key, ft_strlen(key)) == 0 && env->key[ft_strlen(key)] == '=')
+			{
+				printf("Found key: %s\n", env->key);	
+				return (env->value);
+			}
+		env = env->next;
 	}
 	return (NULL);
 }

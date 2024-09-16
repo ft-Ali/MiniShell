@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jules <jules@student.42.fr>                +#+  +:+       +#+        */
+/*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 13:59:41 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/12 16:01:09 by jules            ###   ########.fr       */
+/*   Updated: 2024/09/16 13:35:26 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,7 @@ typedef struct s_shell
 	t_lex			*lex;
 	t_path			*path;
 	t_cmd			*cmd;
+	int				last_exit_status;
 }					t_shell;
 
 /*---------------colors--------------*/
@@ -166,7 +167,7 @@ void				add_new_token(t_shell *shell, t_lex **lexer,
 /*--------------- PARSER ------------*/
 
 void				parser(t_shell *shell, t_cmd **cmd, t_lex *lex);
-t_cmd		 		*rec_parse(t_shell *shell, t_lex *lex, t_cmd *prev);
+t_cmd				*rec_parse(t_shell *shell, t_lex *lex, t_cmd *prev);
 void				print_parser(t_cmd *cmd);
 void				append_command(t_shell *shell, t_cmd *cmd, char *word);
 void				handle_redirections(t_shell *shell, t_lex **lex, t_cmd *cmd,
@@ -185,12 +186,11 @@ void				add_env_entry(t_shell *shell, t_env *node, char **env_vars,
 						int idx);
 void				create_oldpwd(t_shell *shell);
 void				load_env(t_shell *shell, char **env_vars);
-char				*get_value_by_key(char *key, t_env *env_list);
+char				*get_value_by_key(const char *key, t_env *env);
 char				**env_list_to_envp(t_env *env_list);
 int					count_env_entries(t_env *env_list);
 
 void				exec(t_shell *shell, t_cmd *cmd);
-void				exec_cmds(t_shell *shell, t_cmd *cmd);
 
 /*--------------- ERROR-&-FREE ------------------*/
 
@@ -210,5 +210,11 @@ void				print_env_list(t_env *env_list);
 void				print_tokens(t_lex *lex);
 void				print_parser(t_cmd *cmd);
 void				print_lexer_list(t_lex *head);
+
+void				handle_redirection_in(char *file);
+void				handle_redirection_out(char *file);
+char				*find_cmd_path(t_shell *shell, char *cmd);
+void				exec(t_shell *shell, t_cmd *cmd);
+void				exec_cmd(t_shell *shell, t_cmd *cmd);
 
 #endif
