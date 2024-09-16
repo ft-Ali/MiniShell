@@ -6,7 +6,7 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 14:10:03 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/16 14:38:09 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/09/16 14:40:46 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,5 +190,6 @@ void	exec(t_shell *shell, t_cmd *cmd)
 			printf("Child process exited with status %d\n",
 				shell->last_exit_status);
 		}
+		
 	}
 }
