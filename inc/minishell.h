@@ -6,7 +6,7 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 13:59:41 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/16 13:35:26 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/09/17 17:04:47 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,8 +190,6 @@ char				*get_value_by_key(const char *key, t_env *env);
 char				**env_list_to_envp(t_env *env_list);
 int					count_env_entries(t_env *env_list);
 
-void				exec(t_shell *shell, t_cmd *cmd);
-
 /*--------------- ERROR-&-FREE ------------------*/
 
 void				free_lex(t_lex *lex);
@@ -205,7 +203,7 @@ void				gfree(void *ptr, t_struct flag);
 
 /*--------------- PRINTS ------------------*/
 
-void				print_envp(char **envp);
+void				print_env(t_env *env);
 void				print_env_list(t_env *env_list);
 void				print_tokens(t_lex *lex);
 void				print_parser(t_cmd *cmd);

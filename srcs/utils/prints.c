@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prints.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jules <jules@student.42.fr>                +#+  +:+       +#+        */
+/*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 09:55:05 by jules             #+#    #+#             */
-/*   Updated: 2024/09/12 16:00:59 by jules            ###   ########.fr       */
+/*   Updated: 2024/09/17 16:53:06 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,12 @@ void	print_env_list(t_env *env_list)
 	t_env	*current;
 
 	current = env_list;
+	printf("Printing env list\n");
+	if(!current)
+	{
+		printf("Empty list\n");
+		return ;
+	}
 	while (current)
 	{
 		printf(" %s: %s\n", current->key, current->value);
@@ -86,15 +92,17 @@ void	print_env_list(t_env *env_list)
 	}
 }
 
-
-void	print_envp(char **envp)
+void	print_env(t_env *env)
 {
-	int	i;
-
-	i = 0;
-	while (envp[i])
+	printf("Printing env\n");
+	if(!env)
 	{
-		printf("envp[%d]: %s\n", i, envp[i]);
-		i++;
+		printf("Empty env\n");
+		return ;
+	}
+	while (env)
+	{
+		printf("%s=%s\n", env->key, env->value);
+		env = env->next;
 	}
 }

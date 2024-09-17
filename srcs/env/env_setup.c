@@ -6,7 +6,7 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 13:17:44 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/08/28 14:57:23 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/09/17 17:09:54 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@ void	set_env_vars(t_shell *shell, t_env *entry, char **envp, int index)
 	int		key_len;
 	int		value_len;
 
-	delimiter = NULL;
-	if (envp && envp[index])
-		delimiter = ft_strchr(envp[index], '=');
-	else if (!delimiter)
-		exit_shell(shell, "Error: malloc failed set_env_vars");
+	if (!envp || !envp[index])
+		exit_shell(shell, "Error: invalid environment variable format");
+	delimiter = ft_strchr(envp[index], '=');
+	if (!delimiter)
+		exit_shell(shell, "Error: missing '=' in environment variable");
 	key_len = delimiter - envp[index];
 	value_len = ft_strlen(delimiter + 1);
 	entry->key = ft_calloc(key_len + 1, sizeof(char));

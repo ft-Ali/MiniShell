@@ -6,7 +6,7 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 14:10:03 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/16 14:40:46 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/09/17 17:09:14 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ char	*find_cmd_path(t_shell *shell, char *cmd)
 		return (NULL);
 	}
 	paths = ft_split(path, ':');
+	free(path); // Libération de la mémoire de path ici
 	if (!paths)
 	{
 		perror("ft_split failed");
@@ -53,47 +54,65 @@ char	*find_cmd_path(t_shell *shell, char *cmd)
 		full_path = strjoin_free(full_path, cmd);
 		if (access(full_path, X_OK) == 0)
 		{
-			printf("Found executable at: %s\n", full_path);
-			free(path);
-			free(paths);
+			free(paths); // Libération de la mémoire des paths
 			return (full_path);
 		}
 		free(full_path);
 		i++;
 	}
-	free(path);
-	free(paths);
+	free(paths); // Libération de la mémoire des paths
 	return (NULL);
 }
 
 // Exécuter une commande avec gestion des erreurs
-
 void	exec_cmd(t_shell *shell, t_cmd *cmd)
 {
 	char	*cmd_path;
 	char	**envp;
 
+	if (!cmd || !cmd->commands[0])
+		return ;
 	envp = env_list_to_envp(shell->env);
-	cmd_path = find_cmd_path(shell, cmd->commands[0]); // Pass the correct type
-	printf("cmd_path: %s\n", cmd_path);
-	if (cmd_path)
-	{
-		if (execve(cmd_path, cmd->commands, envp) == -1)
-		{
-			perror("execve failed");
-			exit(EXIT_FAILURE);
-		}
-	}
-	else
+	cmd_path = find_cmd_path(shell, cmd->commands[0]);
+	if (!cmd_path)
 	{
 		printf("%s: command not found\n", cmd->commands[0]);
-		// exit(127);
+		free_envp(envp);
+		exit(127); // Exit with command not found status
+	}
+	if (execve(cmd_path, cmd->commands, envp) == -1)
+	{
+		perror("execve failed");
+		free(cmd_path);
+		free_envp(envp);
+		exit(EXIT_FAILURE);
 	}
 	free(cmd_path);
 	free_envp(envp);
 }
 
-// Gérer les redirections de sortie
+void	exec(t_shell *shell, t_cmd *cmd)
+{
+	char	*cmd_path;
+	char	**envp;
+
+	if (!cmd || !cmd->commands[0])
+		return ;
+	cmd_path = find_cmd_path(shell, cmd->commands[0]);
+	if (!cmd_path)
+	{
+		printf("%s: command not found\n", cmd->commands[0]);
+		return ;
+	}
+	envp = env_list_to_envp(shell->env);
+	if (execve(cmd_path, cmd->commands, envp) == -1)
+	{
+		perror("execve failed");
+	}
+	free(cmd_path);
+	free_envp(envp);
+}
+
 void	handle_redirection_out(char *file)
 {
 	int	fd;
@@ -120,76 +139,4 @@ void	handle_redirection_in(char *file)
 	}
 	dup2(fd, STDIN_FILENO); // Rediriger l'entrée depuis ce fichier
 	close(fd);
-}
-
-// Exécuter la commande avec gestion des redirections et des pipes
-// Fonction pour exécuter une commande
-void	exec(t_shell *shell, t_cmd *cmd)
-{
-	pid_t	pid;
-	int		status;
-	t_redir	*current_redir;
-	char	*cmd_path;
-	char	**envp;
-
-	pid = fork();
-	if (pid == -1)
-	{
-		perror("fork failed");
-		return ;
-	}
-	if (pid == 0)
-	{
-		printf("Child process created.\n");
-		// Gérer les redirections avant d'exécuter la commande
-		current_redir = cmd->redir;
-		while (current_redir)
-		{
-			if (current_redir->token == LOWER
-				|| current_redir->token == D_LOWER)
-				handle_redirection_in(current_redir->file);
-			else if (current_redir->token == GREATER
-				|| current_redir->token == D_GREATER)
-				handle_redirection_out(current_redir->file);
-			current_redir = current_redir->next;
-		}
-		// Trouver le chemin de la commande
-		cmd_path = find_cmd_path(shell, cmd->commands[0]);
-		printf("Command Path: %s\n", cmd_path);
-		printf("Command: %s\n", cmd->commands[0]);
-		if (cmd_path)
-		{
-			envp = env_list_to_envp(shell->env);
-			if (!envp)
-			{
-				perror("env_list_to_envp failed");
-				exit(EXIT_FAILURE);
-			}
-			if (execve(cmd_path, cmd->commands, envp) == -1)
-			{
-				perror("execve failed");
-				free_envp(envp);
-				exit(EXIT_FAILURE);
-			}
-			free_envp(envp);
-			free(cmd_path);
-		}
-		else
-		{
-			printf("%s: command not found\n", cmd->commands[0]);
-			exit(127);
-		}
-	}
-	else
-	{
-		printf("Waiting for child process to finish.\n");
-		waitpid(pid, &status, 0);
-		if (WIFEXITED(status))
-		{
-			shell->last_exit_status = WEXITSTATUS(status);
-			printf("Child process exited with status %d\n",
-				shell->last_exit_status);
-		}
-		
-	}
 }

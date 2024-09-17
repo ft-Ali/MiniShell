@@ -6,7 +6,7 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 13:15:29 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/08/21 14:28:58 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/09/17 15:03:21 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int					ft_isprint(int c);
 int					ft_memcmp(const void *s1, const void *s2, size_t n);
 int					ft_tolower(int c);
 int					ft_toupper(int c);
-int					ft_strcmp(char *s1, char *s2);
+int					ft_strcmp(const char *s1, const char *s2);
 int					ft_strncmp(const char *s1, const char *s2, size_t n);
 int					ft_tolower(int c);
 void				*ft_memchr(const void *s, int c, size_t n);

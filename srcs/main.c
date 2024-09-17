@@ -6,7 +6,7 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 13:59:28 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/16 14:32:38 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/09/17 16:59:05 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,15 +46,14 @@ int	main(int c, char **v, char **envp)
 	t_lex	*lex;
 	t_shell	shell;
 
-	// char	**env;
 	if (c != 1)
 		return (printf("Error : no args needed\n"), 0);
 	(void)v;
 	(void)envp;
 	init_shell(&shell);
-	// load_env(&shell, envp);            // Charge envp dans shell.env
-	// env = env_list_to_envp(shell.env); // Charge shell.env dans env
+	load_env(&shell, envp);            // Charge envp dans shell.env
 	// print_envp(env);                   // Affiche env
+	// print_env(shell.env);
 	while (1)
 	{
 		input = readline(CYAN "$ ->" RESET);
