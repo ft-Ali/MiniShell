@@ -6,7 +6,7 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 14:10:03 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/18 15:02:40 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/09/18 15:13:51 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,10 +97,10 @@ void	exec(t_shell *shell, t_cmd *cmd)
 	int		status;
 	char	*cmd_path;
 	char	**envp;
+	int		exit_status;
 
 	if (!cmd || !cmd->commands[0])
 		return ;
-	apply_redirections(cmd);
 	pid = fork();
 	if (pid < 0)
 	{
@@ -110,11 +110,12 @@ void	exec(t_shell *shell, t_cmd *cmd)
 	if (pid == 0)
 	{
 		// Processus enfant
+		apply_redirections(cmd); // Appliquer les redirections
 		envp = env_list_to_envp(shell->env);
 		cmd_path = find_cmd_path(shell, cmd->commands[0]);
 		if (!cmd_path)
 		{
-			printf("%s: command not found\n", cmd->commands[0]);
+			fprintf(stderr, "%s: command not found\n", cmd->commands[0]);
 			free_envp(envp);
 			exit(127);
 		}
@@ -132,6 +133,12 @@ void	exec(t_shell *shell, t_cmd *cmd)
 	{
 		// Processus parent
 		waitpid(pid, &status, 0); // Attendre que le processus enfant se termine
-									// Ajoute la gestion des codes de retour si nécessaire
+		if (WIFEXITED(status))
+		{
+			exit_status = WEXITSTATUS(status);
+			if (exit_status == 127)
+				fprintf(stderr, "Command not found\n");
+			// Autres codes de retour si nécessaire
+		}
 	}
 }
