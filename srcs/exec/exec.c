@@ -6,7 +6,7 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 14:10:03 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/17 17:09:14 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/09/18 13:24:56 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ char	*find_cmd_path(t_shell *shell, char *cmd)
 		return (NULL);
 	}
 	paths = ft_split(path, ':');
-	free(path); // Libération de la mémoire de path ici
+	free(path);
 	if (!paths)
 	{
 		perror("ft_split failed");
@@ -54,13 +54,13 @@ char	*find_cmd_path(t_shell *shell, char *cmd)
 		full_path = strjoin_free(full_path, cmd);
 		if (access(full_path, X_OK) == 0)
 		{
-			free(paths); // Libération de la mémoire des paths
+			free(paths);
 			return (full_path);
 		}
 		free(full_path);
 		i++;
 	}
-	free(paths); // Libération de la mémoire des paths
+	free(paths);
 	return (NULL);
 }
 
@@ -93,24 +93,46 @@ void	exec_cmd(t_shell *shell, t_cmd *cmd)
 
 void	exec(t_shell *shell, t_cmd *cmd)
 {
+	pid_t	pid;
+	int		status;
 	char	*cmd_path;
 	char	**envp;
 
 	if (!cmd || !cmd->commands[0])
 		return ;
-	cmd_path = find_cmd_path(shell, cmd->commands[0]);
-	if (!cmd_path)
+	pid = fork();
+	if (pid < 0)
 	{
-		printf("%s: command not found\n", cmd->commands[0]);
+		perror("fork failed");
 		return ;
 	}
-	envp = env_list_to_envp(shell->env);
-	if (execve(cmd_path, cmd->commands, envp) == -1)
+	if (pid == 0)
 	{
-		perror("execve failed");
+		// Processus enfant
+		envp = env_list_to_envp(shell->env);
+		cmd_path = find_cmd_path(shell, cmd->commands[0]);
+		if (!cmd_path)
+		{
+			printf("%s: command not found\n", cmd->commands[0]);
+			free_envp(envp);
+			exit(127);
+		}
+		if (execve(cmd_path, cmd->commands, envp) == -1)
+		{
+			perror("execve failed");
+			free(cmd_path);
+			free_envp(envp);
+			exit(EXIT_FAILURE);
+		}
+		free(cmd_path);
+		free_envp(envp);
 	}
-	free(cmd_path);
-	free_envp(envp);
+	else
+	{
+		// Processus parent
+		waitpid(pid, &status, 0); // Attendre que le processus enfant se termine
+		// Ajoute la gestion des codes de retour si nécessaire
+	}
 }
 
 void	handle_redirection_out(char *file)
@@ -123,7 +145,7 @@ void	handle_redirection_out(char *file)
 		perror("open failed for output redirection");
 		exit(EXIT_FAILURE);
 	}
-	dup2(fd, STDOUT_FILENO); // Rediriger la sortie vers ce fichier
+	dup2(fd, STDOUT_FILENO);
 	close(fd);
 }
 

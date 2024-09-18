@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jules <jules@student.42.fr>                +#+  +:+       +#+        */
+/*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 13:59:41 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/18 11:06:05 by jules            ###   ########.fr       */
+/*   Updated: 2024/09/18 13:14:43 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,7 +195,7 @@ int					count_env_entries(t_env *env_list);
 
 /*------------- BUILTINS -------------*/
 
-void				bi_exit(t_shell *shell, t_cmd *cmd, t_fd *fds);
+// void				bi_exit(t_shell *shell, t_cmd *cmd, t_fd *fds);
 void				bi_echo(t_shell *shell, t_cmd *cmd);
 
 /*--------------- ERROR-&-FREE ------------------*/
