@@ -6,7 +6,7 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 13:59:41 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/18 13:14:43 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/09/18 15:03:27 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -217,10 +217,14 @@ void				print_tokens(t_lex *lex);
 void				print_parser(t_cmd *cmd);
 void				print_lexer_list(t_lex *head);
 
-void				handle_redirection_in(char *file);
-void				handle_redirection_out(char *file);
+/*--------------- EXEC ------------------*/
 char				*find_cmd_path(t_shell *shell, char *cmd);
 void				exec(t_shell *shell, t_cmd *cmd);
 void				exec_cmd(t_shell *shell, t_cmd *cmd);
+void				handle_redirection_out(char *file);
+void				handle_redirection_out_append(char *file);
+void				handle_redirection_in(char *file);
+void				apply_redirections(t_cmd *cmd);
+void				handle_heredoc(char *delimiter);
 
 #endif

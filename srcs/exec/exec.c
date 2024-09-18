@@ -6,7 +6,7 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 14:10:03 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/18 13:24:56 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/09/18 15:02:40 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ void	exec(t_shell *shell, t_cmd *cmd)
 
 	if (!cmd || !cmd->commands[0])
 		return ;
+	apply_redirections(cmd);
 	pid = fork();
 	if (pid < 0)
 	{
@@ -131,34 +132,6 @@ void	exec(t_shell *shell, t_cmd *cmd)
 	{
 		// Processus parent
 		waitpid(pid, &status, 0); // Attendre que le processus enfant se termine
-		// Ajoute la gestion des codes de retour si nécessaire
+									// Ajoute la gestion des codes de retour si nécessaire
 	}
-}
-
-void	handle_redirection_out(char *file)
-{
-	int	fd;
-
-	fd = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	if (fd < 0)
-	{
-		perror("open failed for output redirection");
-		exit(EXIT_FAILURE);
-	}
-	dup2(fd, STDOUT_FILENO);
-	close(fd);
-}
-
-void	handle_redirection_in(char *file)
-{
-	int	fd;
-
-	fd = open(file, O_RDONLY);
-	if (fd < 0)
-	{
-		perror("open failed for input redirection");
-		exit(EXIT_FAILURE);
-	}
-	dup2(fd, STDIN_FILENO); // Rediriger l'entrée depuis ce fichier
-	close(fd);
 }
