@@ -1,3 +1,0 @@
-Found key: PATH
-ali
-[?2004h[1;96m$ ->[0m^C[?2004l

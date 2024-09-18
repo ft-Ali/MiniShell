@@ -6,7 +6,7 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 14:15:35 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/17 17:09:35 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/09/18 15:19:26 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,7 @@ char	*get_value_by_key(const char *key, t_env *env)
 	{
 		if (ft_strncmp(env->key, key, key_len) == 0
 			&& env->key[key_len] == '\0')
-		{
-			printf("Found key: %s\n", env->key);
 			return (env->value);
-		}
 		env = env->next;
 	}
 	return (NULL);

@@ -6,7 +6,7 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 14:10:03 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/18 15:13:51 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/09/18 15:17:20 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,8 +99,7 @@ void	exec(t_shell *shell, t_cmd *cmd)
 	char	**envp;
 	int		exit_status;
 
-	if (!cmd || !cmd->commands[0])
-		return ;
+	
 	pid = fork();
 	if (pid < 0)
 	{
