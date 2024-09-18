@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jules <jules@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 13:59:41 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/18 13:14:43 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/09/18 14:45:35 by jules            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,11 @@ typedef struct s_cmd
 	struct s_cmd	*prev;
 	struct s_cmd	*next;
 }					t_cmd;
+
+// typedef struct s_export
+// {
+	
+// }
 
 /*------------- EXPANDER -------------*/
 
