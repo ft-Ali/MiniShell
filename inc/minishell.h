@@ -6,7 +6,7 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 13:59:41 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/18 15:03:27 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/09/18 15:07:07 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,11 @@ typedef struct s_cmd
 	struct s_cmd	*prev;
 	struct s_cmd	*next;
 }					t_cmd;
+
+// typedef struct s_export
+// {
+	
+// }
 
 /*------------- EXPANDER -------------*/
 
