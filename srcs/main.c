@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jules <jules@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 13:59:28 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/17 16:59:05 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/09/18 11:06:32 by jules            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ void	exit_shell(t_shell *shell, const char *error_msg)
 
 void	init_shell(t_shell *shell)
 {
+	shell->tmpexcode = 0;
+	shell->excode = 0;
 	shell->cmd = NULL;
 	shell->env = NULL;
 	shell->path = NULL;

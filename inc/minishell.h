@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jules <jules@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 13:59:41 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/17 17:04:47 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/09/18 11:06:05 by jules            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ typedef struct s_cmd
 	struct s_cmd	*next;
 }					t_cmd;
 
-/*------------- EXPANDER PART -------------*/
+/*------------- EXPANDER -------------*/
 
 typedef struct s_expand
 {
@@ -105,7 +105,7 @@ typedef struct s_env
 	struct s_env	*prev;
 }					t_env;
 
-/*------------- LEXER PART -------------*/
+/*------------- LEXER -------------*/
 
 typedef struct s_lex
 {
@@ -115,10 +115,13 @@ typedef struct s_lex
 }					t_lex;
 
 /*------------- SHELL -------------*/
+
 typedef struct s_shell
 {
 	t_env			*env;
 	t_lex			*lex;
+	int				tmpexcode;
+	int				excode;
 	t_path			*path;
 	t_cmd			*cmd;
 	int				last_exit_status;
@@ -189,6 +192,11 @@ void				load_env(t_shell *shell, char **env_vars);
 char				*get_value_by_key(const char *key, t_env *env);
 char				**env_list_to_envp(t_env *env_list);
 int					count_env_entries(t_env *env_list);
+
+/*------------- BUILTINS -------------*/
+
+void				bi_exit(t_shell *shell, t_cmd *cmd, t_fd *fds);
+void				bi_echo(t_shell *shell, t_cmd *cmd);
 
 /*--------------- ERROR-&-FREE ------------------*/
 

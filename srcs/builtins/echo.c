@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpointil <jpointil@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jules <jules@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 13:20:42 by jpointil          #+#    #+#             */
-/*   Updated: 2024/09/16 14:36:25 by jpointil         ###   ########.fr       */
+/*   Updated: 2024/09/18 09:51:02 by jules            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	newline_check(char **cmd, int *valid)
     return (w);
 }
 
-void bt_echo(t_shell *shell, t_cmd *cmd)
+void bi_echo(t_shell *shell, t_cmd *cmd)
 {
     int new_line;
     int i;
