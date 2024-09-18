@@ -6,7 +6,7 @@
 /*   By: jules <jules@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 12:04:31 by jules             #+#    #+#             */
-/*   Updated: 2024/09/18 12:09:20 by jules            ###   ########.fr       */
+/*   Updated: 2024/09/18 13:50:22 by jules            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,5 +36,5 @@ void    bi_unset(t_shell *shell, t_cmd * cmd)
 		}
 		i++;
 	}
-	//fonction qui met a jour l'env(shell);
+	load_env(shell, NULL);
 }
