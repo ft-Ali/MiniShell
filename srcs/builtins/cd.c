@@ -3,24 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jules <jules@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jpointil <jpointil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 11:12:28 by jules             #+#    #+#             */
-/*   Updated: 2024/09/18 11:59:55 by jules            ###   ########.fr       */
+/*   Updated: 2024/09/19 11:27:04 by jpointil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../inc/minishell.h"
 
 int	dir_check(t_shell *shell, t_cmd *cmd)
 {
 	DIR	*dir;
 
-	dir = opendir(cmd->tab[1]);
+	dir = opendir(cmd->commands[1]);
 	if (!dir)
 	{
         ft_putstr_fd("minishell: cd: ", 2);
-        ft_putstr_fd(cmd->tab[1], 2);
+        ft_putstr_fd(cmd->commands[1], 2);
 		perror(NULL);
 		shell->excode = 1;
 		return (0);

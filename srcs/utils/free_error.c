@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_error.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jules <jules@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jpointil <jpointil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 14:44:58 by jpointil          #+#    #+#             */
-/*   Updated: 2024/09/18 11:07:14 by jules            ###   ########.fr       */
+/*   Updated: 2024/09/19 11:51:17 by jpointil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	free_shell(t_shell *shell)
 		free_path(shell->path);
 	if (shell->cmd)
 		free_cmd(shell->cmd);
-	free(shell);
+	//free(shell);
 }
 
 void	gfree(void *ptr, t_struct flag)

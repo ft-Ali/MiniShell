@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jules <jules@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jpointil <jpointil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 13:59:28 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/18 11:06:32 by jules            ###   ########.fr       */
+/*   Updated: 2024/09/19 11:53:32 by jpointil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-
+int		g_sig = 0;
 
 void	reset_loop(t_shell *shell)
 {
@@ -53,7 +53,8 @@ int	main(int c, char **v, char **envp)
 	(void)v;
 	(void)envp;
 	init_shell(&shell);
-	load_env(&shell, envp);            // Charge envp dans shell.env
+	init_sig();
+	load_env(&shell, envp); // Charge envp dans shell.env
 	// print_envp(env);                   // Affiche env
 	// print_env(shell.env);
 	while (1)
@@ -72,5 +73,7 @@ int	main(int c, char **v, char **envp)
 			free_cmd(shell.cmd);
 			free(input);
 		}
+		else
+			exit_shell(&shell, NULL);
 	}
 }

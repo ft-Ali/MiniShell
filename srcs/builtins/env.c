@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jules <jules@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jpointil <jpointil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 12:12:05 by jules             #+#    #+#             */
-/*   Updated: 2024/09/18 12:27:03 by jules            ###   ########.fr       */
+/*   Updated: 2024/09/19 11:30:26 by jpointil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../inc/minishell.h"
 
 void	bi_env(t_shell *shell, t_cmd *cmd)
 {
@@ -25,7 +25,7 @@ void	bi_env(t_shell *shell, t_cmd *cmd)
 	i = 0;
 	while (shell->env->value[i])
 	{
-		ft_putstr_fd(shell->env->value[i++], 1);
+		ft_putstr_fd(&shell->env->value[i++], 1);
 		ft_putstr_fd("\n", 1);
 	}
 	free_shell(shell);
