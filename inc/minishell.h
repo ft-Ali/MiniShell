@@ -6,7 +6,7 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 13:59:41 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/19 17:56:54 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/09/19 18:47:01 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,7 @@ typedef struct s_env
 {
 	char			*value;
 	char			*key;
+	bool			isunset;
 	int				index;
 	struct s_env	*next;
 	struct s_env	*prev;

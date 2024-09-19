@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpointil <jpointil@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 12:04:31 by jules             #+#    #+#             */
-/*   Updated: 2024/09/19 11:35:45 by jpointil         ###   ########.fr       */
+/*   Updated: 2024/09/19 18:49:52 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,10 @@ void    bi_unset(t_shell *shell, t_cmd * cmd)
 				if (env->value)
 					free(env->value);
 				env->value = NULL;
-				//env->isunset = true;
+				env->isunset = true;
 			}
 			env = env->next;
 		}
 		i++;
 	}
-	load_env(shell, NULL);
 }

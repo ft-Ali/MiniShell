@@ -6,7 +6,7 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 14:10:03 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/19 17:50:22 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/09/19 18:11:47 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ void	exec_cmd(t_shell *shell, t_cmd *cmd)
 		free_envp(envp);
 		exit(127);
 	}
+	printf("ZIIIIIIZIIIII\n");
 	if (execve(cmd_path, cmd->commands, envp) == -1)
 	{
 		perror("execve failed");
@@ -216,7 +217,7 @@ void	exec(t_shell *shell, t_cmd *cmd_list)
 		{
 			if (ft_strncmp(current_cmd->commands[0], "exit", 4) == 0
 				&& ft_strlen(current_cmd->commands[0]) == 4)
-				bi_exit(shell, current_cmd, &fds);
+				bi_exit(shell, current_cmd);
 			else if (ft_strncmp(current_cmd->commands[0], "cd", 2) == 0
 				&& ft_strlen(current_cmd->commands[0]) == 2)
 				bi_cd(shell, current_cmd);

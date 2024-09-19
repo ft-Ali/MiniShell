@@ -6,7 +6,7 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 13:30:48 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/17 16:23:09 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/09/19 18:54:50 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,16 @@ char	**env_list_to_envp(t_env *env_list)
 	i = 0;
 	while (tmp)
 	{
-		envp[i] = ft_strjoin(tmp->key, "=");
-		if (!envp[i])
-			return (NULL);
-		envp[i] = strjoin_free(envp[i], tmp->value);
-		if (!envp[i])
-			return (NULL);
-		i++;
+		if (!tmp->isunset)
+		{
+			envp[i] = ft_strjoin(tmp->key, "=");
+			if (!envp[i])
+				return (NULL);
+			envp[i] = strjoin_free(envp[i], tmp->value);
+			if (!envp[i])
+				return (NULL);
+			i++;
+		}
 		tmp = tmp->next;
 	}
 	envp[i] = NULL;
