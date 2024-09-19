@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jules <jules@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jpointil <jpointil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 13:20:42 by jpointil          #+#    #+#             */
-/*   Updated: 2024/09/18 09:51:02 by jules            ###   ########.fr       */
+/*   Updated: 2024/09/19 11:30:08 by jpointil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../inc/minishell.h"
 
 int	newline_check(char **cmd, int *valid)
 {
@@ -39,8 +39,9 @@ void bi_echo(t_shell *shell, t_cmd *cmd)
     int new_line;
     int i;
 
+    (void)shell;
     new_line = 0;
-    i = newline_check(cmd->comands, &new_line);
+    i = newline_check(cmd->commands, &new_line);
     if (cmd->commands[1])
     {
         while (cmd->commands[i])
@@ -53,5 +54,6 @@ void bi_echo(t_shell *shell, t_cmd *cmd)
     }
     if (!new_line)
         printf("\n");
-    exit_shell(shell);
+    return ;
+    //exit_shell(shell);
 }

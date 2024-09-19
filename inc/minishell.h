@@ -6,7 +6,7 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 13:59:41 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/19 16:29:30 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/09/19 17:04:53 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@
 # define FALSE -1
 # define ERR_QUOTE "Error QUOTE\n"
 # define A_ERR "Allocation error\n"
+
+extern int			g_sig;
 
 typedef enum e_token
 {
@@ -154,6 +156,7 @@ typedef struct s_shell
 /*------------- MAIN -------------*/
 
 void				exit_shell(t_shell *shell, const char *error_msg);
+void				init_sig(void);
 
 /*------------- UTILS -------------*/
 
@@ -210,6 +213,11 @@ int					count_env_entries(t_env *env_list);
 
 // void				bi_exit(t_shell *shell, t_cmd *cmd, t_fd *fds);
 void				bi_echo(t_shell *shell, t_cmd *cmd);
+void				bi_cd(t_shell *shell, t_cmd *cmd);
+void				bi_env(t_shell *shell, t_cmd *cmd);
+// void				bi_export(t_shell *shell, t_cmd *cmd);
+void				bi_pwd(t_shell *shell, t_cmd *cmd);
+void				bi_unset(t_shell *shell, t_cmd *cmd);
 
 /*--------------- ERROR-&-FREE ------------------*/
 
@@ -231,6 +239,7 @@ void				print_parser(t_cmd *cmd);
 void				print_lexer_list(t_lex *head);
 
 /*--------------- EXEC ------------------*/
+
 char				*find_cmd_path(t_shell *shell, char *cmd);
 void				exec(t_shell *shell, t_cmd *cmd);
 void				exec_cmd(t_shell *shell, t_cmd *cmd);
