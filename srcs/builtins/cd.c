@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpointil <jpointil@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 11:12:28 by jules             #+#    #+#             */
-/*   Updated: 2024/09/19 15:48:53 by jpointil         ###   ########.fr       */
+/*   Updated: 2024/09/19 17:11:55 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ void	update_pwd(t_shell *shell, char *tmp)
 void	exec_cd(t_shell *shell, char *dir)
 {
 	char	*tmp;
-	t_env	*env;
 
 	while(shell->env)
 	{
@@ -66,7 +65,7 @@ void	exec_cd(t_shell *shell, char *dir)
 		return ;
 	}
 	update_pwd(shell, tmp);
-	update_env(shell);
+	//update_env(shell);
 	
 }
 

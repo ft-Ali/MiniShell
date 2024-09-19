@@ -6,7 +6,7 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 14:10:03 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/19 16:57:57 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/09/19 17:09:16 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,26 +170,26 @@ void	wait_child(t_shell *shell)
 // 	}
 // }
 
-void	child_builtins(t_shell *shell, t_fd *fds)
-{
-	if (fds->input != -2)
-		close(fds->input);
-	if (fds->output == -2)
-		fds->output = dup(STDOUT_FILENO);
-	if (fds->output == -1)
-		(close_all_fds(fds), exit_and_free(shell, "Error : dup2"));
-}
+// void	child_builtins(t_shell *shell, t_fd *fds)
+// {
+// 	if (fds->input != -2)
+// 		close(fds->input);
+// 	if (fds->output == -2)
+// 		fds->output = dup(STDOUT_FILENO);
+// 	if (fds->output == -1)
+// 		(close_all_fds(fds), exit_and_free(shell, "Error : dup2"));
+// }
 
-void	run_builtins(t_shell *shell, t_cmds *cmds, t_fd *fds)
-{
-	child_builtins(shell, fds);
-	if (cmds->builtin == ECHO)
-		ft_echo(shell, cmds, fds->output, fds);
-	if (cmds->builtin == ENV)
-		ft_env(shell, cmds, fds->output, fds);
-	if (cmds->builtin == PWD)
-		ft_pwd(cmds, shell, fds->output, fds);
-}
+// void	run_builtins(t_shell *shell, t_cmds *cmds, t_fd *fds)
+// {
+// 	child_builtins(shell, fds);
+// 	if (cmds->builtin == ECHO)
+// 		ft_echo(shell, cmds, fds->output, fds);
+// 	if (cmds->builtin == ENV)
+// 		ft_env(shell, cmds, fds->output, fds);
+// 	if (cmds->builtin == PWD)
+// 		ft_pwd(cmds, shell, fds->output, fds);
+// }
 
 
 
@@ -216,22 +216,22 @@ void	exec(t_shell *shell, t_cmd *cmd_list)
 		// exec
 		if (current_cmd->commands && current_cmd->commands[0])
 		{
-			if (cmds->builtin == EXIT)
-				ft_exit(shell, cmds, fds);
-			else if (cmds->builtin == CD)
-				ft_cd(shell, cmds);
-			else if (cmds->builtin == EXPORT)
-				ft_export(&shell->env, cmds, shell);
-			else if (cmds->builtin == UNSET)
-				ft_unset_builtin(shell, cmds);
+			// if (cmds->builtin == EXIT)
+			// 	ft_exit(shell, cmds, fds);
+			// else if (cmds->builtin == CD)
+			// 	ft_cd(shell, cmds);
+			// else if (cmds->builtin == EXPORT)
+			// 	ft_export(&shell->env, cmds, shell);
+			// else if (cmds->builtin == UNSET)
+			// 	ft_unset_builtin(shell, cmds);
 			pid = fork();
 			if (pid == -1)
 				(close_all_fds(&fds), exit_shell(shell, "Error : Fork"));
-			else (pid == 0)
+			else if(pid == 0)
 			{
-				if (cmds->builtin)
-					(run_builtins(shell, cmds, fds));
-				else
+				// if (cmds->builtin)
+				// 	(run_builtins(shell, cmds, fds));
+			
 					execute_child(shell, current_cmd, &fds);
 			}
 			close_fds_parent(&fds);

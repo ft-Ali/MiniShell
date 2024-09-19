@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpointil <jpointil@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 13:59:28 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/19 11:53:32 by jpointil         ###   ########.fr       */
+/*   Updated: 2024/09/19 17:17:47 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ int	main(int c, char **v, char **envp)
 	if (c != 1)
 		return (printf("Error : no args needed\n"), 0);
 	(void)v;
-	(void)envp;
 	init_shell(&shell);
 	init_sig();
 	load_env(&shell, envp); // Charge envp dans shell.env
