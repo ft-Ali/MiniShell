@@ -6,7 +6,7 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 13:59:41 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/18 15:07:07 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/09/19 16:29:30 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,14 @@ typedef struct s_path
 	struct s_path	*next;
 }					t_path;
 
+typedef struct s_fd
+{
+	int				pipes[2];
+	int				redir[2];
+	int				input;
+	int				output;
+}					t_fd;
+
 typedef struct s_redir
 {
 	t_token			token;
@@ -87,7 +95,7 @@ typedef struct s_cmd
 
 // typedef struct s_export
 // {
-	
+
 // }
 
 /*------------- EXPANDER -------------*/
@@ -226,10 +234,17 @@ void				print_lexer_list(t_lex *head);
 char				*find_cmd_path(t_shell *shell, char *cmd);
 void				exec(t_shell *shell, t_cmd *cmd);
 void				exec_cmd(t_shell *shell, t_cmd *cmd);
-void				handle_redirection_out(char *file);
-void				handle_redirection_out_append(char *file);
-void				handle_redirection_in(char *file);
-void				apply_redirections(t_cmd *cmd);
-void				handle_heredoc(char *delimiter);
+int					handle_input_redir(t_redir *redir, int fd_in);
+int					handle_output_redir(t_redir *redir, int fd_out);
+void				apply_redirections(t_cmd *cmd, int *fd_in, int *fd_out);
+int					handle_heredoc(char *delimiter);
+void				loop_here_doc(char *delimiter, int fd);
 
+/*--------------- FDS ------------------*/
+
+void				init_fds(t_fd *fds);
+void				set_fds(t_fd *fd);
+void				close_fds_parent(t_fd *fds);
+void				close_all_fds(t_fd *fds);
+// void				wait_child(t_shell *shell);
 #endif

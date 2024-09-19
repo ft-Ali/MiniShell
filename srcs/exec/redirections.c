@@ -6,86 +6,93 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 13:58:02 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/18 15:04:40 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/09/19 16:46:51 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-// Gestion des redirections dans les commandes
-void	handle_redirection_out(char *file)
+/**
+ * Gère les redirections de sortie (fichier avec ou sans append).
+ * Retourne le descripteur de fichier ou -1 en cas d'erreur.
+ */
+int	handle_output_redir(t_redir *redir, int fd_out)
 {
-	int	fd;
-
-	fd = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	if (fd < 0)
+	if (fd_out != -2)
+		close(fd_out);
+	if (redir->token == GREATER) // '>' redirection
 	{
-		perror("open");
-		exit(EXIT_FAILURE);
+		fd_out = open(redir->file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		if (fd_out == -1)
+		{
+			perror(redir->file);
+			return (-1);
+		}
 	}
-	dup2(fd, STDOUT_FILENO);
-	close(fd);
+	else if (redir->token == D_GREATER) // '>>' append redirection
+	{
+		fd_out = open(redir->file, O_WRONLY | O_CREAT | O_APPEND, 0644);
+		if (fd_out == -1)
+		{
+			perror(redir->file);
+			return (-1);
+		}
+	}
+	return (fd_out);
 }
 
 /**
- * Ouvre un fichier pour redirection de sortie avec ajout.
+ * Gère les redirections d'entrée (fichier ou heredoc).
+ * Retourne le descripteur de fichier ou -1 en cas d'erreur.
  */
-void	handle_redirection_out_append(char *file)
+int	handle_input_redir(t_redir *redir, int fd_in)
 {
-	int	fd;
-
-	fd = open(file, O_WRONLY | O_CREAT | O_APPEND, 0644);
-	if (fd < 0)
+	if (fd_in != -2)
+		close(fd_in);
+	if (redir->token == LOWER)  // '<' redirection
 	{
-		perror("open");
-		exit(EXIT_FAILURE);
+		fd_in = open(redir->file, O_RDONLY);
+		if (fd_in == -1)
+		{
+			perror(redir->file);
+			return (-1);
+		}
 	}
-	dup2(fd, STDOUT_FILENO);
-	close(fd);
+	else if (redir->token == D_LOWER)  // '<<' heredoc
+	{
+		fd_in = handle_heredoc(redir->file);
+		if (fd_in == -1)
+		{
+			perror("heredoc.tmp");
+			return (-1);
+		}
+	}
+	return (fd_in);
 }
 
 /**
- * Ouvre un fichier pour redirection d'entre.
+
+	* Applique toutes les redirections d'une commande à l'aide des fonctions de gestion des fds.
+ * Retourne -1 en cas d'erreur,
+	sinon les descripteurs de fichier sont mis à jour.
  */
-void	handle_redirection_in(char *file)
+void	apply_redirections(t_cmd *cmd, int *fd_in, int *fd_out)
 {
-	int	fd;
+	t_redir *redir;
 
-	fd = open(file, O_RDONLY);
-	if (fd < 0)
-	{
-		perror("open");
-		exit(EXIT_FAILURE);
-	}
-	dup2(fd, STDIN_FILENO);
-	close(fd);
-}
-
-/**
- * Applique les redirections à la commande.
- */
-void	apply_redirections(t_cmd *cmd)
-{
-	t_redir *redir = cmd->redir;
-
+	redir = cmd->redir;
 	while (redir)
 	{
-		if (redir->token == GREATER)
+		if (redir->token == LOWER || redir->token == D_LOWER)
 		{
-			handle_redirection_out(redir->file);
+			*fd_in = handle_input_redir(redir, *fd_in);
 		}
-		else if (redir->token == D_GREATER)
+		else if (redir->token == GREATER || redir->token == D_GREATER)
 		{
-			handle_redirection_out_append(redir->file);
+			*fd_out = handle_output_redir(redir, *fd_out);
 		}
-		else if (redir->token == LOWER)
-		{
-			handle_redirection_in(redir->file);
-		}
-		else if (redir->token == D_LOWER)
-		{
-			handle_heredoc(redir->file);
-		}
+		if (*fd_in == -1 || *fd_out == -1)
+			break ;
 		redir = redir->next;
 	}
 }

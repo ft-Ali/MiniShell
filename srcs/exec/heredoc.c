@@ -5,71 +5,85 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/18 13:57:58 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/18 15:04:51 by alsiavos         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-#include "../../inc/minishell.h"
-
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   heredoc.c                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 15:00:00 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/18 15:00:00 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/09/19 16:47:42 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-// Gestion du heredoc (<<)
-static void	create_heredoc_file(char *delimiter)
+// Fonction pour écrire dans le fichier temporaire pendant le heredoc.
+void	loop_here_doc(char *delimiter, int fd) // rajoute de t_shell
 {
-	char	*temp_file;
-	int		fd;
-	char	*line;
+	char *line;
+	char *limiter;
 
-	temp_file = "heredoc.tmp";
-	fd = open(temp_file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	line = NULL;
-	if (fd < 0)
-	{
-		perror("open");
-		exit(EXIT_FAILURE);
-	}
+	// Ajouter un saut de ligne au délimiteur (comme dans l'original)
+	limiter = ft_strjoin(delimiter, "\n");
 	while (1)
 	{
-		line = readline(RED "> " RESET);
-		if (!line || ft_strcmp(line, delimiter) == 0)
+		line = readline(RED "> " RESET); // Affichage du prompt heredoc
+		// Gestion de l'interruption par Ctrl-C
+		// if (g_signal == SIGINT)
+		// {
+		// 	shell->exit_code = 130;
+		// 	g_signal = 0;
+		// 	shell->skip_here = 1;
+		// Indique qu'on doit ignorer la suite du heredoc
+		// 	break ;
+		// }
+		// Si la ligne est égale au délimiteur, on termine la boucle
+		if (line == NULL || (!ft_strncmp(line, limiter, ft_strlen(line))
+				&& ft_strlen(line) == ft_strlen(limiter) - 1))
 		{
 			free(line);
 			break ;
 		}
-		write(fd, line, ft_strlen(line));
-		write(fd, "\n", 1);
+		// Écriture dans le fichier du heredoc
+		ft_putstr_fd(line, fd);
+		ft_putstr_fd("\n", fd);
 		free(line);
 	}
-	close(fd);
+	free(limiter);
 }
 
 /**
- * Gère la redirection heredoc.
- */
-void	handle_heredoc(char *delimiter)
-{
-	int	fd;
 
-	create_heredoc_file(delimiter);
-	fd = open("heredoc.tmp", O_RDONLY);
-	if (fd < 0)
+	* Gère la redirection heredoc (<<) en créant un fichier temporaire et en écrivant dedans
+ * jusqu'à rencontrer le délimiteur.
+ */
+int	handle_heredoc(char *delimiter)
+{
+	char	*file_name;
+	int		fd_out;
+	int		fd_in;
+
+	// Génération d'un nom de fichier temporaire unique
+	file_name = ft_strdup("heredoc_tmp_");
+	while (access(file_name, F_OK) == 0)
+		// Assure que le fichier n'existe pas déjà
+	file_name = strjoin_free(file_name, "42");
+	// Ouverture du fichier temporaire pour écriture
+	fd_out = open(file_name, O_CREAT | O_WRONLY | O_TRUNC, 0644);
+	if (fd_out == -1)
 	{
-		perror("open");
-		exit(EXIT_FAILURE);
+		perror("Error opening heredoc file");
+		free(file_name);
+		return (-1);
 	}
-	dup2(fd, STDIN_FILENO);
-	close(fd);
+	// Boucle pour capturer l'input du heredoc et écrire dans le fichier temporaire
+	loop_here_doc(delimiter, fd_out);
+	close(fd_out); // Ferme le fichier après avoir écrit
+	// Réouverture du fichier pour lecture
+	fd_in = open(file_name, O_RDONLY);
+	if (fd_in == -1)
+	{
+		perror("Error opening heredoc file for reading");
+		free(file_name);
+		return (-1);
+	}
+	unlink(file_name);
+		// Supprime le fichier temporaire du système de fichiers
+	free(file_name); // Libère la mémoire allouée au nom de fichier
+	return (fd_in);  // Retourne le descripteur de fichier
 }

@@ -13,6 +13,7 @@ MINISHELL_SRC	=	srcs/main.c srcs/lexer/lexer.c srcs/lexer/lexer_utils.c srcs/lex
 					srcs/env/env_setup.c srcs/env/env_management.c srcs/parser/parser_utils.c \
 					srcs/env/env_list.c srcs/exec/exec.c srcs/utils/free_error.c srcs/utils/free_utils.c \
 					srcs/utils/utils.c srcs/utils/prints.c srcs/exec/heredoc.c srcs/exec/redirections.c \
+					srcs/exec/fds.c
 					
 					 
 
