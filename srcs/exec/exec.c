@@ -6,7 +6,7 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 14:10:03 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/19 17:09:16 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/09/19 17:50:22 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ void	exec_cmd(t_shell *shell, t_cmd *cmd)
 	free_envp(envp);
 }
 
-void	execute_child(t_shell *shell, t_cmd *cmds, t_fd *fds)
+void	execute_child(t_shell *shell, t_cmd *cmd, t_fd *fds)
 {
 	if (fds->pipes[0] != -2)
 		close(fds->pipes[0]);
@@ -102,18 +102,18 @@ void	execute_child(t_shell *shell, t_cmd *cmds, t_fd *fds)
 		if (dup2(fds->output, STDOUT_FILENO) == -1)
 			(close_all_fds(fds), exit_shell(shell, ""));
 	close_all_fds(fds);
-	exec_cmd(shell, cmds);
+	exec_cmd(shell, cmd);
 }
-// void	execute_cmd(t_shell *shell, t_cmd *cmds, t_fd *fds)
+// void	execute_cmd(t_shell *shell, t_cmd *cmd, t_fd *fds)
 // {
-// 	// if (cmds->builtin == EXIT)
-// 	// 	ft_exit(shell, cmds, fds);
-// 	// else if (cmds->builtin == CD)
-// 	// 	ft_cd(shell, cmds);
-// 	// else if (cmds->builtin == EXPORT)
-// 	// 	ft_export(&shell->env, cmds, shell);
-// 	// else if (cmds->builtin == UNSET)
-// 	// 	ft_unset_builtin(shell, cmds);
+// 	// if (cmd->builtin == EXIT)
+// 	// 	ft_exit(shell, cmd, fds);
+// 	// else if (cmd->builtin == CD)
+// 	// 	ft_cd(shell, cmd);
+// 	// else if (cmd->builtin == EXPORT)
+// 	// 	ft_export(&shell->env, cmd, shell);
+// 	// else if (cmd->builtin == UNSET)
+// 	// 	ft_unset_builtin(shell, cmd);
 // 	// else
 // 	// {
 // }
@@ -142,56 +142,57 @@ void	wait_child(t_shell *shell)
 	}
 }
 
-// void	is_builtin(t_cmds *cmds)
+// void	is_builtin(t_cmd *cmd)
 // {
-// 	if (cmds && cmds->tab != NULL)
+// 	if (cmd && cmd->commands != NULL)
 // 	{
-// 		if (ft_strncmp(cmds->tab[0], "echo", 4) == 0
-// 			&& ft_strlen(cmds->tab[0]) == 4)
-// 			cmds->builtin = ECHO;
-// 		else if (ft_strncmp(cmds->tab[0], "cd", 3) == 0
-// 			&& ft_strlen(cmds->tab[0]) == 2)
-// 			cmds->builtin = CD;
-// 		else if (ft_strncmp(cmds->tab[0], "pwd", 3) == 0
-// 			&& ft_strlen(cmds->tab[0]) == 3)
-// 			cmds->builtin = PWD;
-// 		else if (ft_strncmp(cmds->tab[0], "exit", 4) == 0
-// 			&& ft_strlen(cmds->tab[0]) == 4)
-// 			cmds->builtin = EXIT;
-// 		else if (ft_strncmp(cmds->tab[0], "export", 6) == 0
-// 			&& ft_strlen(cmds->tab[0]) == 6)
-// 			cmds->builtin = EXPORT;
-// 		else if (ft_strncmp(cmds->tab[0], "unset", 5) == 0
-// 			&& ft_strlen(cmds->tab[0]) == 5)
-// 			cmds->builtin = UNSET;
-// 		else if (ft_strncmp(cmds->tab[0], "env", 3) == 0
-// 			&& ft_strlen(cmds->tab[0]) == 3)
-// 			cmds->builtin = ENV;
+// 		if (ft_strncmp(cmd->commands[0], "echo", 4) == 0
+// 			&& ft_strlen(cmd->commands[0]) == 4)
+// 			cmd->builtin = ECHO;
+// 		else if (ft_strncmp(cmd->commands[0], "cd", 3) == 0
+// 			&& ft_strlen(cmd->commands[0]) == 2)
+// 			cmd->builtin = CD;
+// 		else if (ft_strncmp(cmd->commands[0], "pwd", 3) == 0
+// 			&& ft_strlen(cmd->commands[0]) == 3)
+// 			cmd->builtin = PWD;
+// 		else if (ft_strncmp(cmd->commands[0], "exit", 4) == 0
+// 			&& ft_strlen(cmd->commands[0]) == 4)
+// 			cmd->builtin = EXIT;
+// 		else if (ft_strncmp(cmd->commands[0], "export", 6) == 0
+// 			&& ft_strlen(cmd->commands[0]) == 6)
+// 			cmd->builtin = EXPORT;
+// 		else if (ft_strncmp(cmd->commands[0], "unset", 5) == 0
+// 			&& ft_strlen(cmd->commands[0]) == 5)
+// 			cmd->builtin = UNSET;
+// 		else if (ft_strncmp(cmd->commands[0], "env", 3) == 0
+// 			&& ft_strlen(cmd->commands[0]) == 3)
+// 			cmd->builtin = ENV;
 // 	}
 // }
 
-// void	child_builtins(t_shell *shell, t_fd *fds)
-// {
-// 	if (fds->input != -2)
-// 		close(fds->input);
-// 	if (fds->output == -2)
-// 		fds->output = dup(STDOUT_FILENO);
-// 	if (fds->output == -1)
-// 		(close_all_fds(fds), exit_and_free(shell, "Error : dup2"));
-// }
+void	child_builtins(t_shell *shell, t_fd *fds)
+{
+	if (fds->input != -2)
+		close(fds->input);
+	if (fds->output == -2)
+		fds->output = dup(STDOUT_FILENO);
+	if (fds->output == -1)
+		(close_all_fds(fds), exit_shell(shell, "Error : dup2"));
+}
 
-// void	run_builtins(t_shell *shell, t_cmds *cmds, t_fd *fds)
-// {
-// 	child_builtins(shell, fds);
-// 	if (cmds->builtin == ECHO)
-// 		ft_echo(shell, cmds, fds->output, fds);
-// 	if (cmds->builtin == ENV)
-// 		ft_env(shell, cmds, fds->output, fds);
-// 	if (cmds->builtin == PWD)
-// 		ft_pwd(cmds, shell, fds->output, fds);
-// }
-
-
+void	run_builtins(t_shell *shell, t_cmd *cmd, t_fd *fds)
+{
+	child_builtins(shell, fds);
+	if (ft_strncmp(cmd->commands[0], "echo", 4) == 0
+		&& ft_strlen(cmd->commands[0]) == 4)
+		bi_echo(shell, cmd);
+	if (ft_strncmp(cmd->commands[0], "env", 3) == 0
+		&& ft_strlen(cmd->commands[0]) == 3)
+		bi_env(shell, cmd);
+	if (ft_strncmp(cmd->commands[0], "pwd", 3) == 0
+		&& ft_strlen(cmd->commands[0]) == 3)
+		bi_pwd(shell, cmd);
+}
 
 void	exec(t_shell *shell, t_cmd *cmd_list)
 {
@@ -211,35 +212,32 @@ void	exec(t_shell *shell, t_cmd *cmd_list)
 				exit_shell(shell, "Error : pipe");
 		apply_redirections(current_cmd, &fds.redir[0], &fds.redir[1]);
 		set_fds(&fds);
-
-
-		// exec
 		if (current_cmd->commands && current_cmd->commands[0])
 		{
-			// if (cmds->builtin == EXIT)
-			// 	ft_exit(shell, cmds, fds);
-			// else if (cmds->builtin == CD)
-			// 	ft_cd(shell, cmds);
-			// else if (cmds->builtin == EXPORT)
-			// 	ft_export(&shell->env, cmds, shell);
-			// else if (cmds->builtin == UNSET)
-			// 	ft_unset_builtin(shell, cmds);
+			if (ft_strncmp(current_cmd->commands[0], "exit", 4) == 0
+				&& ft_strlen(current_cmd->commands[0]) == 4)
+				bi_exit(shell, current_cmd, &fds);
+			else if (ft_strncmp(current_cmd->commands[0], "cd", 2) == 0
+				&& ft_strlen(current_cmd->commands[0]) == 2)
+				bi_cd(shell, current_cmd);
+			// else if (ft_strncmp(current_cmd->commands[0], "export", 6) == 0
+			// && ft_strlen(current_cmd->commands[0]) == 6)
+			// 	bi_export(&shell->env, current_cmd, shell);
+			else if (ft_strncmp(current_cmd->commands[0], "unset", 5) == 0
+				&& ft_strlen(current_cmd->commands[0]) == 5)
+				bi_unset(shell, current_cmd);
 			pid = fork();
 			if (pid == -1)
 				(close_all_fds(&fds), exit_shell(shell, "Error : Fork"));
-			else if(pid == 0)
+			else if (pid == 0)
 			{
-				// if (cmds->builtin)
-				// 	(run_builtins(shell, cmds, fds));
-			
-					execute_child(shell, current_cmd, &fds);
+				if (current_cmd)
+					(run_builtins(shell, current_cmd, &fds)),
+						execute_child(shell, current_cmd, &fds);
 			}
 			close_fds_parent(&fds);
 			fds.input = fds.pipes[0];
 		}
-		// fin
-
-		
 		if (!current_cmd->next)
 			close_fds_parent(&fds);
 		if (current_cmd->next)

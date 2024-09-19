@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpointil <jpointil@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 15:05:50 by jpointil          #+#    #+#             */
-/*   Updated: 2024/09/19 11:32:33 by jpointil         ###   ########.fr       */
+/*   Updated: 2024/09/19 17:51:36 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int		exit_options(t_cmd *cmd, int *flag)
 	return (ft_atoi(cmd->commands[1]) % 256);
 }
 
-void	bi_exit(t_shell *shell, t_cmd *cmd, t_fd *fds)
+void	bi_exit(t_shell *shell, t_cmd *cmd)
 {
 	int ext;
 	int flag;

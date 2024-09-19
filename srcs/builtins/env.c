@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpointil <jpointil@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 12:12:05 by jules             #+#    #+#             */
-/*   Updated: 2024/09/19 11:30:26 by jpointil         ###   ########.fr       */
+/*   Updated: 2024/09/19 18:02:45 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void	bi_env(t_shell *shell, t_cmd *cmd)
 {
 	int i;
+	char **envp;
 
 	if (cmd->commands[1])
 	{
@@ -23,9 +24,11 @@ void	bi_env(t_shell *shell, t_cmd *cmd)
 		exit(127);
 	}
 	i = 0;
-	while (shell->env->value[i])
+	envp = env_list_to_envp(shell->env);
+	while (envp[i])
 	{
-		ft_putstr_fd(&shell->env->value[i++], 1);
+		//printf(" value : %s, key  : %s", shell->env->value[i], shell->env->key[i]);
+		ft_putstr_fd(envp[i++], 1);
 		ft_putstr_fd("\n", 1);
 	}
 	free_shell(shell);

@@ -6,7 +6,7 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 13:59:41 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/19 17:04:53 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/09/19 17:56:54 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,7 +155,7 @@ typedef struct s_shell
 
 /*------------- MAIN -------------*/
 
-void				exit_shell(t_shell *shell, const char *error_msg);
+void				exit_shell(t_shell *shell, char *error_msg);
 void				init_sig(void);
 
 /*------------- UTILS -------------*/
@@ -211,7 +211,7 @@ int					count_env_entries(t_env *env_list);
 
 /*------------- BUILTINS -------------*/
 
-// void				bi_exit(t_shell *shell, t_cmd *cmd, t_fd *fds);
+void				bi_exit(t_shell *shell, t_cmd *cmd);
 void				bi_echo(t_shell *shell, t_cmd *cmd);
 void				bi_cd(t_shell *shell, t_cmd *cmd);
 void				bi_env(t_shell *shell, t_cmd *cmd);

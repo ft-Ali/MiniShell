@@ -6,7 +6,7 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 13:59:28 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/19 17:17:47 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/09/19 17:56:42 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,10 @@ void	reset_loop(t_shell *shell)
 	shell->lex = NULL;
 }
 
-void	exit_shell(t_shell *shell, const char *error_msg)
+void	exit_shell(t_shell *shell, char *error_msg)
 {
 	if (error_msg)
-		perror(error_msg);
+		ft_putstr_fd(error_msg, 2);
 	free_shell(shell);
 	exit(EXIT_FAILURE);
 }
