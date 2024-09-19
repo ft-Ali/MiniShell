@@ -6,7 +6,7 @@
 /*   By: jpointil <jpointil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 11:12:28 by jules             #+#    #+#             */
-/*   Updated: 2024/09/19 15:45:55 by jpointil         ###   ########.fr       */
+/*   Updated: 2024/09/19 15:48:53 by jpointil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	update_pwd(t_shell *shell, char *tmp)
 	{
 		if (ft_strictcmp(shell->env->key, "OLDPWD"))
 		{
-			free(shell->env>value);
+			free(shell->env->value);
 			shell->env->value = ft_strdup(tmp);
 		}
 		if (ft_strictcmp(shell->env->key, "PWD"))
@@ -62,7 +62,7 @@ void	exec_cd(t_shell *shell, char *dir)
 	if (chdir(dir) == -1)
 	{
 		ft_putstr_fd("chdir", 2);
-		shell->excode 1;
+		shell->excode = 1;
 		return ;
 	}
 	update_pwd(shell, tmp);
