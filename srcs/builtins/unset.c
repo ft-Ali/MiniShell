@@ -14,7 +14,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../inc/minishell.h"
 
 void    bi_unset(t_shell *shell, t_cmd * cmd)
 {
