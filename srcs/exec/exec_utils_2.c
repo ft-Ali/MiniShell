@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils_2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jules <jules@student.42.fr>                +#+  +:+       +#+        */
+/*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 15:31:04 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/20 16:22:35 by jules            ###   ########.fr       */
+/*   Updated: 2024/09/20 21:33:49 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,24 @@ int	handle_builtins(t_shell *shell, t_cmd *current_cmd)
 	}
 	return (0);
 }
+int	is_builtin_command(const char *command)
+{
+	if (ft_strncmp(command, "exit", 4) == 0 && ft_strlen(command) == 4)
+		return (1);
+	else if (ft_strncmp(command, "cd", 2) == 0 && ft_strlen(command) == 2)
+		return (1);
+	else if (ft_strncmp(command, "export", 6) == 0 && ft_strlen(command) == 6)
+		return (1);
+	else if (ft_strncmp(command, "unset", 5) == 0 && ft_strlen(command) == 5)
+		return (1);
+	else if (ft_strncmp(command, "env", 3) == 0 && ft_strlen(command) == 3)
+		return (1);
+	else if (ft_strncmp(command, "echo", 4) == 0 && ft_strlen(command) == 4)
+		return (1);
+	else if (ft_strncmp(command, "pwd", 3) == 0 && ft_strlen(command) == 3)
+		return (1);
+	return (0);
+}
 
 void	execute_process(t_shell *shell, t_cmd *current_cmd, t_fd *fds)
 {
@@ -63,17 +81,20 @@ void	execute_process(t_shell *shell, t_cmd *current_cmd, t_fd *fds)
 		close_all_fds(fds);
 		exit_shell(shell, "Error: Fork");
 	}
-	else if (pid == 0)
+	else if (pid == 0) // Processus enfant
 	{
-		// Exécution du processus enfant
-		execute_child(shell, current_cmd, fds);
-		if (current_cmd)
+		if (is_builtin_command(current_cmd->commands[0])) 
 		{
+			// Si c'est un builtin, on exécute le builtin dans le processus enfant
 			run_builtins(shell, current_cmd, fds);
+			close_all_fds(fds);
+			exit(0); // On s'assure de terminer le processus après le builtin
+		}
+		else
+		{
+			// Sinon, on exécute une commande externe
 			execute_child(shell, current_cmd, fds);
 		}
 	}
-	// Fermeture des FDs du parent après fork
-	close_fds_parent(fds);
-	fds->input = fds->pipes[0];
+	// Le parent continue ici après fork()
 }

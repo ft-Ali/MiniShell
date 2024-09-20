@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jules <jules@student.42.fr>                +#+  +:+       +#+        */
+/*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 14:10:03 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/20 17:14:03 by jules            ###   ########.fr       */
+/*   Updated: 2024/09/20 21:31:44 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	exec_cmd(t_shell *shell, t_cmd *cmd)
 	cmd->cmd_path = find_cmd_path(shell, cmd->commands[0]);
 	if (!cmd->cmd_path)
 	{
-		ft_free_split(envp);
+		free_envp(envp);
 		printf("%s: command not found\n", cmd->commands[0]);
 		exit_shell(shell, "");
 		
@@ -99,19 +99,19 @@ void	exec(t_shell *shell, t_cmd *cmd_list)
 		init_fds_and_redirections(shell, current_cmd, &fds);
 		if (current_cmd->commands && current_cmd->commands[0])
 		{
-			// Si la commande est une commande intégrée (built-in),
-				// on la gère et on continue
-			handle_builtins(shell, current_cmd);
-			execute_process(shell, current_cmd, &fds);
+			if (!(handle_builtins(shell, current_cmd))) // Exécuter les builtins dans le processus parent
+				execute_process(shell, current_cmd, &fds); // Exécuter les commandes dans le processus enfant
 		}
+		close_fds_parent(&fds);
+		fds.input = fds.pipes[0];
 		if (!current_cmd->next)
 			close_fds_parent(&fds);
 		if (current_cmd->next)
 			current_cmd->next->prev = current_cmd;
 		current_cmd = current_cmd->next;
 	}
-	wait_child(shell);   // Attente de la fin des processus enfants
-	close_all_fds(&fds); // Fermeture des FDs après l'exécution
+	wait_child(shell);
+	close_all_fds(&fds);
 }
 
 // void	exec(t_shell *shell, t_cmd *cmd_list)

@@ -6,7 +6,7 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 13:59:41 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/20 17:09:44 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/09/20 21:34:07 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -257,9 +257,10 @@ void				execute_child(t_shell *shell, t_cmd *cmd, t_fd *fds);
 char				**get_paths_from_env(t_shell *shell);
 void				execute_process(t_shell *shell, t_cmd *current_cmd,
 						t_fd *fds);
-int					handle_builtins(t_shell *shell, t_cmd *current_cmd);
+int				handle_builtins(t_shell *shell, t_cmd *current_cmd);
 void				init_fds_and_redirections(t_shell *shell,
 						t_cmd *current_cmd, t_fd *fds);
+int	is_builtin_command(const char *command);
 /*--------------- FDS ------------------*/
 
 void				init_fds(t_fd *fds);

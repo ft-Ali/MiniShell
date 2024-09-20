@@ -6,7 +6,7 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 15:01:16 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/20 15:16:01 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/09/20 21:30:15 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@ void	run_builtins(t_shell *shell, t_cmd *cmd, t_fd *fds)
 	if (ft_strncmp(cmd->commands[0], "echo", 4) == 0
 		&& ft_strlen(cmd->commands[0]) == 4)
 		bi_echo(shell, cmd);
-	if (ft_strncmp(cmd->commands[0], "env", 3) == 0
+	else if (ft_strncmp(cmd->commands[0], "env", 3) == 0
 		&& ft_strlen(cmd->commands[0]) == 3)
 		bi_env(shell, cmd);
-	if (ft_strncmp(cmd->commands[0], "pwd", 3) == 0
+	else if (ft_strncmp(cmd->commands[0], "pwd", 3) == 0
 		&& ft_strlen(cmd->commands[0]) == 3)
 		bi_pwd(shell, cmd);
 }
