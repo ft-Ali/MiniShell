@@ -6,7 +6,7 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 14:10:03 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/20 15:33:41 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/09/20 15:46:27 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,8 +101,7 @@ void	exec(t_shell *shell, t_cmd *cmd_list)
 		if (current_cmd->commands && current_cmd->commands[0])
 		{
 			// Si la commande est une commande intégrée (built-in), on la gère et on continue
-			if (handle_builtins(shell, current_cmd))
-				continue ;
+			handle_builtins(shell, current_cmd);
 			execute_process(shell, current_cmd, &fds);
 		}
 		if (!current_cmd->next)
