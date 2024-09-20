@@ -6,7 +6,7 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 13:59:28 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/20 14:11:04 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/09/20 16:28:17 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,9 @@ int	main(int c, char **v, char **envp)
 			exec(&shell, shell.cmd);
 			// free_lex(lex);
 			// free_cmd(shell.cmd);
-			free_cmd(shell.cmd);
+			// free_cmd(shell.cmd);
 			free(input);
+			free_loop(&shell);
 		}
 		else
 			exit_shell(&shell, NULL);

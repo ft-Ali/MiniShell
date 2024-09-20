@@ -6,7 +6,7 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 09:58:50 by jules             #+#    #+#             */
-/*   Updated: 2024/09/19 17:27:14 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/09/20 16:25:05 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,19 @@ void	free_cmd(t_cmd *cmd)
 		free_redir(cmd->redir);
 	if (cmd->next)
 		free_cmd(cmd->next);
+	if(cmd->cmd_path)
+		free(cmd->cmd_path);
 	free(cmd);
 }
-
+void free_loop(t_shell *shell)
+{
+	if (shell->lex)
+		free_lex(shell->lex);
+	if (shell->cmd)
+		free_cmd(shell->cmd);
+	shell->cmd = NULL;
+	shell->lex = NULL;
+}
 void	free_path(t_path *path)
 {
 	if (!path)

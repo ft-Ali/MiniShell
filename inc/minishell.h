@@ -6,7 +6,7 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 13:59:41 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/20 15:34:08 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/09/20 17:03:43 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ typedef struct s_redir
 typedef struct s_cmd
 {
 	char			**commands;
+	char			*cmd_path;
 	t_redir			*redir;
 	struct s_cmd	*prev;
 	struct s_cmd	*next;
@@ -228,8 +229,9 @@ void				free_cmd(t_cmd *cmd);
 void				free_exp(t_expand *expand);
 void				free_redir(t_redir *redir);
 void				free_shell(t_shell *shell);
-void				free_env(t_env *env);
+void				free_env(t_env **env);
 void				gfree(void *ptr, t_struct flag);
+void				free_loop(t_shell *shell);
 
 /*--------------- PRINTS ------------------*/
 
@@ -256,8 +258,8 @@ char				**get_paths_from_env(t_shell *shell);
 void				execute_process(t_shell *shell, t_cmd *current_cmd,
 						t_fd *fds);
 int					handle_builtins(t_shell *shell, t_cmd *current_cmd);
-void				init_fds_and_redirections(t_shell *shell, t_cmd *current_cmd,
-						t_fd *fds);
+void				init_fds_and_redirections(t_shell *shell,
+						t_cmd *current_cmd, t_fd *fds);
 /*--------------- FDS ------------------*/
 
 void				init_fds(t_fd *fds);

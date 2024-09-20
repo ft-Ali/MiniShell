@@ -6,7 +6,7 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 14:10:03 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/20 15:46:27 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/09/20 16:47:19 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ char	*find_cmd_path(t_shell *shell, char *cmd)
 	while (paths[i])
 	{
 		full_path = ft_strjoin(paths[i], "/");
+		free(paths[i]);
 		full_path = strjoin_free(full_path, cmd);
 		if (access(full_path, X_OK) == 0)
 		{
@@ -63,28 +64,26 @@ char	*find_cmd_path(t_shell *shell, char *cmd)
 // Exécuter une commande avec gestion des erreurs
 void	exec_cmd(t_shell *shell, t_cmd *cmd)
 {
-	char	*cmd_path;
 	char	**envp;
 
 	if (!cmd || !cmd->commands[0])
 		return ;
 	envp = env_list_to_envp(shell->env);
-	cmd_path = find_cmd_path(shell, cmd->commands[0]);
-	if (!cmd_path)
+	cmd->cmd_path = find_cmd_path(shell, cmd->commands[0]);
+	if (!cmd->cmd_path)
 	{
+		ft_free_split(envp);
 		printf("%s: command not found\n", cmd->commands[0]);
-		free_envp(envp);
-		exit(127);
+		exit_shell(shell, "");
+		
 	}
-	if (execve(cmd_path, cmd->commands, envp) == -1)
+	if (execve(cmd->cmd_path, cmd->commands, envp) == -1)
 	{
-		perror("execve failed");
-		free(cmd_path);
-		free_envp(envp);
-		exit(EXIT_FAILURE);
+		ft_free_split(envp);
+		exit_shell(shell, "Error : execve");
 	}
-	free(cmd_path);
-	free_envp(envp);
+	// free(cmd_path);
+	// free_envp(envp);
 }
 
 void	exec(t_shell *shell, t_cmd *cmd_list)
@@ -100,7 +99,8 @@ void	exec(t_shell *shell, t_cmd *cmd_list)
 		init_fds_and_redirections(shell, current_cmd, &fds);
 		if (current_cmd->commands && current_cmd->commands[0])
 		{
-			// Si la commande est une commande intégrée (built-in), on la gère et on continue
+			// Si la commande est une commande intégrée (built-in),
+				// on la gère et on continue
 			handle_builtins(shell, current_cmd);
 			execute_process(shell, current_cmd, &fds);
 		}

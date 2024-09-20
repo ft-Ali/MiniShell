@@ -3,34 +3,41 @@
 /*                                                        :::      ::::::::   */
 /*   free_error.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpointil <jpointil@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 14:44:58 by jpointil          #+#    #+#             */
-/*   Updated: 2024/09/19 11:51:17 by jpointil         ###   ########.fr       */
+/*   Updated: 2024/09/20 17:04:34 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	free_env(t_env *env)
+void free_env(t_env **env)
 {
-	if (!env)
-		return ;
-	if (env->value)
-		free(env->value);
-	if (env->key)
-		free(env->key);
-	if (env->next)
-		free_env(env->next);
-	free(env);
+    t_env   *tmp;
+    t_env   *next;
+
+    if (!env || !*env)
+        return;
+    tmp = *env;
+    while (tmp)
+    {
+        next = tmp->next;
+        free(tmp->value);   // No need to check if it's NULL
+        free(tmp->key);     // No need to check if it's NULL
+        free(tmp);
+        tmp = next;
+    }
+    *env = NULL;  // Set the original pointer to NULL
 }
+
 
 void	free_shell(t_shell *shell)
 {
 	if (!shell)
 		return ;
 	if (shell->env)
-		free_env(shell->env);
+		free_env(&shell->env);
 	if (shell->lex)
 		free_lex(shell->lex);
 	if (shell->path)
