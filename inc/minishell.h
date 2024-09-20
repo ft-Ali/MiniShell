@@ -6,7 +6,7 @@
 /*   By: jules <jules@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 13:59:41 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/20 16:10:52 by jules            ###   ########.fr       */
+/*   Updated: 2024/09/20 16:18:49 by jules            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -249,12 +249,21 @@ int					handle_output_redir(t_redir *redir, int fd_out);
 void				apply_redirections(t_cmd *cmd, int *fd_in, int *fd_out);
 int					handle_heredoc(char *delimiter);
 void				loop_here_doc(char *delimiter, int fd);
-
+void				run_builtins(t_shell *shell, t_cmd *cmd, t_fd *fds);
+void				child_builtins(t_shell *shell, t_fd *fds);
+void				execute_child(t_shell *shell, t_cmd *cmd, t_fd *fds);
+char				**get_paths_from_env(t_shell *shell);
+void				execute_process(t_shell *shell, t_cmd *current_cmd,
+						t_fd *fds);
+int					handle_builtins(t_shell *shell, t_cmd *current_cmd);
+void				init_fds_and_redirections(t_shell *shell, t_cmd *current_cmd,
+						t_fd *fds);
 /*--------------- FDS ------------------*/
 
 void				init_fds(t_fd *fds);
 void				set_fds(t_fd *fd);
 void				close_fds_parent(t_fd *fds);
 void				close_all_fds(t_fd *fds);
-// void				wait_child(t_shell *shell);
+void				wait_child(t_shell *shell);
+void				free_envp(char **envp);
 #endif
