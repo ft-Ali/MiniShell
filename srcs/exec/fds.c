@@ -6,7 +6,7 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 13:42:42 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/19 16:13:08 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/09/20 15:14:51 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,24 +67,27 @@ void	close_fds_parent(t_fd *fds)
 		close(fds->output);
 }
 
-// void	wait_child(t_shell *shell)
-// {
-// 	int status;
-// 	t_cmd *cmd;
+// Exécuter une liste de commandes en boucle avec gestion des redirections et des erreurs
+void	wait_child(t_shell *shell)
+{
+	int status;
+	pid_t pid;
 
-// 	status = -1;
-// 	cmd = shell->cmd;
-// 	while (cmd)
-// 	{
-// 		if (cmd->pid != -2 && cmd->pid != -1)
-// 		{
-// 			// if (WIFEXITED(status))
-// 			// 	shell->exit_code = WEXITSTATUS(status);
-// 			// if (errno == EACCES)
-// 			// 	shell->exit_code = 126;
-// 			// if (cmd->pid == -1)
-// 			// 	shell->exit_code = 127;
-// 		}
-// 		cmd = cmd->next;
-// 	}
-// }
+	// Attendre que tous les processus enfants se terminent
+	while ((pid = wait(&status)) > 0)
+	{
+		if (WIFEXITED(status))
+		{
+			shell->excode = WEXITSTATUS(status);
+		}
+		else if (WIFSIGNALED(status))
+		{
+			shell->excode = 128 + WTERMSIG(status);
+		}
+	}
+	if (pid == -1 && errno != ECHILD)
+	{
+		perror("wait");
+		exit(EXIT_FAILURE);
+	}
+}

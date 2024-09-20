@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jules <jules@student.42.fr>                +#+  +:+       +#+        */
+/*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 13:40:08 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/10 09:43:02 by jules            ###   ########.fr       */
+/*   Updated: 2024/09/20 12:05:56 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	handle_variable_expansion(t_expand *exp, char **result, char quote)
 			exp->pos++;
 		variable_name = ft_strndup(exp->input + start, exp->pos - start);
 		variable_value = getenv(variable_name);
-		*result = strjoin_free(*result, variable_value);
+		*result = ft_strjoin_free_n(*result, variable_value);
 		free(variable_name);
 		return (1);
 	}

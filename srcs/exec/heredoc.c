@@ -6,7 +6,7 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 15:00:00 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/19 16:47:42 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/09/20 14:17:31 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,12 +58,9 @@ int	handle_heredoc(char *delimiter)
 	int		fd_out;
 	int		fd_in;
 
-	// Génération d'un nom de fichier temporaire unique
 	file_name = ft_strdup("heredoc_tmp_");
 	while (access(file_name, F_OK) == 0)
-		// Assure que le fichier n'existe pas déjà
 	file_name = strjoin_free(file_name, "42");
-	// Ouverture du fichier temporaire pour écriture
 	fd_out = open(file_name, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	if (fd_out == -1)
 	{
@@ -71,10 +68,8 @@ int	handle_heredoc(char *delimiter)
 		free(file_name);
 		return (-1);
 	}
-	// Boucle pour capturer l'input du heredoc et écrire dans le fichier temporaire
 	loop_here_doc(delimiter, fd_out);
-	close(fd_out); // Ferme le fichier après avoir écrit
-	// Réouverture du fichier pour lecture
+	close(fd_out);
 	fd_in = open(file_name, O_RDONLY);
 	if (fd_in == -1)
 	{
@@ -83,7 +78,6 @@ int	handle_heredoc(char *delimiter)
 		return (-1);
 	}
 	unlink(file_name);
-		// Supprime le fichier temporaire du système de fichiers
 	free(file_name); // Libère la mémoire allouée au nom de fichier
 	return (fd_in);  // Retourne le descripteur de fichier
 }
