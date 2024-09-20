@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jules <jules@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 13:59:28 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/19 17:56:42 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/09/20 15:50:49 by jules            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,7 @@ int	main(int c, char **v, char **envp)
 	init_shell(&shell);
 	init_sig();
 	load_env(&shell, envp); // Charge envp dans shell.env
-	// print_envp(env);                   // Affiche env
-	// print_env(shell.env);
+	// print_env(shell.env);                   // Affiche env
 	while (1)
 	{
 		input = readline(CYAN "$ ->" RESET);

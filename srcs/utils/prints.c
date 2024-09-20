@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prints.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jules <jules@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 09:55:05 by jules             #+#    #+#             */
-/*   Updated: 2024/09/17 16:53:06 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/09/20 15:50:29 by jules            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,3 +106,19 @@ void	print_env(t_env *env)
 		env = env->next;
 	}
 }
+
+void	print_env2(t_env *env)
+{
+	printf("Printing env\n");
+	if(!env)
+	{
+		printf("Empty env\n");
+		return ;
+	}
+	while (env)
+	{
+		printf("%s=%s\n", env->key, env->value);
+		env = env->next;
+	}
+}
+
