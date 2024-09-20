@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils_2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jules <jules@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 15:31:04 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/20 15:33:04 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/09/20 16:22:35 by jules            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,12 @@ int	handle_builtins(t_shell *shell, t_cmd *current_cmd)
 		bi_cd(shell, current_cmd);
 		return (1);
 	}
+	else if (ft_strncmp(current_cmd->commands[0], "export", 6) == 0
+		&& ft_strlen(current_cmd->commands[0]) == 6)
+	{
+		bi_export(shell, current_cmd);
+		return (1);
+	}
 	else if (ft_strncmp(current_cmd->commands[0], "unset", 5) == 0
 		&& ft_strlen(current_cmd->commands[0]) == 5)
 	{
@@ -49,7 +55,7 @@ int	handle_builtins(t_shell *shell, t_cmd *current_cmd)
 
 void	execute_process(t_shell *shell, t_cmd *current_cmd, t_fd *fds)
 {
-	pid_t pid;
+	pid_t	pid;
 
 	pid = fork();
 	if (pid == -1)

@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jules <jules@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 14:10:03 by alsiavos          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2024/09/20 16:47:19 by alsiavos         ###   ########.fr       */
+=======
+/*   Updated: 2024/09/20 16:21:25 by jules            ###   ########.fr       */
+>>>>>>> 52586e74b63b60f35a57084c5d004a05e5395ef3
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,10 +143,10 @@ void	exec(t_shell *shell, t_cmd *cmd_list)
 // 			else if (ft_strncmp(current_cmd->commands[0], "cd", 2) == 0
 // 				&& ft_strlen(current_cmd->commands[0]) == 2)
 // 				bi_cd(shell, current_cmd);
-// 			// else if (ft_strncmp(current_cmd->commands[0], "export",
-// 			// 6) == 0
-// 			// && ft_strlen(current_cmd->commands[0]) == 6)
-// 			// 	bi_export(&shell->env, current_cmd, shell);
+// 			else if (ft_strncmp(current_cmd->commands[0], "export",
+// 			6) == 0
+// 			&& ft_strlen(current_cmd->commands[0]) == 6)
+// 			bi_export(&shell->env, current_cmd, shell);
 // 			else if (ft_strncmp(current_cmd->commands[0], "unset", 5) == 0
 // 				&& ft_strlen(current_cmd->commands[0]) == 5)
 // 				bi_unset(shell, current_cmd);

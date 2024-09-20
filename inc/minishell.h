@@ -6,7 +6,7 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 13:59:41 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/20 17:03:43 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/09/20 17:09:44 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -217,7 +217,7 @@ void				bi_exit(t_shell *shell, t_cmd *cmd);
 void				bi_echo(t_shell *shell, t_cmd *cmd);
 void				bi_cd(t_shell *shell, t_cmd *cmd);
 void				bi_env(t_shell *shell, t_cmd *cmd);
-// void				bi_export(t_shell *shell, t_cmd *cmd);
+void				bi_export(t_shell *shell, t_cmd *cmd);
 void				bi_pwd(t_shell *shell, t_cmd *cmd);
 void				bi_unset(t_shell *shell, t_cmd *cmd);
 
