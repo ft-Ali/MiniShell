@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jules <jules@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 14:10:03 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/19 18:11:47 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/09/20 16:11:41 by jules            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -221,9 +221,9 @@ void	exec(t_shell *shell, t_cmd *cmd_list)
 			else if (ft_strncmp(current_cmd->commands[0], "cd", 2) == 0
 				&& ft_strlen(current_cmd->commands[0]) == 2)
 				bi_cd(shell, current_cmd);
-			// else if (ft_strncmp(current_cmd->commands[0], "export", 6) == 0
-			// && ft_strlen(current_cmd->commands[0]) == 6)
-			// 	bi_export(&shell->env, current_cmd, shell);
+			else if (ft_strncmp(current_cmd->commands[0], "export", 6) == 0
+			&& ft_strlen(current_cmd->commands[0]) == 6)
+				bi_export(shell, current_cmd);
 			else if (ft_strncmp(current_cmd->commands[0], "unset", 5) == 0
 				&& ft_strlen(current_cmd->commands[0]) == 5)
 				bi_unset(shell, current_cmd);

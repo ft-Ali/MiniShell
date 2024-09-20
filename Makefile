@@ -15,7 +15,8 @@ MINISHELL_SRC	=	srcs/main.c srcs/lexer/lexer.c srcs/lexer/lexer_utils.c srcs/lex
 					srcs/utils/utils.c srcs/utils/prints.c srcs/exec/heredoc.c srcs/exec/redirections.c \
 					srcs/signals.c srcs/builtins/echo.c srcs/builtins/env.c srcs/builtins/pwd.c srcs/builtins/unset.c \
 					srcs/builtins/cd.c srcs/exec/fds.c srcs/builtins/exit.c \
-					# srcs/builtins/export.c srcs/builtins/export2.c c \
+					srcs/builtins/export.c \
+					# srcs/builtins/export2.c
 					
 					 
 
