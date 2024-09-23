@@ -6,7 +6,7 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 14:10:03 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/20 21:31:44 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/09/23 16:09:32 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char	**get_paths_from_env(t_shell *shell)
 		return (NULL);
 	}
 	paths = ft_split(path, ':');
-	free(path);
+	// free(path);
 	if (!paths)
 	{
 		perror("ft_split failed");

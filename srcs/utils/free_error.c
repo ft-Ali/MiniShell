@@ -6,31 +6,30 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 14:44:58 by jpointil          #+#    #+#             */
-/*   Updated: 2024/09/20 17:04:34 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/09/23 16:06:07 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void free_env(t_env **env)
+void	free_env(t_env **env)
 {
-    t_env   *tmp;
-    t_env   *next;
+	t_env	*tmp;
+	t_env	*next;
 
-    if (!env || !*env)
-        return;
-    tmp = *env;
-    while (tmp)
-    {
-        next = tmp->next;
-        free(tmp->value);   // No need to check if it's NULL
-        free(tmp->key);     // No need to check if it's NULL
-        free(tmp);
-        tmp = next;
-    }
-    *env = NULL;  // Set the original pointer to NULL
+	if (!env || !*env)
+		return ;
+	tmp = *env;
+	while (tmp)
+	{
+	    next = tmp->next;
+	    free(tmp->value);
+	    free(tmp->key);
+	    free(tmp);
+	    tmp = next;
+	}
+	*env = NULL;
 }
-
 
 void	free_shell(t_shell *shell)
 {
@@ -44,7 +43,7 @@ void	free_shell(t_shell *shell)
 		free_path(shell->path);
 	if (shell->cmd)
 		free_cmd(shell->cmd);
-	//free(shell);
+	// free(shell);
 }
 
 void	gfree(void *ptr, t_struct flag)
