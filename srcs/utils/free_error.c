@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_error.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jpointil <jpointil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 14:44:58 by jpointil          #+#    #+#             */
-/*   Updated: 2024/09/23 16:06:07 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/09/23 17:37:25 by jpointil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ void	free_shell(t_shell *shell)
 		free_path(shell->path);
 	if (shell->cmd)
 		free_cmd(shell->cmd);
+	if (shell->input)
+		free(shell->input);
 	// free(shell);
 }
 

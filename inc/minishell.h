@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jpointil <jpointil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 13:59:41 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/23 16:51:39 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/09/23 17:49:18 by jpointil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,6 +141,7 @@ typedef struct s_shell
 	int				excode;
 	t_path			*path;
 	t_cmd			*cmd;
+	char			*input;
 	int				last_exit_status;
 }					t_shell;
 
@@ -164,6 +165,7 @@ void				init_sig(void);
 
 char				*strjoin_free(char *s1, char *s2);
 char				*ft_strjoin_char(char *s, char c);
+int					find_end_index(const char *s1, const char *s2, int i);
 
 /*------------- EXPANDER -------------*/
 

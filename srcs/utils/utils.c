@@ -3,14 +3,42 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jules <jules@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jpointil <jpointil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 09:42:09 by jules             #+#    #+#             */
-/*   Updated: 2024/09/10 12:16:13 by jules            ###   ########.fr       */
+/*   Updated: 2024/09/23 17:49:13 by jpointil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+int	find_end_index(const char *s1, const char *s2, int i)
+{
+	char *pos = strstr(s2, s1);
+	if (pos)
+		return ((pos - s2) + strlen(s1) - 1);
+	return (i);
+}
+
+char	*ft_strstr(const char *s1, const char *s2)
+{
+	int	i;
+	int	j;
+
+	if (!s2[0])
+		return ((char *)s1);
+	i = 0;
+	while (s1[i])
+	{
+		j = 0;
+		while (s1[i + j] && s2[j] && s1[i + j] == s2[j])
+			j++;
+		if (!s2[j])
+			return ((char *)&s1[i]);
+		i++;
+	}
+	return (NULL);
+}
 
 char	*strjoin_free(char *s1, char *s2)
 {
