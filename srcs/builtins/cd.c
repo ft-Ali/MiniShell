@@ -6,7 +6,7 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 11:12:28 by jules             #+#    #+#             */
-/*   Updated: 2024/09/19 17:11:55 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/09/23 12:40:04 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	exec_cd(t_shell *shell, char *dir)
 		return ;
 	}
 	update_pwd(shell, tmp);
-	//update_env(shell);
+	// update_env(shell->env, "OLDPWD", tmp);
 	
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpointil <jpointil@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 13:59:28 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/23 11:38:01 by jpointil         ###   ########.fr       */
+/*   Updated: 2024/09/23 14:09:00 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,10 +62,10 @@ int	main(int c, char **v, char **envp)
 		{
 			add_history(input);
 			lex = lexer(&shell, input);
-			print_lexer_list(lex);
+			// print_lexer_list(lex);
 			expander(lex);
 			parser(&shell, &shell.cmd, lex);
-			print_parser(shell.cmd);
+			// print_parser(shell.cmd);
 			exec(&shell, shell.cmd);
 			// free_lex(lex);
 			// free_cmd(shell.cmd);

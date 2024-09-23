@@ -6,7 +6,7 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 13:59:41 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/20 21:34:07 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/09/23 14:23:32 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -214,7 +214,7 @@ int					count_env_entries(t_env *env_list);
 /*------------- BUILTINS -------------*/
 
 void				bi_exit(t_shell *shell, t_cmd *cmd);
-void				bi_echo(t_shell *shell, t_cmd *cmd);
+void				bi_echo(t_shell *shell, t_cmd *cmd, int fd_out, t_fd *fd);
 void				bi_cd(t_shell *shell, t_cmd *cmd);
 void				bi_env(t_shell *shell, t_cmd *cmd);
 void				bi_export(t_shell *shell, t_cmd *cmd);
@@ -257,10 +257,10 @@ void				execute_child(t_shell *shell, t_cmd *cmd, t_fd *fds);
 char				**get_paths_from_env(t_shell *shell);
 void				execute_process(t_shell *shell, t_cmd *current_cmd,
 						t_fd *fds);
-int				handle_builtins(t_shell *shell, t_cmd *current_cmd);
+int					handle_builtins(t_shell *shell, t_cmd *current_cmd);
 void				init_fds_and_redirections(t_shell *shell,
 						t_cmd *current_cmd, t_fd *fds);
-int	is_builtin_command(const char *command);
+int					is_builtin_command(const char *command);
 /*--------------- FDS ------------------*/
 
 void				init_fds(t_fd *fds);
