@@ -6,7 +6,7 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 13:30:48 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/23 12:40:23 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/09/23 15:40:03 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,4 +57,3 @@ char	**env_list_to_envp(t_env *env_list)
 	envp[i] = NULL;
 	return (envp);
 }
-

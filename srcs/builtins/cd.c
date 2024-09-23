@@ -6,7 +6,7 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 11:12:28 by jules             #+#    #+#             */
-/*   Updated: 2024/09/23 12:40:04 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/09/23 15:40:20 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	exec_cd(t_shell *shell, char *dir)
 		return ;
 	}
 	update_pwd(shell, tmp);
-	// update_env(shell->env, "OLDPWD", tmp);
+	// uodate_env(shell, tmp);
 	
 }
 
@@ -88,6 +88,7 @@ void	cd_home(t_shell *shell)
 
 void	bi_cd(t_shell *shell, t_cmd *cmd)
 {
+	printf("cd ok\n");
 	if (cmd->commands[1] && cmd->commands[2])
 	{
 		ft_putstr_fd("minishell: cd: too many arguments\n", 2);

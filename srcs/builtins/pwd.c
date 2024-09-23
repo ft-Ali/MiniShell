@@ -3,20 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpointil <jpointil@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 12:28:49 by jules             #+#    #+#             */
-/*   Updated: 2024/09/23 10:12:33 by jpointil         ###   ########.fr       */
+/*   Updated: 2024/09/23 15:57:38 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	bi_pwd(t_shell *shell, t_cmd *cmd)
+void	bi_pwd(t_shell *shell, t_cmd *cmd, int output, t_fd *fds)
 {
 	char *pwd;
 
 	//printf("pwd ok\n");
+	
 	pwd = getcwd(NULL, 0);
 	if (!pwd)
 		perror("pwd: error retrieving current directory: getcwd: \
@@ -30,10 +31,11 @@ void	bi_pwd(t_shell *shell, t_cmd *cmd)
 	}
 	else
 	{
-		ft_putstr_fd(pwd, 1);
-		ft_putstr_fd("\n", 1);
+		ft_putstr_fd(pwd, output);
+		ft_putstr_fd("\n", output);
 	}
 	free(pwd);
 	free_shell(shell);
+	close_all_fds(fds);
 	exit(0);
 }

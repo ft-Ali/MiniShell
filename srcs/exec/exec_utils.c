@@ -6,7 +6,7 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 15:01:16 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/23 14:24:30 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/09/23 15:56:13 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@ void	run_builtins(t_shell *shell, t_cmd *cmd, t_fd *fds)
 		bi_echo(shell, cmd, fds->output, fds);
 	else if (ft_strncmp(cmd->commands[0], "env", 3) == 0
 		&& ft_strlen(cmd->commands[0]) == 3)
-		bi_env(shell, cmd);
+		bi_env(shell, cmd, fds->output, fds);
 	else if (ft_strncmp(cmd->commands[0], "pwd", 3) == 0
 		&& ft_strlen(cmd->commands[0]) == 3)
-		bi_pwd(shell, cmd);
+		bi_pwd(shell, cmd, fds->output, fds);
 }
 
 void	child_builtins(t_shell *shell, t_fd *fds)

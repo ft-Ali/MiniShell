@@ -6,7 +6,7 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 13:59:41 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/23 14:23:32 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/09/23 15:55:53 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -216,9 +216,9 @@ int					count_env_entries(t_env *env_list);
 void				bi_exit(t_shell *shell, t_cmd *cmd);
 void				bi_echo(t_shell *shell, t_cmd *cmd, int fd_out, t_fd *fd);
 void				bi_cd(t_shell *shell, t_cmd *cmd);
-void				bi_env(t_shell *shell, t_cmd *cmd);
+void				bi_env(t_shell *shell, t_cmd *cmd, int output, t_fd *fds);
 void				bi_export(t_shell *shell, t_cmd *cmd);
-void				bi_pwd(t_shell *shell, t_cmd *cmd);
+void				bi_pwd(t_shell *shell, t_cmd *cmd, int output, t_fd *fds);
 void				bi_unset(t_shell *shell, t_cmd *cmd);
 
 /*--------------- ERROR-&-FREE ------------------*/
