@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prints.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jules <jules@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jpointil <jpointil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 09:55:05 by jules             #+#    #+#             */
-/*   Updated: 2024/09/20 15:50:29 by jules            ###   ########.fr       */
+/*   Updated: 2024/09/23 11:26:12 by jpointil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ void	print_env_list(t_env *env_list)
 
 void	print_env(t_env *env)
 {
-	printf("Printing env\n");
+	printf(RED "Printing env\n" RESET);
 	if(!env)
 	{
 		printf("Empty env\n");

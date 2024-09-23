@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jpointil <jpointil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 13:20:42 by jpointil          #+#    #+#             */
-/*   Updated: 2024/09/19 17:55:20 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/09/23 11:37:03 by jpointil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void bi_echo(t_shell *shell, t_cmd *cmd)
     int i;
 
     (void)shell;
-    printf("echo ok\n");
+    //printf("echo ok\n");
     new_line = 0;
     i = newline_check(cmd->commands, &new_line);
     if (cmd->commands[1])
@@ -48,9 +48,10 @@ void bi_echo(t_shell *shell, t_cmd *cmd)
         while (cmd->commands[i])
         {
             if (cmd->commands[i] && !cmd->commands[i + 1])
-                printf("%s", cmd->commands[i++]);
+                printf("%s", cmd->commands[i]);
             else if (cmd->commands[i])
-                printf("%s", cmd->commands[i++]);
+                printf("%s", cmd->commands[i]);
+            i++;
         }
     }
     if (!new_line)

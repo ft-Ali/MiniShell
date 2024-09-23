@@ -3,21 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jules <jules@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jpointil <jpointil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 14:06:07 by jules             #+#    #+#             */
-/*   Updated: 2024/09/20 16:13:53 by jules            ###   ########.fr       */
+/*   Updated: 2024/09/23 11:54:17 by jpointil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	add_or_update_env(t_env *env, const char *key, const char *value)
+void	add_or_update_env(t_env **env, const char *key, const char *value)
 {
 	t_env	*temp;
 	t_env	*new_node;
 
-	temp = env;
+	printf("add_update_env : key : %s, value : %s\n", key, value);
+	temp = *env;
 	while (temp)
 	{
 		if (ft_strncmp(temp->key, key, ft_strlen(temp->key)) == 0)
@@ -33,10 +34,10 @@ void	add_or_update_env(t_env *env, const char *key, const char *value)
 		exit_shell(NULL, "Error: malloc failed");
 	new_node->key = ft_strdup(key);
 	new_node->value = ft_strdup(value);
-	new_node->next = env;
-	if (env)
-		env->prev = new_node;
-	env = new_node;
+	new_node->next = *env;
+	if (*env)
+		(*env)->prev = new_node;
+	*env = new_node;
 }
 
 int	is_valid_identifier(const char *str)
@@ -77,9 +78,10 @@ void	trim_spaces(char *str)
 
 void	handle_identifier(t_env *env, char *arg)
 {
+	printf("handle identifier : %s\n", arg);
 	trim_spaces(arg);
 	if (is_valid_identifier(arg))
-		add_or_update_env(env, arg, "");
+		add_or_update_env(&env, arg, "");
 	else
 		ft_putstr_fd("export: not a valid identifier\n", STDERR_FILENO);
 }
@@ -92,10 +94,12 @@ void	free_joined(char *str)
 
 void	handle_assignment(t_env *env, char *arg, char *equal_sign)
 {
+	printf("handle assignment : %s\n", arg);
 	trim_spaces(arg);
 	trim_spaces(equal_sign + 1);
+	printf("after double trim : %s\n", arg);
 	if (is_valid_identifier(arg))
-		add_or_update_env(env, arg, equal_sign + 1);
+		add_or_update_env(&env, arg, equal_sign + 1);
 	else
 		ft_putstr_fd("export: not a valid identifier\n", STDERR_FILENO);
 }
@@ -106,9 +110,12 @@ bool	process_arg(t_env *env, char *arg, char *next_arg)
 	char	*joined_arg;
 	bool	skip_next;
 
+	printf(YELLOW "entering arg process : %s\n" RESET, arg);
 	skip_next = false;
 	joined_arg = NULL;
 	trim_spaces(arg);
+	printf("arg after trim : %s\n", arg);
+	printf("next arg : %s\n", next_arg);
 	if (arg && arg[ft_strlen(arg) - 1] == '=' && next_arg)
 	{
 		joined_arg = ft_strjoin(arg, next_arg);
@@ -116,6 +123,7 @@ bool	process_arg(t_env *env, char *arg, char *next_arg)
 			return (ft_putstr_fd("Error: malloc\n", STDERR_FILENO), false);
 		arg = joined_arg;
 		skip_next = true;
+		printf("arg aftr join : %s\n", arg);
 	}
 	equal_sign = ft_strchr(arg, '=');
 	if (equal_sign)
@@ -131,9 +139,10 @@ bool	process_arg(t_env *env, char *arg, char *next_arg)
 
 void	bi_export(t_shell *shell, t_cmd *cmd)
 {
-	bool skip;
-	int i;
+	bool	skip;
+	int		i;
 
+	printf(GREEN "entering export\n" RESET);
 	if (!cmd->commands[1])
 		return ;
 	i = 1;
@@ -144,4 +153,5 @@ void	bi_export(t_shell *shell, t_cmd *cmd)
 			i++;
 		i++;
 	}
+	print_env(shell->env);
 }

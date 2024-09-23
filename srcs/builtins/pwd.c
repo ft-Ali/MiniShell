@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jpointil <jpointil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 12:28:49 by jules             #+#    #+#             */
-/*   Updated: 2024/09/19 17:54:06 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/09/23 10:12:33 by jpointil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	bi_pwd(t_shell *shell, t_cmd *cmd)
 {
 	char *pwd;
 
-	printf("pwd ok\n");
+	//printf("pwd ok\n");
 	pwd = getcwd(NULL, 0);
 	if (!pwd)
 		perror("pwd: error retrieving current directory: getcwd: \
