@@ -6,7 +6,7 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 13:59:28 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/23 14:09:00 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/09/23 16:17:20 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,7 @@ int	main(int c, char **v, char **envp)
 	(void)v;
 	init_shell(&shell);
 	init_sig();
-	load_env(&shell, envp); // Charge envp dans shell.env
-	// print_env(shell.env);                   // Affiche env
+	load_env(&shell, envp);
 	while (1)
 	{
 		input = readline(CYAN "$ ->" RESET);
@@ -62,14 +61,9 @@ int	main(int c, char **v, char **envp)
 		{
 			add_history(input);
 			lex = lexer(&shell, input);
-			// print_lexer_list(lex);
 			expander(lex);
 			parser(&shell, &shell.cmd, lex);
-			// print_parser(shell.cmd);
 			exec(&shell, shell.cmd);
-			// free_lex(lex);
-			// free_cmd(shell.cmd);
-			// free_cmd(shell.cmd);
 			free(input);
 			free_loop(&shell);
 		}

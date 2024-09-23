@@ -6,13 +6,13 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 15:05:50 by jpointil          #+#    #+#             */
-/*   Updated: 2024/09/19 17:51:36 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/09/23 16:20:45 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int		exit_options(t_cmd *cmd, int *flag)
+int	exit_options(t_cmd *cmd, int *flag)
 {
 	int	i;
 
@@ -42,8 +42,8 @@ int		exit_options(t_cmd *cmd, int *flag)
 
 void	bi_exit(t_shell *shell, t_cmd *cmd)
 {
-	int ext;
-	int flag;
+	int	ext;
+	int	flag;
 
 	flag = 0;
 	if (cmd->commands[1])

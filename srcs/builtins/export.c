@@ -6,13 +6,14 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 14:06:07 by jules             #+#    #+#             */
-/*   Updated: 2024/09/23 12:05:39 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/09/23 16:20:55 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	add_or_update_env(t_env **env, const char *key, const char *value, t_shell *shell)
+void	add_or_update_env(t_env **env, const char *key, const char *value,
+		t_shell *shell)
 {
 	t_env	*temp;
 	t_env	*new_node;
@@ -76,12 +77,12 @@ void	trim_spaces(char *str)
 	}
 }
 
-void	handle_identifier(t_env *env, char *arg,t_shell *shell)
+void	handle_identifier(t_env *env, char *arg, t_shell *shell)
 {
 	printf("handle identifier : %s\n", arg);
 	trim_spaces(arg);
 	if (is_valid_identifier(arg))
-		add_or_update_env(&env, arg, "",shell);
+		add_or_update_env(&env, arg, "", shell);
 	else
 		ft_putstr_fd("export: not a valid identifier\n", STDERR_FILENO);
 }
@@ -92,7 +93,8 @@ void	free_joined(char *str)
 		free(str);
 }
 
-void	handle_assignment(t_env *env, char *arg, char *equal_sign, t_shell *shell)
+void	handle_assignment(t_env *env, char *arg, char *equal_sign,
+		t_shell *shell)
 {
 	printf("handle assignment : %s\n", arg);
 	trim_spaces(arg);
@@ -148,7 +150,8 @@ void	bi_export(t_shell *shell, t_cmd *cmd)
 	i = 1;
 	while (cmd->commands[i])
 	{
-		skip = process_arg(shell->env, cmd->commands[i], cmd->commands[i + 1], shell);
+		skip = process_arg(shell->env, cmd->commands[i], cmd->commands[i + 1],
+				shell);
 		if (skip)
 			i++;
 		i++;

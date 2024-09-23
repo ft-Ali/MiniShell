@@ -6,7 +6,7 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 13:20:42 by jpointil          #+#    #+#             */
-/*   Updated: 2024/09/23 14:30:29 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/09/23 16:18:57 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ void	bi_echo(t_shell *shell, t_cmd *cmd, int fd_out, t_fd *fd)
 	int	i;
 
 	(void)shell;
-	// printf("echo ok\n");
 	new_line = 0;
 	i = newline_check(cmd->commands, &new_line);
 	if (cmd->commands[1])
