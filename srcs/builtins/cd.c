@@ -6,7 +6,7 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 11:12:28 by jules             #+#    #+#             */
-/*   Updated: 2024/09/23 16:38:56 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/09/23 16:46:36 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,14 @@ void	update_env(t_env *env, const char *key, char *new_value)
 void	update_pwd(t_shell *shell, char *old_pwd)
 {
 	t_env	*env_copy;
+	char *pwdd;
 
+	pwdd = getcwd(NULL, 0);
 	env_copy = shell->env;
 	update_env(env_copy, "OLDPWD", old_pwd);
-	update_env(env_copy, "PWD", getcwd(NULL, 0));
+	update_env(env_copy, "PWD", pwdd);
 	free(old_pwd);
+	free(pwdd);
 }
 
 void	exec_cd(t_shell *shell, char *dir)
