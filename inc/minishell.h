@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpointil <jpointil@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 13:59:41 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/23 17:49:18 by jpointil         ###   ########.fr       */
+/*   Updated: 2024/09/23 23:25:39 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,14 +101,7 @@ typedef struct s_cmd
 
 // }
 
-/*------------- EXPANDER -------------*/
 
-typedef struct s_expand
-{
-	char			*input;
-	char			*output;
-	int				pos;
-}					t_expand;
 
 /*------------- ENV -------------*/
 
@@ -121,6 +114,16 @@ typedef struct s_env
 	struct s_env	*next;
 	struct s_env	*prev;
 }					t_env;
+
+/*------------- EXPANDER -------------*/
+
+typedef struct s_expand
+{
+	char			*input;
+	char			*output;
+	int				pos;
+	t_env 			*env;
+}					t_expand;
 
 /*------------- LEXER -------------*/
 
@@ -169,11 +172,11 @@ int					find_end_index(const char *s1, const char *s2, int i);
 
 /*------------- EXPANDER -------------*/
 
-void				expander(t_lex *token);
+void				expander(t_lex *token, t_env *env);
 char				*expand_char(char *result, t_expand *exp);
 int					handle_variable_expansion(t_expand *exp, char **result,
-						char quote);
-char				*expand_var(t_expand *exp);
+						char quote, t_env *env);
+char				*expand_var(t_expand *exp, t_env *env);
 void				handle_quotes(t_expand *exp, char *quote);
 
 /*------------- LEXER -------------*/

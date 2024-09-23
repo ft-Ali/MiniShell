@@ -6,7 +6,7 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 14:13:43 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/20 12:06:08 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/09/23 23:25:25 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	*expand_char(char *result, t_expand *exp)
 	return (joined_result);
 }
 
-char	*expand_var(t_expand *exp)
+char	*expand_var(t_expand *exp, t_env *env)
 {
 	char	*result;
 	char	quote;
@@ -35,16 +35,15 @@ char	*expand_var(t_expand *exp)
 	while (exp->pos < (int)ft_strlen(exp->input))
 	{
 		handle_quotes(exp, &quote);
-		if (exp->input[exp->pos] && handle_variable_expansion(exp, &result,
-				quote))
-			continue ;
+		if (exp->input[exp->pos] && handle_variable_expansion(exp, &result, quote, env))
+            continue;
 		result = expand_char(result, exp);
 		exp->pos++;
 	}
 	return (result);
 }
 
-void	expander(t_lex *token)
+void	expander(t_lex *token, t_env *env)
 {
 	t_expand	exp;
 
@@ -52,7 +51,7 @@ void	expander(t_lex *token)
 	{
 		exp.input = token->word;
 		exp.pos = 0;
-		exp.output = expand_var(&exp);
+		exp.output = expand_var(&exp, env);
 		free(token->word);
 		token->word = exp.output;
 		token = token->next;
