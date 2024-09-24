@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jules <jules@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 13:58:02 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/19 16:46:51 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/09/24 17:27:51 by jules            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	handle_output_redir(t_redir *redir, int fd_out)
  * Gère les redirections d'entrée (fichier ou heredoc).
  * Retourne le descripteur de fichier ou -1 en cas d'erreur.
  */
-int	handle_input_redir(t_redir *redir, int fd_in)
+int	handle_input_redir(t_redir *redir, int fd_in, t_shell *shell)
 {
 	if (fd_in != -2)
 		close(fd_in);
@@ -60,7 +60,7 @@ int	handle_input_redir(t_redir *redir, int fd_in)
 	}
 	else if (redir->token == D_LOWER)  // '<<' heredoc
 	{
-		fd_in = handle_heredoc(redir->file);
+		fd_in = handle_heredoc(redir->file, shell);
 		if (fd_in == -1)
 		{
 			perror("heredoc.tmp");
@@ -76,7 +76,7 @@ int	handle_input_redir(t_redir *redir, int fd_in)
  * Retourne -1 en cas d'erreur,
 	sinon les descripteurs de fichier sont mis à jour.
  */
-void	apply_redirections(t_cmd *cmd, int *fd_in, int *fd_out)
+void	apply_redirections(t_cmd *cmd, int *fd_in, int *fd_out, t_shell *shell)
 {
 	t_redir *redir;
 
@@ -85,7 +85,7 @@ void	apply_redirections(t_cmd *cmd, int *fd_in, int *fd_out)
 	{
 		if (redir->token == LOWER || redir->token == D_LOWER)
 		{
-			*fd_in = handle_input_redir(redir, *fd_in);
+			*fd_in = handle_input_redir(redir, *fd_in, shell);
 		}
 		else if (redir->token == GREATER || redir->token == D_GREATER)
 		{

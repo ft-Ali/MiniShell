@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils_2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jules <jules@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 15:31:04 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/20 21:33:49 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/09/24 17:28:33 by jules            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	init_fds_and_redirections(t_shell *shell, t_cmd *current_cmd, t_fd *fds)
 		if (pipe(fds->pipes) == -1)
 			exit_shell(shell, "Error: pipe");
 	}
-	apply_redirections(current_cmd, &fds->redir[0], &fds->redir[1]);
+	apply_redirections(current_cmd, &fds->redir[0], &fds->redir[1], shell);
 	set_fds(fds);
 }
 

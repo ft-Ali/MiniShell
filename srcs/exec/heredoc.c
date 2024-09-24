@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jules <jules@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 15:00:00 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/20 14:17:31 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/09/24 17:25:48 by jules            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
 // Fonction pour écrire dans le fichier temporaire pendant le heredoc.
-void	loop_here_doc(char *delimiter, int fd) // rajoute de t_shell
+void	loop_here_doc(char *delimiter, int fd, t_shell *shell) // rajoute de t_shell
 {
 	char *line;
 	char *limiter;
@@ -24,14 +24,14 @@ void	loop_here_doc(char *delimiter, int fd) // rajoute de t_shell
 	{
 		line = readline(RED "> " RESET); // Affichage du prompt heredoc
 		// Gestion de l'interruption par Ctrl-C
-		// if (g_signal == SIGINT)
-		// {
-		// 	shell->exit_code = 130;
-		// 	g_signal = 0;
-		// 	shell->skip_here = 1;
-		// Indique qu'on doit ignorer la suite du heredoc
-		// 	break ;
-		// }
+		if (g_sig == SIGINT)
+		{
+			shell->excode = 130;
+			g_sig = 0;
+			//shell->skip_here = 1;
+		//Indique qu'on doit ignorer la suite du heredoc
+			break ;
+		}
 		// Si la ligne est égale au délimiteur, on termine la boucle
 		if (line == NULL || (!ft_strncmp(line, limiter, ft_strlen(line))
 				&& ft_strlen(line) == ft_strlen(limiter) - 1))
@@ -52,7 +52,7 @@ void	loop_here_doc(char *delimiter, int fd) // rajoute de t_shell
 	* Gère la redirection heredoc (<<) en créant un fichier temporaire et en écrivant dedans
  * jusqu'à rencontrer le délimiteur.
  */
-int	handle_heredoc(char *delimiter)
+int	handle_heredoc(char *delimiter, t_shell *shell)
 {
 	char	*file_name;
 	int		fd_out;
@@ -68,7 +68,7 @@ int	handle_heredoc(char *delimiter)
 		free(file_name);
 		return (-1);
 	}
-	loop_here_doc(delimiter, fd_out);
+	loop_here_doc(delimiter, fd_out, shell);
 	close(fd_out);
 	fd_in = open(file_name, O_RDONLY);
 	if (fd_in == -1)

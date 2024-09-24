@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jules <jules@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 13:59:41 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/23 23:25:39 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/09/24 17:28:17 by jules            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -255,11 +255,11 @@ void				print_lexer_list(t_lex *head);
 char				*find_cmd_path(t_shell *shell, char *cmd);
 void				exec(t_shell *shell, t_cmd *cmd);
 void				exec_cmd(t_shell *shell, t_cmd *cmd);
-int					handle_input_redir(t_redir *redir, int fd_in);
+int					handle_input_redir(t_redir *redir, int fd_in, t_shell *shell);
 int					handle_output_redir(t_redir *redir, int fd_out);
-void				apply_redirections(t_cmd *cmd, int *fd_in, int *fd_out);
-int					handle_heredoc(char *delimiter);
-void				loop_here_doc(char *delimiter, int fd);
+void				apply_redirections(t_cmd *cmd, int *fd_in, int *fd_out, t_shell *shell);
+int					handle_heredoc(char *delimiter, t_shell *shell);
+void				loop_here_doc(char *delimiter, int fd, t_shell *shell);
 void				run_builtins(t_shell *shell, t_cmd *cmd, t_fd *fds);
 void				child_builtins(t_shell *shell, t_fd *fds);
 void				execute_child(t_shell *shell, t_cmd *cmd, t_fd *fds);
