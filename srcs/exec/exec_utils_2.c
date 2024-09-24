@@ -6,7 +6,7 @@
 /*   By: jules <jules@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 15:31:04 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/24 17:28:33 by jules            ###   ########.fr       */
+/*   Updated: 2024/09/24 17:40:06 by jules            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,15 @@ int	is_builtin_command(const char *command)
 	return (0);
 }
 
+int	is_dir(const char *path)
+{
+	struct stat	path_stat;
+
+	if (stat(path, &path_stat) != 0)
+		return (0);
+	return (S_ISDIR(path_stat.st_mode));
+}
+
 void	execute_process(t_shell *shell, t_cmd *current_cmd, t_fd *fds)
 {
 	pid_t	pid;
@@ -83,9 +92,9 @@ void	execute_process(t_shell *shell, t_cmd *current_cmd, t_fd *fds)
 	}
 	else if (pid == 0) // Processus enfant
 	{
-		if (is_builtin_command(current_cmd->commands[0])) 
+		if (is_builtin_command(current_cmd->commands[0]))
 		{
-			// Si c'est un builtin, on exécute le builtin dans le processus enfant
+			// Si c'est un builtin,on exécute le builtin dans le processus enfant
 			run_builtins(shell, current_cmd, fds);
 			close_all_fds(fds);
 			exit(0); // On s'assure de terminer le processus après le builtin

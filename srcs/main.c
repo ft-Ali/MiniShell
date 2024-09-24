@@ -6,7 +6,7 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 13:59:28 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/23 23:28:49 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/09/24 15:48:59 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,10 @@ int	main(int c, char **v, char **envp)
 		{
 			add_history(input);
 			lex = lexer(&shell, input);
+			// print_lexer_list(lex);
 			expander(lex, shell.env);
 			parser(&shell, &shell.cmd, lex);
+			// print_parser(shell.cmd);
 			// init_shell_input(&shell, input);
 			exec(&shell, shell.cmd);
 			free(input);

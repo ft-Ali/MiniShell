@@ -6,7 +6,7 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 15:01:16 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/23 15:56:13 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/09/24 16:49:02 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,32 @@ void	child_builtins(t_shell *shell, t_fd *fds)
 		(close_all_fds(fds), exit_shell(shell, "Error : dup2"));
 }
 
+char	*get_cmd_path(t_shell *shell, t_cmd *cmd, t_fd *fds)
+{
+	// Vérifie si le chemin contient un slash ('/') et est un répertoire
+	if (ft_strchr(cmd->commands[0], '/') != NULL)
+	{
+		if (is_dir(cmd->commands[0]))
+		{
+			ft_putstr_fd(cmd->commands[0], STDOUT_FILENO);
+			ft_putstr_fd(": Is a directory\n", STDOUT_FILENO);
+			shell->excode = 126;
+			close_all_fds(fds);
+			exit_shell(shell, ""); // Arrête l'exécution car c'est un répertoire
+		}
+		else if (access(cmd->commands[0], F_OK | X_OK) == 0) // Vérifie l'accès
+			return (ft_strdup(cmd->commands[0]));           
+				// Renvoie le chemin absolu
+	}
+	else
+	{
+		// Si ce n'est pas un chemin absolu,cherche le chemin de la commande dans les PATH
+		return (find_cmd_path(shell, cmd->commands[0]));
+	}
+	return (NULL);
+		// Renvoie NULL si la commande n'est pas trouvée ou non exécutable
+}
+
 void	free_envp(char **envp)
 {
 	int	i;
@@ -60,5 +86,5 @@ void	execute_child(t_shell *shell, t_cmd *cmd, t_fd *fds)
 		if (dup2(fds->output, STDOUT_FILENO) == -1)
 			(close_all_fds(fds), exit_shell(shell, ""));
 	close_all_fds(fds);
-	exec_cmd(shell, cmd);
+	exec_cmd(shell, cmd, fds);
 }

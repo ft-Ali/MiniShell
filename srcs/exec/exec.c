@@ -6,7 +6,7 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 14:10:03 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/23 16:09:32 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/09/24 16:48:09 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,11 @@ char	*find_cmd_path(t_shell *shell, char *cmd)
 		full_path = ft_strjoin(paths[i], "/");
 		free(paths[i]);
 		full_path = strjoin_free(full_path, cmd);
+		printf("full_path_3: %s\n", full_path);
 		if (access(full_path, X_OK) == 0)
 		{
 			free(paths);
+			printf("full_path 2: %s\n", full_path);
 			return (full_path);
 		}
 		free(full_path);
@@ -62,28 +64,27 @@ char	*find_cmd_path(t_shell *shell, char *cmd)
 }
 
 // Exécuter une commande avec gestion des erreurs
-void	exec_cmd(t_shell *shell, t_cmd *cmd)
+void	exec_cmd(t_shell *shell, t_cmd *cmd, t_fd *fds)
 {
 	char	**envp;
 
 	if (!cmd || !cmd->commands[0])
 		return ;
 	envp = env_list_to_envp(shell->env);
-	cmd->cmd_path = find_cmd_path(shell, cmd->commands[0]);
+	if (!cmd || !cmd->commands || cmd->commands[0][0] == '\0')
+		exit_shell(shell, "");
+	cmd->cmd_path = get_cmd_path(shell, cmd, fds);
 	if (!cmd->cmd_path)
 	{
 		free_envp(envp);
 		printf("%s: command not found\n", cmd->commands[0]);
 		exit_shell(shell, "");
-		
 	}
 	if (execve(cmd->cmd_path, cmd->commands, envp) == -1)
 	{
 		ft_free_split(envp);
 		exit_shell(shell, "Error : execve");
 	}
-	// free(cmd_path);
-	// free_envp(envp);
 }
 
 void	exec(t_shell *shell, t_cmd *cmd_list)
@@ -99,8 +100,10 @@ void	exec(t_shell *shell, t_cmd *cmd_list)
 		init_fds_and_redirections(shell, current_cmd, &fds);
 		if (current_cmd->commands && current_cmd->commands[0])
 		{
-			if (!(handle_builtins(shell, current_cmd))) // Exécuter les builtins dans le processus parent
-				execute_process(shell, current_cmd, &fds); // Exécuter les commandes dans le processus enfant
+			if (!(handle_builtins(shell, current_cmd)))   
+				// Exécuter les builtins dans le processus parent
+				execute_process(shell, current_cmd, &fds);
+					// Exécuter les commandes dans le processus enfant
 		}
 		close_fds_parent(&fds);
 		fds.input = fds.pipes[0];
