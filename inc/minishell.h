@@ -6,7 +6,7 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 13:59:41 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/23 23:25:39 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/09/24 16:47:19 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,8 +101,6 @@ typedef struct s_cmd
 
 // }
 
-
-
 /*------------- ENV -------------*/
 
 typedef struct s_env
@@ -122,7 +120,7 @@ typedef struct s_expand
 	char			*input;
 	char			*output;
 	int				pos;
-	t_env 			*env;
+	t_env			*env;
 }					t_expand;
 
 /*------------- LEXER -------------*/
@@ -254,7 +252,7 @@ void				print_lexer_list(t_lex *head);
 
 char				*find_cmd_path(t_shell *shell, char *cmd);
 void				exec(t_shell *shell, t_cmd *cmd);
-void				exec_cmd(t_shell *shell, t_cmd *cmd);
+void				exec_cmd(t_shell *shell, t_cmd *cmd, t_fd *fds);
 int					handle_input_redir(t_redir *redir, int fd_in);
 int					handle_output_redir(t_redir *redir, int fd_out);
 void				apply_redirections(t_cmd *cmd, int *fd_in, int *fd_out);
@@ -270,6 +268,8 @@ int					handle_builtins(t_shell *shell, t_cmd *current_cmd);
 void				init_fds_and_redirections(t_shell *shell,
 						t_cmd *current_cmd, t_fd *fds);
 int					is_builtin_command(const char *command);
+int					is_dir(const char *path);
+char				*get_cmd_path(t_shell *shell, t_cmd *cmd, t_fd *fds);
 /*--------------- FDS ------------------*/
 
 void				init_fds(t_fd *fds);
