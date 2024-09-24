@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jules <jules@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 14:10:03 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/24 16:48:09 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/09/24 17:44:20 by jules            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,11 @@ char	*find_cmd_path(t_shell *shell, char *cmd)
 		full_path = ft_strjoin(paths[i], "/");
 		free(paths[i]);
 		full_path = strjoin_free(full_path, cmd);
-		printf("full_path_3: %s\n", full_path);
+		// printf("full_path_3: %s\n", full_path);
 		if (access(full_path, X_OK) == 0)
 		{
 			free(paths);
-			printf("full_path 2: %s\n", full_path);
+			// printf("full_path 2: %s\n", full_path);
 			return (full_path);
 		}
 		free(full_path);

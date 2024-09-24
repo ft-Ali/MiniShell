@@ -6,7 +6,7 @@
 /*   By: jules <jules@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 13:59:41 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/24 17:38:37 by jules            ###   ########.fr       */
+/*   Updated: 2024/09/24 17:42:54 by jules            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -253,7 +253,7 @@ void				print_lexer_list(t_lex *head);
 char				*find_cmd_path(t_shell *shell, char *cmd);
 void				exec(t_shell *shell, t_cmd *cmd);
 void				exec_cmd(t_shell *shell, t_cmd *cmd, t_fd *fds);
-int					handle_input_redir(t_redir *redir, int fd_in);
+int					handle_input_redir(t_redir *redir, int fd_in, t_shell *shell);
 int					handle_output_redir(t_redir *redir, int fd_out);
 void				apply_redirections(t_cmd *cmd, int *fd_in, int *fd_out, t_shell *shell);
 int					handle_heredoc(char *delimiter, t_shell *shell);
