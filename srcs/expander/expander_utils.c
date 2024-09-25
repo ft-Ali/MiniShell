@@ -6,7 +6,7 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 13:40:08 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/25 15:39:54 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/09/25 15:42:54 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ int	handle_variable_expansion(t_expand *exp, char **result, char quote,
 	char	*variable_value;
 	int		start;
 
+	if(!exp->input[exp->pos])
+		return (0);
 	if(exp->input[exp->pos] == '$')
 	{
 		*result = ft_strjoin_free_n(*result, "$");
