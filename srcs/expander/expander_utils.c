@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jpointil <jpointil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 13:40:08 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/25 15:42:54 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/09/25 16:04:31 by jpointil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,24 +52,22 @@ int	handle_variable_expansion(t_expand *exp, char **result, char quote,
 	char	*variable_value;
 	int		start;
 
-	if(!exp->input[exp->pos])
-		return (0);
-	if(exp->input[exp->pos] == '$')
-	{
-		*result = ft_strjoin_free_n(*result, "$");
-		exp->pos++;
-		return (1);	
-	}
 	if (exp->input[exp->pos] == '$' && quote != '\'')
 	{
 		exp->pos++;
+		if (exp->input[exp->pos] == '\0' || ft_isspace(exp->input[exp->pos]))
+		{
+			*result = ft_strjoin_free_n(*result, "$");
+			return (1);
+		}
 		start = exp->pos;
 		while (ft_isdigit(exp->input[exp->pos])
 			|| ft_isalpha(exp->input[exp->pos]) || exp->input[exp->pos] == '_')
 			exp->pos++;
 		variable_name = ft_strndup(exp->input + start, exp->pos - start);
 		variable_value = get_custom_env(env, variable_name);
-		*result = ft_strjoin_free_n(*result, variable_value);
+		if (variable_value)
+			*result = ft_strjoin_free_n(*result, variable_value);
 		free(variable_name);
 		return (1);
 	}

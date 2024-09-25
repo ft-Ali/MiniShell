@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jpointil <jpointil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 13:59:28 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/25 15:36:48 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/09/25 16:17:47 by jpointil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,7 @@ int	main(int c, char **v, char **envp)
 	if (c != 1)
 		return (printf("Error : no args needed\n"), 0);
 	(void)v;
-	init_shell(&shell);
-	init_sig();
+	(init_shell(&shell), init_sig());
 	load_env(&shell, envp);
 	while (1)
 	{
@@ -71,12 +70,8 @@ int	main(int c, char **v, char **envp)
 		{
 			add_history(input);
 			lex = lexer(&shell, input);
-			// parse_quotes(input);
-			// print_lexer_list(lex);
 			expander(lex, shell.env);
 			parser(&shell, &shell.cmd, lex);
-			// print_parser(shell.cmd);
-			// init_shell_input(&shell, input);
 			exec(&shell, shell.cmd);
 			free(input);
 			free_loop(&shell);

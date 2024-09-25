@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jpointil <jpointil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 14:05:44 by jpointil          #+#    #+#             */
-/*   Updated: 2024/09/23 16:52:58 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/09/25 15:56:08 by jpointil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	add_or_update_env(t_env **env, const char *key, const char *value,
 	if (*env)
 		(*env)->prev = new_node;
 	*env = new_node;
-    shell->env = *env;
+	shell->env = *env;
 }
 
 void	trim_spaces(char *str)

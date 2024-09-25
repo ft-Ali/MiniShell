@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jpointil <jpointil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 14:13:43 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/25 14:42:02 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/09/25 16:38:33 by jpointil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,12 @@ char	*expand_var(t_expand *exp, t_env *env)
 	while (exp->pos < (int)ft_strlen(exp->input))
 	{
 		handle_quotes(exp, &quote);
-		if (exp->input[exp->pos] && handle_variable_expansion(exp, &result, quote, env))
-            continue;
+		if (exp->input[exp->pos] && handle_variable_expansion(exp, &result,
+				quote, env))
+			continue ;
 		result = expand_char(result, exp);
 		exp->pos++;
 	}
-	
 	return (result);
 }
 

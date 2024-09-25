@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jpointil <jpointil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 12:04:31 by jules             #+#    #+#             */
-/*   Updated: 2024/09/19 18:49:52 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/09/25 15:57:43 by jpointil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void    bi_unset(t_shell *shell, t_cmd * cmd)
+void	bi_unset(t_shell *shell, t_cmd *cmd)
 {
 	int		i;
 	t_env	*env;

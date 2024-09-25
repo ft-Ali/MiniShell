@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_list.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jpointil <jpointil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 13:30:48 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/23 15:40:03 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/09/25 16:01:15 by jpointil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,19 +27,16 @@ int	count_env_entries(t_env *env_list)
 	return (count);
 }
 
-char	**env_list_to_envp(t_env *env_list)
+char	**env_list_to_envp(t_env *env_list, int i, int size)
 {
-	int		size;
 	char	**envp;
 	t_env	*tmp;
-	int		i;
 
 	size = count_env_entries(env_list);
 	envp = (char **)malloc(sizeof(char *) * (size + 1));
 	if (!envp)
 		return (NULL);
 	tmp = env_list;
-	i = 0;
 	while (tmp)
 	{
 		if (!tmp->isunset)

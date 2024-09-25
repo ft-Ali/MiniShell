@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jpointil <jpointil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 13:59:41 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/25 15:41:14 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/09/25 16:03:10 by jpointil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -213,7 +213,7 @@ void				add_env_entry(t_shell *shell, t_env *node, char **env_vars,
 void				create_oldpwd(t_shell *shell);
 void				load_env(t_shell *shell, char **env_vars);
 char				*get_value_by_key(const char *key, t_env *env);
-char				**env_list_to_envp(t_env *env_list);
+char				**env_list_to_envp(t_env *env_list, int i, int size);
 int					count_env_entries(t_env *env_list);
 
 /*------------- BUILTINS -------------*/
@@ -221,6 +221,7 @@ int					count_env_entries(t_env *env_list);
 void				bi_exit(t_shell *shell, t_cmd *cmd);
 void				bi_echo(t_shell *shell, t_cmd *cmd, int fd_out, t_fd *fd);
 void				bi_cd(t_shell *shell, t_cmd *cmd);
+int					dir_check(t_shell *shell, t_cmd *cmd);
 void				bi_env(t_shell *shell, t_cmd *cmd, int output, t_fd *fds);
 void				bi_export(t_shell *shell, t_cmd *cmd);
 void				add_or_update_env(t_env **env, const char *key,

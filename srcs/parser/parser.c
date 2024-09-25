@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jpointil <jpointil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 12:04:22 by jpointil          #+#    #+#             */
-/*   Updated: 2024/09/25 13:38:43 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/09/25 16:44:22 by jpointil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,10 @@ void	syntax_analyser(t_shell *shell, t_lex *lex)
 	{
 		if (tmp->token == PIPE && (!tmp->next || tmp->next->token == PIPE))
 			exit_shell(shell, "Error: syntax error near unexpected token");
-			//ou relancer la boucle
 		if ((tmp->token == GREATER || tmp->token == D_GREATER
 				|| tmp->token == LOWER || tmp->token == D_LOWER) && (!tmp->next
 				|| tmp->next->token != WORD))
 			exit_shell(shell, "Error: syntax error near unexpected token");
-			//ou relancer la boucle
 		tmp = tmp->next;
 	}
 }
@@ -72,17 +70,9 @@ t_cmd	*rec_parse(t_shell *shell, t_lex *lex, t_cmd *prev)
 
 void	parser(t_shell *shell, t_cmd **cmd, t_lex *lex)
 {
-	// int i;
-
-	// i = 0;
 	syntax_analyser(shell, lex);
 	*cmd = rec_parse(shell, lex, NULL);
 	free_lex(lex);
-	// while ((*cmd)->commands[i])
-	// {
-	// 	printf("%s\n", (*cmd)->commands[i]);
-	// 	i++;
-	// }
 }
 
 /*fonctionnement rec parse :

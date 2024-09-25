@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fds.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jpointil <jpointil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 13:42:42 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/20 16:18:18 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/09/25 16:47:02 by jpointil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,6 @@ void	init_fds(t_fd *fds)
 	fds->redir[1] = -2;
 }
 
-/**
- * Ajuste les descripteurs de fichiers selon les redirections et les pipes.
- * Les pipes sont fermés si les redirections prennent le dessus.
- */
 void	set_fds(t_fd *fd)
 {
 	if (fd->pipes[1] != -2)
@@ -67,15 +63,16 @@ void	close_fds_parent(t_fd *fds)
 		close(fds->output);
 }
 
-// Exécuter une liste de commandes en boucle avec gestion des redirections et des erreurs
 void	wait_child(t_shell *shell)
 {
-	int status;
-	pid_t pid;
+	int		status;
+	pid_t	pid;
 
-	// Attendre que tous les processus enfants se terminent
-	while ((pid = wait(&status)) > 0)
+	while (1)
 	{
+		pid = wait(&status);
+		if (pid <= 0)
+			break ;
 		if (WIFEXITED(status))
 		{
 			shell->excode = WEXITSTATUS(status);

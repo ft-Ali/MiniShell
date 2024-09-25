@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils_2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jules <jules@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jpointil <jpointil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 15:31:04 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/24 17:40:06 by jules            ###   ########.fr       */
+/*   Updated: 2024/09/25 16:12:26 by jpointil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ int	handle_builtins(t_shell *shell, t_cmd *current_cmd)
 	}
 	return (0);
 }
+
 int	is_builtin_command(const char *command)
 {
 	if (ft_strncmp(command, "exit", 4) == 0 && ft_strlen(command) == 4)
@@ -90,20 +91,15 @@ void	execute_process(t_shell *shell, t_cmd *current_cmd, t_fd *fds)
 		close_all_fds(fds);
 		exit_shell(shell, "Error: Fork");
 	}
-	else if (pid == 0) // Processus enfant
+	else if (pid == 0)
 	{
 		if (is_builtin_command(current_cmd->commands[0]))
 		{
-			// Si c'est un builtin,on exécute le builtin dans le processus enfant
 			run_builtins(shell, current_cmd, fds);
 			close_all_fds(fds);
-			exit(0); // On s'assure de terminer le processus après le builtin
+			exit(0);
 		}
 		else
-		{
-			// Sinon, on exécute une commande externe
 			execute_child(shell, current_cmd, fds);
-		}
 	}
-	// Le parent continue ici après fork()
 }

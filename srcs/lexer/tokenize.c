@@ -3,20 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jpointil <jpointil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/29 13:27:25 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/08/29 13:27:25 by alsiavos         ###   ########.fr       */
+/*   Created: 2024/09/25 16:43:20 by jpointil          #+#    #+#             */
+/*   Updated: 2024/09/25 16:43:20 by jpointil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-
 void	add_new_token(t_shell *shell, t_lex **lexer, int token_type)
 {
-	t_lex *new_token;
-	t_lex *current;
+	t_lex	*new_token;
+	t_lex	*current;
 
 	new_token = ft_calloc(1, sizeof(t_lex));
 	if (!new_token)
@@ -40,8 +39,8 @@ void	add_new_token(t_shell *shell, t_lex **lexer, int token_type)
 
 void	add_new_word(t_shell *shell, t_lex **lexer, char *str, int indices[2])
 {
-	t_lex *new_word;
-	t_lex *current;
+	t_lex	*new_word;
+	t_lex	*current;
 
 	new_word = ft_calloc(1, sizeof(t_lex));
 	if (!new_word)

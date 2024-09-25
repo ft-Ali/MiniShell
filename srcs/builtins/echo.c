@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jpointil <jpointil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 13:20:42 by jpointil          #+#    #+#             */
-/*   Updated: 2024/09/25 15:40:45 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/09/25 15:55:43 by jpointil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,12 @@
 
 // 	input = shell->input;
 // 	i =	find_end_index(cmd->commands[i], input, i);
-// 	//printf("i : %c, i + 1 : %c, i + 2 : %c\n", input[i], input[i + 1], input[i + 2]);
+// 	//printf("i : %c, i + 1 : %c, i + 2 : %c\n", input[i], input[i + 1], input[i
+//		+ 2]);
 // 	if (input[i + 1] == '\"'  && input[i + 2] == '\"')
 // 		return (0);
 // 	else
-// 		return (1); 
+// 		return (1);
 // }
 
 int	newline_check(char **cmd, int *valid)
