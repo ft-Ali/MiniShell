@@ -6,7 +6,7 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 14:13:43 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/23 23:25:25 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/09/25 14:42:02 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ char	*expand_var(t_expand *exp, t_env *env)
 		result = expand_char(result, exp);
 		exp->pos++;
 	}
+	
 	return (result);
 }
 

@@ -6,7 +6,7 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 09:58:50 by jules             #+#    #+#             */
-/*   Updated: 2024/09/20 16:25:05 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/09/25 14:32:44 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,8 @@ void	free_lex(t_lex *lex)
 		return ;
 	if (lex->word)
 		free(lex->word);
+	// if (lex->token)
+	// 	free(lex->token.D_GREATER);
 	if (lex->next)
 		free_lex(lex->next);
 	free(lex);

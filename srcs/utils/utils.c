@@ -3,22 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpointil <jpointil@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 09:42:09 by jules             #+#    #+#             */
-/*   Updated: 2024/09/23 17:49:13 by jpointil         ###   ########.fr       */
+/*   Updated: 2024/09/25 14:57:19 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
-int	find_end_index(const char *s1, const char *s2, int i)
-{
-	char *pos = strstr(s2, s1);
-	if (pos)
-		return ((pos - s2) + strlen(s1) - 1);
-	return (i);
-}
 
 char	*ft_strstr(const char *s1, const char *s2)
 {
@@ -28,6 +20,8 @@ char	*ft_strstr(const char *s1, const char *s2)
 	if (!s2[0])
 		return ((char *)s1);
 	i = 0;
+	if(!s1)
+		return (NULL);
 	while (s1[i])
 	{
 		j = 0;
@@ -39,6 +33,16 @@ char	*ft_strstr(const char *s1, const char *s2)
 	}
 	return (NULL);
 }
+int	find_end_index(const char *s1, const char *s2, int i)
+{
+	char	*pos;
+
+	pos = ft_strstr(s2, s1);
+	if (pos)
+		return ((pos - s2) + ft_strlen(s1) - 1);
+	return (i);
+}
+
 
 char	*strjoin_free(char *s1, char *s2)
 {

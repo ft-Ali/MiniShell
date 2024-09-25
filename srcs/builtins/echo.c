@@ -6,7 +6,7 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 13:20:42 by jpointil          #+#    #+#             */
-/*   Updated: 2024/09/23 23:37:42 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/09/25 15:40:45 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	bi_echo(t_shell *shell, t_cmd *cmd, int fd_out, t_fd *fd)
 			else if (cmd->commands[i])
 			{
 				ft_putstr_fd(cmd->commands[i], fd_out);
-				ft_putstr_fd("", fd_out);
+				ft_putstr_fd(" ", fd_out);
 			}
 			i++;
 		}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jules <jules@student.42.fr>                +#+  +:+       +#+        */
+/*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 13:59:41 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/24 17:42:54 by jules            ###   ########.fr       */
+/*   Updated: 2024/09/25 15:41:14 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,6 +182,8 @@ void				handle_quotes(t_expand *exp, char *quote);
 t_lex				*lexer(t_shell *shell, char *string);
 int					is_token(char *str, int i);
 int					is_quote(char quote);
+void				process_quote(char *string, int *index, int *count,
+						int *quote_state);
 int					check_opened_quote(char *string);
 void				add_new_word(t_shell *shell, t_lex **lexer, char *str,
 						int indices[2]);
@@ -253,9 +255,11 @@ void				print_lexer_list(t_lex *head);
 char				*find_cmd_path(t_shell *shell, char *cmd);
 void				exec(t_shell *shell, t_cmd *cmd);
 void				exec_cmd(t_shell *shell, t_cmd *cmd, t_fd *fds);
-int					handle_input_redir(t_redir *redir, int fd_in, t_shell *shell);
+int					handle_input_redir(t_redir *redir, int fd_in,
+						t_shell *shell);
 int					handle_output_redir(t_redir *redir, int fd_out);
-void				apply_redirections(t_cmd *cmd, int *fd_in, int *fd_out, t_shell *shell);
+void				apply_redirections(t_cmd *cmd, int *fd_in, int *fd_out,
+						t_shell *shell);
 int					handle_heredoc(char *delimiter, t_shell *shell);
 void				loop_here_doc(char *delimiter, int fd, t_shell *shell);
 void				run_builtins(t_shell *shell, t_cmd *cmd, t_fd *fds);
@@ -270,6 +274,7 @@ void				init_fds_and_redirections(t_shell *shell,
 int					is_builtin_command(const char *command);
 int					is_dir(const char *path);
 char				*get_cmd_path(t_shell *shell, t_cmd *cmd, t_fd *fds);
+
 /*--------------- FDS ------------------*/
 
 void				init_fds(t_fd *fds);

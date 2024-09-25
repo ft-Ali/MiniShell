@@ -6,7 +6,7 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 13:59:28 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/24 15:48:59 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/09/25 15:36:48 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ int	main(int c, char **v, char **envp)
 		{
 			add_history(input);
 			lex = lexer(&shell, input);
+			// parse_quotes(input);
 			// print_lexer_list(lex);
 			expander(lex, shell.env);
 			parser(&shell, &shell.cmd, lex);
