@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpointil <jpointil@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 11:12:28 by jules             #+#    #+#             */
-/*   Updated: 2024/09/25 15:54:33 by jpointil         ###   ########.fr       */
+/*   Updated: 2024/09/26 14:47:22 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,6 @@ void	cd_home(t_shell *shell)
 
 void	bi_cd(t_shell *shell, t_cmd *cmd)
 {
-	printf("cd ok\n");
 	if (cmd->commands[1] && cmd->commands[2])
 	{
 		ft_putstr_fd("minishell: cd: too many arguments\n", 2);

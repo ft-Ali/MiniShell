@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpointil <jpointil@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 14:10:03 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/25 16:18:28 by jpointil         ###   ########.fr       */
+/*   Updated: 2024/09/26 14:48:01 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,7 @@ char	**get_paths_from_env(t_shell *shell)
 
 	path = get_value_by_key("PATH", shell->env);
 	if (!path)
-	{
-		printf("PATH variable not found in env.\n");
 		return (NULL);
-	}
 	paths = ft_split(path, ':');
 	if (!paths)
 	{
