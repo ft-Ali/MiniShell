@@ -6,13 +6,13 @@
 /*   By: jpointil <jpointil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 13:58:02 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/25 16:37:08 by jpointil         ###   ########.fr       */
+/*   Updated: 2024/09/26 11:33:58 by jpointil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int	handle_output_redir(t_redir *redir, int fd_out)
+int	handle_output_redir(t_redir *redir, int fd_out, t_shell *shell)
 {
 	if (fd_out != -2)
 		close(fd_out);
@@ -22,6 +22,7 @@ int	handle_output_redir(t_redir *redir, int fd_out)
 		if (fd_out == -1)
 		{
 			perror(redir->file);
+			shell->excode = 1;
 			return (-1);
 		}
 	}
@@ -31,6 +32,7 @@ int	handle_output_redir(t_redir *redir, int fd_out)
 		if (fd_out == -1)
 		{
 			perror(redir->file);
+			shell->excode = 1;
 			return (-1);
 		}
 	}
@@ -47,6 +49,7 @@ int	handle_input_redir(t_redir *redir, int fd_in, t_shell *shell)
 		if (fd_in == -1)
 		{
 			perror(redir->file);
+			shell->excode = 1;
 			return (-1);
 		}
 	}
@@ -75,7 +78,7 @@ void	apply_redirections(t_cmd *cmd, int *fd_in, int *fd_out, t_shell *shell)
 		}
 		else if (redir->token == GREATER || redir->token == D_GREATER)
 		{
-			*fd_out = handle_output_redir(redir, *fd_out);
+			*fd_out = handle_output_redir(redir, *fd_out, shell);
 		}
 		if (*fd_in == -1 || *fd_out == -1)
 			break ;

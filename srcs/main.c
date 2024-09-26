@@ -6,7 +6,7 @@
 /*   By: jpointil <jpointil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 13:59:28 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/25 16:17:47 by jpointil         ###   ########.fr       */
+/*   Updated: 2024/09/26 11:05:53 by jpointil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,21 @@ void	reset_loop(t_shell *shell)
 		free_cmd(shell->cmd);
 	shell->cmd = NULL;
 	shell->lex = NULL;
+	shell->tmpexcode = shell->excode;
+	shell->excode = 0;
 }
 
 void	exit_shell(t_shell *shell, char *error_msg)
 {
+	int	tmp;
+	if (shell->excode != 0)
+		tmp = shell->excode;
+	else 
+		tmp = shell->tmpexcode;
 	if (error_msg)
 		ft_putstr_fd(error_msg, 2);
 	free_shell(shell);
-	exit(EXIT_FAILURE);
+	exit(tmp);
 }
 
 void	init_shell(t_shell *shell)

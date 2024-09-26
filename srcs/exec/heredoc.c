@@ -6,11 +6,22 @@
 /*   By: jpointil <jpointil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 15:00:00 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/25 16:56:30 by jpointil         ###   ########.fr       */
+/*   Updated: 2024/09/26 12:35:42 by jpointil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+void	here_doc_ctrlc(t_shell *shell)
+{
+	if (g_sig == SIGINT)
+	{
+		shell->excode = 130;
+		g_sig = 0;
+		// close(fd->input);
+		shell->tmpexcode = 130;
+	}
+}
 
 void	loop_here_doc(char *delimiter, int fd, t_shell *shell)
 {
@@ -22,22 +33,16 @@ void	loop_here_doc(char *delimiter, int fd, t_shell *shell)
 	while (1)
 	{
 		line = readline(RED "> " RESET);
-		if (g_sig == SIGINT)
-		{
-			shell->excode = 130;
-			g_sig = 0;
-			break ;
-		}
 		if (line == NULL || (!ft_strncmp(line, limiter, ft_strlen(line))
 				&& ft_strlen(line) == ft_strlen(limiter) - 1))
 		{
 			free(line);
 			break ;
 		}
-		ft_putstr_fd(line, fd);
-		ft_putstr_fd("\n", fd);
+		(ft_putstr_fd(line, fd), ft_putstr_fd("\n", fd));
 		free(line);
 	}
+	here_doc_ctrlc(shell);
 	free(limiter);
 }
 

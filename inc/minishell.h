@@ -6,7 +6,7 @@
 /*   By: jpointil <jpointil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 13:59:41 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/25 16:03:10 by jpointil         ###   ########.fr       */
+/*   Updated: 2024/09/26 12:22:45 by jpointil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,6 +161,7 @@ typedef struct s_shell
 
 void				exit_shell(t_shell *shell, char *error_msg);
 void				init_sig(void);
+bool				get_shell_sig(t_shell *shell);
 
 /*------------- UTILS -------------*/
 
@@ -220,6 +221,7 @@ int					count_env_entries(t_env *env_list);
 
 void				bi_exit(t_shell *shell, t_cmd *cmd);
 void				bi_echo(t_shell *shell, t_cmd *cmd, int fd_out, t_fd *fd);
+void				ft_putstr_fd_e(char *s, int fd, t_shell *shell);
 void				bi_cd(t_shell *shell, t_cmd *cmd);
 int					dir_check(t_shell *shell, t_cmd *cmd);
 void				bi_env(t_shell *shell, t_cmd *cmd, int output, t_fd *fds);
@@ -258,7 +260,8 @@ void				exec(t_shell *shell, t_cmd *cmd);
 void				exec_cmd(t_shell *shell, t_cmd *cmd, t_fd *fds);
 int					handle_input_redir(t_redir *redir, int fd_in,
 						t_shell *shell);
-int					handle_output_redir(t_redir *redir, int fd_out);
+int					handle_output_redir(t_redir *redir, int fd_out,
+						t_shell *shell);
 void				apply_redirections(t_cmd *cmd, int *fd_in, int *fd_out,
 						t_shell *shell);
 int					handle_heredoc(char *delimiter, t_shell *shell);

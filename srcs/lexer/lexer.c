@@ -6,7 +6,7 @@
 /*   By: jpointil <jpointil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 16:38:16 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/25 17:23:04 by jpointil         ###   ########.fr       */
+/*   Updated: 2024/09/26 10:29:46 by jpointil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ t_lex	*lexer(t_shell *shell, char *string)
 		write(STDERR_FILENO, ERR_QUOTE, ft_strlen(ERR_QUOTE));
 		return (lex);
 	}
+	get_shell_sig(shell);
 	process_input(shell, &lex, string);
 	return (lex);
 }

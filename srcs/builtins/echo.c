@@ -6,7 +6,7 @@
 /*   By: jpointil <jpointil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 13:20:42 by jpointil          #+#    #+#             */
-/*   Updated: 2024/09/25 15:55:43 by jpointil         ###   ########.fr       */
+/*   Updated: 2024/09/26 12:27:10 by jpointil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,20 +53,15 @@ void	bi_echo(t_shell *shell, t_cmd *cmd, int fd_out, t_fd *fd)
 	int	new_line;
 	int	i;
 
-	(void)shell;
-	new_line = 0;
+	((void)shell, new_line = 0);
 	i = newline_check(cmd->commands, &new_line);
 	if (cmd->commands[1])
 	{
 		while (cmd->commands[i])
 		{
-			if (cmd->commands[i] && !cmd->commands[i + 1])
-				ft_putstr_fd(cmd->commands[i], fd_out);
-			else if (cmd->commands[i])
-			{
-				ft_putstr_fd(cmd->commands[i], fd_out);
+			ft_putstr_fd_e(cmd->commands[i], fd_out, shell);
+			if (cmd->commands[i] && cmd->commands[i + 1])
 				ft_putstr_fd(" ", fd_out);
-			}
 			i++;
 		}
 	}

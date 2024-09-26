@@ -6,7 +6,7 @@
 /*   By: jpointil <jpointil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 13:42:42 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/25 16:47:02 by jpointil         ###   ########.fr       */
+/*   Updated: 2024/09/26 12:30:12 by jpointil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,17 +74,16 @@ void	wait_child(t_shell *shell)
 		if (pid <= 0)
 			break ;
 		if (WIFEXITED(status))
-		{
 			shell->excode = WEXITSTATUS(status);
-		}
+		if (errno == 13)
+			shell->excode = 126;
 		else if (WIFSIGNALED(status))
-		{
 			shell->excode = 128 + WTERMSIG(status);
-		}
 	}
 	if (pid == -1 && errno != ECHILD)
 	{
 		perror("wait");
+		shell->excode = 127;
 		exit(EXIT_FAILURE);
 	}
 }

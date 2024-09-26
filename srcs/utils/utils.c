@@ -3,46 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jpointil <jpointil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 09:42:09 by jules             #+#    #+#             */
-/*   Updated: 2024/09/25 14:57:19 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/09/26 12:20:46 by jpointil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-char	*ft_strstr(const char *s1, const char *s2)
+void	ft_putstr_fd_e(char *s, int fd, t_shell *shell)
 {
-	int	i;
-	int	j;
+	int i;
 
-	if (!s2[0])
-		return ((char *)s1);
 	i = 0;
-	if(!s1)
-		return (NULL);
-	while (s1[i])
+	if (!s || !fd)
+		return ;
+	while (s[i])
 	{
-		j = 0;
-		while (s1[i + j] && s2[j] && s1[i + j] == s2[j])
-			j++;
-		if (!s2[j])
-			return ((char *)&s1[i]);
+		if (s[i] == '$' && s[i + 1] == '?')
+		{
+			ft_putstr_fd(ft_itoa(shell->excode), fd);
+			i += 2;
+		}
+		write(fd, &s[i], 1);
 		i++;
 	}
-	return (NULL);
 }
-int	find_end_index(const char *s1, const char *s2, int i)
-{
-	char	*pos;
-
-	pos = ft_strstr(s2, s1);
-	if (pos)
-		return ((pos - s2) + ft_strlen(s1) - 1);
-	return (i);
-}
-
 
 char	*strjoin_free(char *s1, char *s2)
 {
