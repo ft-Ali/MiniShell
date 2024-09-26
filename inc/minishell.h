@@ -6,7 +6,7 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 13:59:41 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/26 15:24:21 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/09/26 17:09:58 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,12 +171,12 @@ int					find_end_index(const char *s1, const char *s2, int i);
 
 /*------------- EXPANDER -------------*/
 
-void				expander(t_lex *token, t_env *env);
-char				*expand_char(char *result, t_expand *exp);
-int					handle_variable_expansion(t_expand *exp, char **result,
+char				*expander(char *str, t_env *env);
+char				*expand_char(char *result, char *input, int pos);
+int					handle_variable_expansion(char *exp, char **result,
 						char quote, t_env *env);
-char				*expand_var(t_expand *exp, t_env *env);
-void				handle_quotes(t_expand *exp, char *quote);
+char				*expand_var(char *input, int pos, t_env *env);
+void				handle_quotes(char *exp, int *pos, char *quote);
 
 /*------------- LEXER -------------*/
 
@@ -287,5 +287,6 @@ void				close_fds_parent(t_fd *fds);
 void				close_all_fds(t_fd *fds);
 void				wait_child(t_shell *shell);
 void				free_envp(char **envp);
-int					check_cmd_skip(t_shell *shell, t_cmd *cmd, int i);
+// int					check_cmd_skip(t_shell *shell, t_cmd *cmd, int i);
+char				*get_custom_env(t_env *env, char *var_name);
 #endif

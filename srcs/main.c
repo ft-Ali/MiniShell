@@ -6,7 +6,7 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 13:59:28 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/26 16:19:55 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/09/26 18:54:22 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ int	main(int c, char **v, char **envp)
 	char	*input;
 	t_lex	*lex;
 	t_shell	shell;
+	char *expanded;
 
 	if (c != 1)
 		return (printf("Error : no args needed\n"), 0);
@@ -77,9 +78,9 @@ int	main(int c, char **v, char **envp)
 		if (input)
 		{
 			add_history(input);
-			lex = lexer(&shell, input);
-			expander(lex, shell.env);
-			// print_lexer_list(lex);
+			expander(input, shell.env);
+			expanded = expander(input, shell.env);
+			lex = lexer(&shell, expanded);
 			parser(&shell, &shell.cmd, lex);
 			exec(&shell, shell.cmd);
 			free(input);

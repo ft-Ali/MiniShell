@@ -3,31 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   expander_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpointil <jpointil@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 13:40:08 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/26 13:41:40 by jpointil         ###   ########.fr       */
+/*   Updated: 2024/09/26 19:44:06 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	handle_quotes(t_expand *exp, char *quote)
+void	handle_quotes(char *input, int *pos, char *quote)
 {
-	if (exp->input[exp->pos] == '"' || exp->input[exp->pos] == '\'')
+	if (input[*pos] == '\'' && *quote != '"')
 	{
-		if (*quote == '\0')
-		{
-			*quote = exp->input[exp->pos];
-			ft_memmove(&exp->input[exp->pos], &exp->input[exp->pos + 1],
-				ft_strlen(exp->input) - exp->pos);
-		}
-		else if (*quote == exp->input[exp->pos])
-		{
+		if (*quote == '\'')
 			*quote = '\0';
-			ft_memmove(&exp->input[exp->pos], &exp->input[exp->pos + 1],
-				ft_strlen(exp->input) - exp->pos);
-		}
+		else
+			*quote = '\'';
+	}
+	else if (input[*pos] == '"' && *quote != '\'')
+	{
+		if (*quote == '"')
+			*quote = '\0';
+		else
+			*quote = '"';
 	}
 }
 
@@ -45,92 +44,30 @@ char	*get_custom_env(t_env *env, char *var_name)
 	return (NULL);
 }
 
-// 1ER
-// int	handle_variable_expansion(t_expand *exp, char **result, char quote,
-// 		t_env *env)
-// {
-// 	char	*variable_name;
-// 	char	*variable_value;
-// 	int		start;
-
-// 	if (exp->input[exp->pos] == '$' && quote != '\'')
-// 	{
-// 		exp->pos++;
-// 		if (exp->input[exp->pos] == '\0' || ft_isspace(exp->input[exp->pos]))
-// 		{
-// 			*result = ft_strjoin_free_n(*result, "$");
-// 			return (1);
-// 		}
-// 		start = exp->pos;
-// 		while (ft_isdigit(exp->input[exp->pos])
-// 			|| ft_isalpha(exp->input[exp->pos]) || exp->input[exp->pos] == '_')
-// 			exp->pos++;
-// 		variable_name = ft_strndup(exp->input + start, exp->pos - start);
-// 		variable_value = get_custom_env(env, variable_name);
-// 		if (variable_value)
-// 			*result = ft_strjoin_free_n(*result, variable_value);
-// 		free(variable_name);
-// 		return (1);
-// 	}
-// 	return (0);
-// }
-
-// 2EME
-// int	handle_variable_expansion(t_expand *exp, char **result, char quote,
-// 		t_env *env)
-// {
-// 	char	*variable_name;
-// 	char	*variable_value;
-// 	int		start;
-
-// 	if (exp->input[exp->pos] == '$' && (quote != '\'' || quote != '\"'))
-// 	{
-// 		exp->pos++;
-// 		if (exp->input[exp->pos] == '\0' || (!ft_isalnum(exp->input[exp->pos])
-// 				&& exp->input[exp->pos] != '_'))
-// 		{
-// 			*result = ft_strjoin_free_n(*result, "$");
-// 			return (1);
-// 		}
-// 		start = exp->pos;
-// 		while (ft_isdigit(exp->input[exp->pos])
-// 			|| ft_isalpha(exp->input[exp->pos]) || exp->input[exp->pos] == '_')
-// 			exp->pos++;
-// 		variable_name = ft_strndup(exp->input + start, exp->pos - start);
-// 		variable_value = get_custom_env(env, variable_name);
-// 		if (variable_value)
-// 			*result = ft_strjoin_free_n(*result, variable_value);
-// 		free(variable_name);
-// 		return (1);
-// 	}
-// 	return (0);
-// }
-
-// 3EME
-int	handle_variable_expansion(t_expand *exp, char **result, char quote,
-		t_env *env)
+int	handle_variable_expansion(char *input, char **result, char quote, t_env *env)
 {
 	char	*variable_name;
 	char	*variable_value;
 	int		start;
+	char	*temp;
 
-	if (exp->input[exp->pos] == '$' && quote != '\'')
+	// Only expand variables if not inside single quotes
+	if (input[0] == '$' && quote != '\'')
 	{
-		exp->pos++;
-		if (exp->input[exp->pos] == '\0' || (!ft_isalnum(exp->input[exp->pos])
-				&& exp->input[exp->pos] != '_'))
-			return (*result = ft_strjoin_free_n(*result, "$"), 1);
-		start = exp->pos;
-		while (ft_isalnum(exp->input[exp->pos]) || exp->input[exp->pos] == '_')
-			exp->pos++;
-		variable_name = ft_strndup(exp->input + start, exp->pos - start);
+		start = 1;
+		while (input[start] && (ft_isalnum(input[start]) || input[start] == '_'))
+			start++;
+		variable_name = ft_substr(input, 1, start - 1);  // Extract variable name after '$'
 		variable_value = get_custom_env(env, variable_name);
-		if (variable_value)
-			*result = ft_strjoin_free_n(*result, variable_value);
-		else
-			*result = ft_strjoin_free_n(*result, "");
 		free(variable_name);
-		return (1);
+
+		if (variable_value)
+		{
+			temp = ft_strjoin(*result, variable_value);  // Join the expanded variable value to result
+			free(*result);
+			*result = temp;
+		}
+		return (start);  // Return the length of the variable name (to adjust position in the main loop)
 	}
 	return (0);
 }
