@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpointil <jpointil@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 13:59:41 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/26 12:22:45 by jpointil         ###   ########.fr       */
+/*   Updated: 2024/09/26 15:24:21 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -287,4 +287,5 @@ void				close_fds_parent(t_fd *fds);
 void				close_all_fds(t_fd *fds);
 void				wait_child(t_shell *shell);
 void				free_envp(char **envp);
+int					check_cmd_skip(t_shell *shell, t_cmd *cmd, int i);
 #endif

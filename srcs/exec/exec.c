@@ -6,7 +6,7 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 14:10:03 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/26 14:48:01 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/09/26 15:14:28 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ void	exec_cmd(t_shell *shell, t_cmd *cmd, t_fd *fds)
 	{
 		free_envp(envp);
 		printf("%s: command not found\n", cmd->commands[0]);
+		shell->excode = 127;
 		exit_shell(shell, "");
 	}
 	if (execve(cmd->cmd_path, cmd->commands, envp) == -1)

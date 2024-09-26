@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpointil <jpointil@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 10:57:31 by jpointil          #+#    #+#             */
-/*   Updated: 2024/09/26 12:12:53 by jpointil         ###   ########.fr       */
+/*   Updated: 2024/09/26 15:16:01 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,13 +65,13 @@ bool	get_shell_sig(t_shell *shell)
 {
 	if (g_sig == SIGINT)
 	{
-		shell->tmpexcode = 130;
+		shell->excode = 130;
 		g_sig = 0;
 		return (true);
 	}
 	else if (g_sig == SIGQUIT)
 	{
-		shell->tmpexcode = 131;
+		shell->excode = 131;
 		g_sig = 0;
 		return (true);
 	}

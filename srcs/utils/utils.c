@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpointil <jpointil@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 09:42:09 by jules             #+#    #+#             */
-/*   Updated: 2024/09/26 14:16:45 by jpointil         ###   ########.fr       */
+/*   Updated: 2024/09/26 16:13:36 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void	ft_putstr_fd_e(char *s, int fd, t_shell *shell)
 {
 	int	i;
+	char *str;
 
 	i = 0;
 	if (!s || !fd)
@@ -23,11 +24,15 @@ void	ft_putstr_fd_e(char *s, int fd, t_shell *shell)
 	{
 		if (s[i] == '$' && s[i + 1] == '?')
 		{
-			ft_putstr_fd(ft_itoa(shell->excode), fd);
+			str = ft_itoa(shell->excode);
+			ft_putstr_fd(str, fd);
+			free(str);
 			i += 2;
+			break;
 		}
 		write(fd, &s[i], 1);
 		i++;
+		
 	}
 }
 
