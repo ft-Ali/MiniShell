@@ -6,7 +6,7 @@
 /*   By: jpointil <jpointil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 09:42:09 by jules             #+#    #+#             */
-/*   Updated: 2024/09/26 12:20:46 by jpointil         ###   ########.fr       */
+/*   Updated: 2024/09/26 14:16:45 by jpointil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_putstr_fd_e(char *s, int fd, t_shell *shell)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (!s || !fd)

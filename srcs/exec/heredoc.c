@@ -6,7 +6,7 @@
 /*   By: jpointil <jpointil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 15:00:00 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/26 12:35:42 by jpointil         ###   ########.fr       */
+/*   Updated: 2024/09/26 14:10:30 by jpointil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ void	here_doc_ctrlc(t_shell *shell)
 	{
 		shell->excode = 130;
 		g_sig = 0;
-		// close(fd->input);
 		shell->tmpexcode = 130;
 	}
 }

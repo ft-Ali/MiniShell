@@ -3,14 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   free_error.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jpointil <jpointil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 14:44:58 by jpointil          #+#    #+#             */
-/*   Updated: 2024/09/25 13:43:11 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/09/26 14:12:27 by jpointil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+void	free_redir(t_redir *redir)
+{
+	if (!redir)
+		return ;
+	if (redir->file)
+		free(redir->file);
+	if (redir->next)
+		free_redir(redir->next);
+	free(redir);
+}
 
 void	free_env(t_env **env)
 {
@@ -22,11 +33,11 @@ void	free_env(t_env **env)
 	tmp = *env;
 	while (tmp)
 	{
-	    next = tmp->next;
-	    free(tmp->value);
-	    free(tmp->key);
-	    free(tmp);
-	    tmp = next;
+		next = tmp->next;
+		free(tmp->value);
+		free(tmp->key);
+		free(tmp);
+		tmp = next;
 	}
 	*env = NULL;
 }
@@ -45,7 +56,6 @@ void	free_shell(t_shell *shell)
 		free_cmd(shell->cmd);
 	if (shell->input)
 		free(shell->input);
-	// free(shell);
 }
 
 void	gfree(void *ptr, t_struct flag)

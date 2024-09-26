@@ -3,25 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   free_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jpointil <jpointil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 09:58:50 by jules             #+#    #+#             */
-/*   Updated: 2024/09/25 14:32:44 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/09/26 14:13:11 by jpointil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
-void	free_redir(t_redir *redir)
-{
-	if (!redir)
-		return ;
-	if (redir->file)
-		free(redir->file);
-	if (redir->next)
-		free_redir(redir->next);
-	free(redir);
-}
 
 void	free_exp(t_expand *expand)
 {
@@ -42,20 +31,21 @@ void	free_cmd(t_cmd *cmd)
 		return ;
 	if (cmd->commands)
 	{
-        i = -1;
+		i = -1;
 		while (cmd->commands[++i])
 			free(cmd->commands[i]);
-        free(cmd->commands);
-    }
+		free(cmd->commands);
+	}
 	if (cmd->redir)
 		free_redir(cmd->redir);
 	if (cmd->next)
 		free_cmd(cmd->next);
-	if(cmd->cmd_path)
+	if (cmd->cmd_path)
 		free(cmd->cmd_path);
 	free(cmd);
 }
-void free_loop(t_shell *shell)
+
+void	free_loop(t_shell *shell)
 {
 	if (shell->lex)
 		free_lex(shell->lex);
@@ -64,6 +54,7 @@ void free_loop(t_shell *shell)
 	shell->cmd = NULL;
 	shell->lex = NULL;
 }
+
 void	free_path(t_path *path)
 {
 	if (!path)
@@ -81,8 +72,6 @@ void	free_lex(t_lex *lex)
 		return ;
 	if (lex->word)
 		free(lex->word);
-	// if (lex->token)
-	// 	free(lex->token.D_GREATER);
 	if (lex->next)
 		free_lex(lex->next);
 	free(lex);

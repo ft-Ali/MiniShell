@@ -6,7 +6,7 @@
 /*   By: jpointil <jpointil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 09:55:05 by jules             #+#    #+#             */
-/*   Updated: 2024/09/23 11:26:12 by jpointil         ###   ########.fr       */
+/*   Updated: 2024/09/26 14:16:17 by jpointil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,43 +22,35 @@ void	print_tokens(t_lex *lexer)
 	}
 }
 
-void	print_parser(t_cmd *cmd)
-{
-	int		i;
-	t_redir	*current_redir;
+// void	print_parser(t_cmd *cmd)
+// {
+// 	int		i;
+// 	t_redir	*current_redir;
 
-	if (!cmd)
-	{
-		printf("PKO\n");
-		return ;
-	}
-	while (cmd)
-	{
-		if (cmd->commands)
-		{
-			printf("cmd: ");
-			i = 0;
-			while (cmd->commands[i])
-			{
-				printf("%s ", cmd->commands[i]);
-				i++;
-			}
-			printf("\n");
-		}
-		if (cmd->redir)
-		{
-			printf("Redirections:\n");
-			current_redir = cmd->redir;
-			while (current_redir)
-			{
-				printf("token: %d, file: %s\n", current_redir->token,
-					current_redir->file);
-				current_redir = current_redir->next;
-			}
-		}
-		cmd = cmd->next;
-	}
-}
+// 	if (!cmd)
+// 		return ;
+// 	while (cmd)
+// 	{
+// 		if (cmd->commands)
+// 		{
+// 			(printf("cmd: "), i = 0);
+// 			while (cmd->commands[i])
+// 				(printf("%s ", cmd->commands[i]), i++);
+// 			printf("\n");
+// 		}
+// 		if (cmd->redir)
+// 		{
+// 			(printf("Redirections:\n"), current_redir = cmd->redir);
+// 			while (current_redir)
+// 			{
+// 				printf("token: %d, file: %s\n", current_redir->token,
+// 					current_redir->file);
+// 				current_redir = current_redir->next;
+// 			}
+// 		}
+// 		cmd = cmd->next;
+// 	}
+// }
 
 void	print_lexer_list(t_lex *head)
 {
@@ -80,7 +72,7 @@ void	print_env_list(t_env *env_list)
 
 	current = env_list;
 	printf("Printing env list\n");
-	if(!current)
+	if (!current)
 	{
 		printf("Empty list\n");
 		return ;
@@ -95,7 +87,7 @@ void	print_env_list(t_env *env_list)
 void	print_env(t_env *env)
 {
 	printf(RED "Printing env\n" RESET);
-	if(!env)
+	if (!env)
 	{
 		printf("Empty env\n");
 		return ;
@@ -110,7 +102,7 @@ void	print_env(t_env *env)
 void	print_env2(t_env *env)
 {
 	printf("Printing env\n");
-	if(!env)
+	if (!env)
 	{
 		printf("Empty env\n");
 		return ;
@@ -121,4 +113,3 @@ void	print_env2(t_env *env)
 		env = env->next;
 	}
 }
-
