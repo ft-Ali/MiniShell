@@ -6,32 +6,32 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 16:38:16 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/26 19:48:12 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/09/27 16:33:05 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	process_quote(char *string, int *index, int *count, int *quote_state)
-{
-	*quote_state = is_quote(string[(*index)++]);
-	(*count)++;
-	while (*quote_state != 0 && string[*index])
-	{
-		if (is_quote(string[*index]) == *quote_state)
-		{
-			(*index)++;
-			(*count)++;
-			*quote_state = 0;
-			break ;
-		}
-		if (*quote_state != 0)
-		{
-			(*count)++;
-			(*index)++;
-		}
-	}
-}
+// void	process_quote(char *string, int *index, int *count, int *quote_state)
+// {
+// 	*quote_state = is_quote(string[(*index)++]);
+// 	(*count)++;
+// 	while (*quote_state != 0 && string[*index])
+// 	{
+// 		if (is_quote(string[*index]) == *quote_state)
+// 		{
+// 			(*index)++;
+// 			(*count)++;
+// 			*quote_state = 0;
+// 			break ;
+// 		}
+// 		if (*quote_state != 0)
+// 		{
+// 			(*count)++;
+// 			(*index)++;
+// 		}
+// 	}
+// }
 
 static void	process_word(char *string, int *index, int *length)
 {
@@ -57,9 +57,9 @@ static void	process_input(t_shell *shell, t_lex **lex, char *string)
 					&& string[index] <= 13)))
 			index++;
 		length = 0;
-		if ((string[index] == '\'') || (string[index] == '\"'))
-			process_quote(string, &index, &length, &quote_state);
-		else
+		// if ((string[index] == '\'') || (string[index] == '\"'))
+		// 	process_quote(string, &index, &length, &quote_state);
+		// else
 			process_word(string, &index, &length);
 		if (length > 0)
 			add_new_word(shell, lex, string, (int [2]){index, length});
