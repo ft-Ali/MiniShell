@@ -6,7 +6,7 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 09:42:09 by jules             #+#    #+#             */
-/*   Updated: 2024/09/26 16:13:36 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/09/27 17:03:21 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	ft_putstr_fd_e(char *s, int fd, t_shell *shell)
 {
-	int	i;
-	char *str;
+	int		i;
+	char	*str;
 
 	i = 0;
 	if (!s || !fd)
@@ -28,11 +28,10 @@ void	ft_putstr_fd_e(char *s, int fd, t_shell *shell)
 			ft_putstr_fd(str, fd);
 			free(str);
 			i += 2;
-			break;
+			break ;
 		}
 		write(fd, &s[i], 1);
 		i++;
-		
 	}
 }
 
@@ -62,4 +61,51 @@ char	*ft_strjoin_char(char *s, char c)
 	result[len + 1] = '\0';
 	free(s);
 	return (result);
+}
+char	*trimquotes(char *str)
+{
+	char	*new;
+	int		i;
+	int		j;
+
+	i = 0;
+	j = 0;
+	new = ft_calloc(ft_strlen(str) + 1, sizeof(char));
+	if (!new)
+		return (NULL);
+	while (str[i])
+	{
+		// Skip quotes
+		if (str[i] != '\'' && str[i] != '\"')
+		{
+			new[j] = str[i];
+			j++;
+		}
+		i++;
+	}
+	new[j] = '\0';
+	return (new);
+}
+
+void	renegentrecote(char *input)
+{
+	int flag = 0;
+	char quote = '\0';
+	int i = -1;
+
+	while (input[++i])
+	{
+		if ((input[i] == '\"' || input[i] == '\'') && (!flag))
+		{
+			quote = input[i]; // Set active quote type
+			flag = 1;
+		}
+		else if (flag && input[i] != quote && input[i] > 0)
+			input[i] *= -1; // Mark non-expandable
+		else if (flag == 1 && input[i] == quote)
+		{
+			flag = 0;
+			quote = '\0'; // Reset quote
+		}
+	}
 }

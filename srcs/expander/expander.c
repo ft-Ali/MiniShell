@@ -6,7 +6,7 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 14:13:43 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/27 16:08:31 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/09/27 17:05:56 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@ char	*expand_char(char *result, char *input, int pos)
 	char	*temp;
 	char	*joined_result;
 
-	temp = ft_substr(input, pos, 1);          // Extract the current character
-	joined_result = ft_strjoin(result, temp); // Join it with the result
+	temp = ft_substr(input, pos, 1);
+	joined_result = ft_strjoin(result, temp);
 	free(temp);
-	free(result); // Free the old result to avoid memory leak
+	free(result);
 	return (joined_result);
 }
 
@@ -30,25 +30,24 @@ char *expand_var(char *input, int pos, t_env *env)
     char    quote;
     int     var_len;
 
-    quote = '\0';  // Track if we're inside quotes
+    quote = '\0';
     if (input == NULL)
         return (NULL);
-    result = ft_strdup("");  // Start with an empty string for the result
+    result = ft_strdup("");
 
     while (pos < (int)ft_strlen(input))
     {
-        handle_quotes(input, &pos, &quote);  // Handle opening/closing of quotes
-        // Skip variable expansion inside single quotes
+        handle_quotes(input, &pos, &quote);
         var_len = handle_variable_expansion(input + pos, &result, quote, env);
         if (var_len > 0)
         {
-            pos += var_len;  // Skip over the expanded variable
+            pos += var_len;
             continue;
         }
-        result = expand_char(result, input, pos);  // Append current char to result
+        result = expand_char(result, input, pos);
         pos++;
     }
-    return (result);  // Return the expanded string with quotes preserved
+    return (result);
 }
 
 size_t	count_char(char *str)
@@ -67,31 +66,7 @@ size_t	count_char(char *str)
 	return (c);
 }
 
-void renegentrecote(char *input)
-{
-    int     flag = 0;
-    char    quote = '\0';
-    int     i = -1;
 
-    while (input[++i])
-    {
-        // Detect opening quotes
-        if ((input[i] == '\"' || input[i] == '\'') && (!flag))
-        {
-            quote = input[i];  // Set active quote type
-            flag = 1;
-        }
-        // Inside quotes, mark characters as non-expandable (negative ASCII)
-        else if (flag && input[i] != quote && input[i] > 0)
-            input[i] *= -1;  // Mark non-expandable
-        // Detect closing quotes and stop marking
-        else if (flag == 1 && input[i] == quote)
-        {
-            flag = 0;
-            quote = '\0';  // Reset quote
-        }
-    }
-}
 
 void backtoascii(char *input)
 {
@@ -105,29 +80,7 @@ void backtoascii(char *input)
     }
 }
 
-char *trimquotes(char *str)
-{
-    char    *new;
-    int     i = 0;
-    int     j = 0;
 
-    // Allocate space for the new string, skipping unnecessary quotes
-    new = ft_calloc(ft_strlen(str) + 1, sizeof(char));
-    if (!new)
-        return (NULL);
-    while (str[i])
-    {
-        // Skip quotes
-        if (str[i] != '\'' && str[i] != '\"')
-        {
-            new[j] = str[i];  // Copy characters excluding quotes
-            j++;
-        }
-        i++;
-    }
-    new[j] = '\0';  // Null-terminate the new string
-    return (new);
-}
 
 char *expander(char *input, t_env *env)
 {
@@ -146,6 +99,6 @@ char *expander(char *input, t_env *env)
     // Step 4: Restore marked characters inside single quotes
     backtoascii(trimmed_input);
 
-    free(expanded_input);  // Free the expanded input string
-    return (trimmed_input);  // Return the fully processed string ready for lexer
+    free(expanded_input);
+    return (trimmed_input);
 }

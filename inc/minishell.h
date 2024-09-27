@@ -6,7 +6,7 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 13:59:41 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/27 16:08:44 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/09/27 17:11:11 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,7 +167,7 @@ bool				get_shell_sig(t_shell *shell);
 
 char				*strjoin_free(char *s1, char *s2);
 char				*ft_strjoin_char(char *s, char c);
-int					find_end_index(const char *s1, const char *s2, int i);
+// int					find_end_index(const char *s1, const char *s2, int i);
 
 /*------------- EXPANDER -------------*/
 
@@ -177,14 +177,19 @@ int					handle_variable_expansion(char *exp, char **result,
 						char quote, t_env *env);
 char				*expand_var(char *input, int pos, t_env *env);
 void				handle_quotes(char *exp, int *pos, char *quote);
+void				renegentrecote(char *input);
+char				*trimquotes(char *str);
+size_t				count_char(char *str);
+void				backtoascii(char *input);
+int					handle_variable_expansion_core(char *input, char **result,
+						t_env *env);
+int					handle_special_cases(char *input, char **result);
 
 /*------------- LEXER -------------*/
 
 t_lex				*lexer(t_shell *shell, char *string);
 int					is_token(char *str, int i);
 int					is_quote(char quote);
-void				process_quote(char *string, int *index, int *count,
-						int *quote_state);
 int					check_opened_quote(char *string);
 void				add_new_word(t_shell *shell, t_lex **lexer, char *str,
 						int indices[2]);
@@ -195,7 +200,6 @@ void				add_new_token(t_shell *shell, t_lex **lexer,
 
 void				parser(t_shell *shell, t_cmd **cmd, t_lex *lex);
 t_cmd				*rec_parse(t_shell *shell, t_lex *lex, t_cmd *prev);
-void				print_parser(t_cmd *cmd);
 void				append_command(t_shell *shell, t_cmd *cmd, char *word);
 void				handle_redirections(t_shell *shell, t_lex **lex, t_cmd *cmd,
 						t_redir **redir_tail);
