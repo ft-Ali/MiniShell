@@ -6,32 +6,29 @@
 /*   By: jpointil <jpointil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 15:00:00 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/26 14:10:30 by jpointil         ###   ########.fr       */
+/*   Updated: 2024/09/27 17:04:57 by jpointil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
-void	here_doc_ctrlc(t_shell *shell)
-{
-	if (g_sig == SIGINT)
-	{
-		shell->excode = 130;
-		g_sig = 0;
-		shell->tmpexcode = 130;
-	}
-}
 
 void	loop_here_doc(char *delimiter, int fd, t_shell *shell)
 {
 	char	*line;
 	char	*limiter;
 
-	(void)shell;
-	limiter = ft_strjoin(delimiter, "\n");
+	((void)shell, limiter = ft_strjoin(delimiter, "\n"));
 	while (1)
 	{
 		line = readline(RED "> " RESET);
+		if (g_sig == SIGINT)
+		{
+			shell->excode = 130;
+			shell->tmpexcode = 130;
+			g_sig = 0;
+			free(line);
+			break ;
+		}
 		if (line == NULL || (!ft_strncmp(line, limiter, ft_strlen(line))
 				&& ft_strlen(line) == ft_strlen(limiter) - 1))
 		{
@@ -41,7 +38,6 @@ void	loop_here_doc(char *delimiter, int fd, t_shell *shell)
 		(ft_putstr_fd(line, fd), ft_putstr_fd("\n", fd));
 		free(line);
 	}
-	here_doc_ctrlc(shell);
 	free(limiter);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jpointil <jpointil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 09:42:09 by jules             #+#    #+#             */
-/*   Updated: 2024/09/26 16:13:36 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/09/27 17:13:21 by jpointil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	ft_putstr_fd_e(char *s, int fd, t_shell *shell)
 {
-	int	i;
-	char *str;
+	int		i;
+	char	*str;
 
 	i = 0;
 	if (!s || !fd)
@@ -28,11 +28,10 @@ void	ft_putstr_fd_e(char *s, int fd, t_shell *shell)
 			ft_putstr_fd(str, fd);
 			free(str);
 			i += 2;
-			break;
+			break ;
 		}
 		write(fd, &s[i], 1);
 		i++;
-		
 	}
 }
 

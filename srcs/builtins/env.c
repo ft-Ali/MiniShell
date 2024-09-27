@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jpointil <jpointil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 12:12:05 by jules             #+#    #+#             */
-/*   Updated: 2024/09/26 15:59:57 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/09/27 17:05:23 by jpointil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ void	bi_env(t_shell *shell, t_cmd *cmd, int output, t_fd *fds)
 
 	if (cmd->commands[1])
 	{
-		
 		close_all_fds(fds);
 		shell->excode = 127;
 		exit_shell(shell, "minishell: env: too many arguments\n");

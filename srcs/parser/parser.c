@@ -6,7 +6,7 @@
 /*   By: jpointil <jpointil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 12:04:22 by jpointil          #+#    #+#             */
-/*   Updated: 2024/09/25 16:44:22 by jpointil         ###   ########.fr       */
+/*   Updated: 2024/09/27 17:02:15 by jpointil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,14 +44,22 @@ void	syntax_analyser(t_shell *shell, t_lex *lex)
 	t_lex	*tmp;
 
 	tmp = lex;
+	if (tmp->token == PIPE)
+		(reset_loop(shell),
+			ft_putstr_fd("Error: syntax error near unexpected token", 2),
+			shell->excode = 2);
 	while (tmp)
 	{
 		if (tmp->token == PIPE && (!tmp->next || tmp->next->token == PIPE))
-			exit_shell(shell, "Error: syntax error near unexpected token");
+			(reset_loop(shell),
+				ft_putstr_fd("Error: syntax error near unexpected token", 2),
+				shell->excode = 2);
 		if ((tmp->token == GREATER || tmp->token == D_GREATER
 				|| tmp->token == LOWER || tmp->token == D_LOWER) && (!tmp->next
 				|| tmp->next->token != WORD))
-			exit_shell(shell, "Error: syntax error near unexpected token");
+			(reset_loop(shell),
+				ft_putstr_fd("Error: syntax error near unexpected token", 2),
+				shell->excode = 2);
 		tmp = tmp->next;
 	}
 }
