@@ -6,7 +6,7 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 13:59:41 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/27 17:11:11 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/09/27 17:17:59 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -248,6 +248,7 @@ void				free_shell(t_shell *shell);
 void				free_env(t_env **env);
 void				gfree(void *ptr, t_struct flag);
 void				free_loop(t_shell *shell);
+void				reset_loop(t_shell *shell);
 
 /*--------------- PRINTS ------------------*/
 

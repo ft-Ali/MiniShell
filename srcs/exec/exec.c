@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jpointil <jpointil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 14:10:03 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/26 15:14:28 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/09/27 16:57:11 by jpointil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ char	*find_cmd_path(t_shell *shell, char *cmd)
 			free(paths);
 			return (full_path);
 		}
+		shell->tmpexcode = 126;
 		free(full_path);
 		i++;
 	}
@@ -75,6 +76,8 @@ void	exec_cmd(t_shell *shell, t_cmd *cmd, t_fd *fds)
 	}
 	if (execve(cmd->cmd_path, cmd->commands, envp) == -1)
 	{
+		shell->excode = 0;
+		shell->tmpexcode = 0;
 		ft_free_split(envp);
 		exit_shell(shell, "Error : execve");
 	}

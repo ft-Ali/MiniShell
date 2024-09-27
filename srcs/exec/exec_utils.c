@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jpointil <jpointil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 15:01:16 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/26 15:58:31 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/09/27 16:56:13 by jpointil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ char	*get_cmd_path(t_shell *shell, t_cmd *cmd, t_fd *fds)
 	}
 	else
 	{
+		shell->excode = 126;
 		return (find_cmd_path(shell, cmd->commands[0]));
 	}
 	return (NULL);

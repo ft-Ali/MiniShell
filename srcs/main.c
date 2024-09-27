@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jpointil <jpointil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 13:59:28 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/27 16:08:59 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/09/27 16:54:52 by jpointil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,13 +65,11 @@ int	main(int c, char **v, char **envp)
 	char	*input;
 	t_lex	*lex;
 	t_shell	shell;
-	char *expanded;
+	char	*expanded;
 
 	if (c != 1)
 		return (printf("Error : no args needed\n"), 0);
-	(void)v;
-	(init_shell(&shell), init_sig());
-	load_env(&shell, envp);
+	((void)v, init_shell(&shell), init_sig(), load_env(&shell, envp));
 	while (1)
 	{
 		input = readline(CYAN "$ ->" RESET);
