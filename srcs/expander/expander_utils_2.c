@@ -6,7 +6,7 @@
 /*   By: jpointil <jpointil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 17:09:58 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/27 17:32:08 by jpointil         ###   ########.fr       */
+/*   Updated: 2024/09/27 19:13:56 by jpointil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ int	handle_variable_expansion_core(char *input, char **result, t_env *env)
 	while (input[start] && (ft_isalnum(input[start]) || input[start] == '_'))
 		start++;
 	variable_name = ft_substr(input, 1, start - 1);
+	if (!variable_name)
+		return (0);
 	variable_value = get_custom_env(env, variable_name);
 	free(variable_name);
 	if (variable_value)

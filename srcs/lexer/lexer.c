@@ -6,7 +6,7 @@
 /*   By: jpointil <jpointil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 16:38:16 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/27 17:32:39 by jpointil         ###   ########.fr       */
+/*   Updated: 2024/09/27 18:49:00 by jpointil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,8 @@ t_lex	*lexer(t_shell *shell, char *string)
 	t_lex	*lex;
 
 	lex = NULL;
+	if (!string)
+		return (NULL);
 	if (check_opened_quote(string) == FALSE)
 	{
 		shell->excode = 2;

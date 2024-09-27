@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_setup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jpointil <jpointil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 13:17:44 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/20 16:57:15 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/09/27 18:58:10 by jpointil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,8 @@ static void	add_underscore(t_shell *shell)
 void	handle_no_env_vars(t_shell *shell)
 {
 	create_pwd(shell);
+	if (!shell)
+		return ;
 	add_shell_level(shell);
 	add_underscore(shell);
 	create_oldpwd(shell);

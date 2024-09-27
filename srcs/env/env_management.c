@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_management.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jpointil <jpointil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 14:15:35 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/19 18:49:44 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/09/27 18:57:38 by jpointil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,8 @@ void	create_pwd(t_shell *shell)
 	t_env	*node;
 
 	node = ft_calloc(1, sizeof(t_env));
+	if (!node)
+		return ;
 	current_dir = getcwd(NULL, 0);
 	if (!node || !current_dir)
 		exit_shell(shell, "Error: malloc failed create_pwd");

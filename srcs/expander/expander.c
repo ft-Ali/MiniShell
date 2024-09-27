@@ -6,7 +6,7 @@
 /*   By: jpointil <jpointil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 14:13:43 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/27 18:02:43 by jpointil         ###   ########.fr       */
+/*   Updated: 2024/09/27 18:47:22 by jpointil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,12 @@ char	*expand_char(char *result, char *input, int pos)
 
 	temp = ft_substr(input, pos, 1);
 	joined_result = ft_strjoin(result, temp);
+	if (!joined_result)
+	{
+		free(temp);
+		free(result);
+		return (NULL);
+	}
 	free(temp);
 	free(result);
 	return (joined_result);
@@ -34,6 +40,8 @@ char	*expand_var(char *input, int pos, t_env *env)
 	if (input == NULL)
 		return (NULL);
 	result = ft_strdup("");
+	if (!result)
+		return (NULL);
 	while (pos < (int)ft_strlen(input))
 	{
 		handle_quotes(input, &pos, &quote);
@@ -84,8 +92,12 @@ char	*expander(char *input, t_env *env)
 	char	*trimmed_input;
 
 	expanded_input = expand_var(input, 0, env);
+	if (!expanded_input)
+		return (NULL);
 	invert_quote(expanded_input);
 	trimmed_input = trimquotes(expanded_input);
+	if (!trimmed_input)
+		return (NULL);
 	re_invert_quote(trimmed_input);
 	free(expanded_input);
 	return (trimmed_input);
