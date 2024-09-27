@@ -6,11 +6,14 @@
 /*   By: jpointil <jpointil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 12:04:22 by jpointil          #+#    #+#             */
-/*   Updated: 2024/09/27 17:02:15 by jpointil         ###   ########.fr       */
+/*   Updated: 2024/09/27 18:16:28 by jpointil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+/*(shell->excode = 2, exit_shell(shell,
+				"Error: syntax error near unexpected token"));*/
 
 void	lex_loop(t_shell *shell, t_lex *lex, t_cmd *cmd)
 {
@@ -43,22 +46,24 @@ void	syntax_analyser(t_shell *shell, t_lex *lex)
 {
 	t_lex	*tmp;
 
+	if (!lex)
+		return ;
 	tmp = lex;
 	if (tmp->token == PIPE)
 		(reset_loop(shell),
-			ft_putstr_fd("Error: syntax error near unexpected token", 2),
+			ft_putstr_fd("Error: syntax error near unexpected token\n", 2),
 			shell->excode = 2);
 	while (tmp)
 	{
 		if (tmp->token == PIPE && (!tmp->next || tmp->next->token == PIPE))
 			(reset_loop(shell),
-				ft_putstr_fd("Error: syntax error near unexpected token", 2),
+				ft_putstr_fd("Error: syntax error near unexpected token\n", 2),
 				shell->excode = 2);
 		if ((tmp->token == GREATER || tmp->token == D_GREATER
 				|| tmp->token == LOWER || tmp->token == D_LOWER) && (!tmp->next
 				|| tmp->next->token != WORD))
 			(reset_loop(shell),
-				ft_putstr_fd("Error: syntax error near unexpected token", 2),
+				ft_putstr_fd("Error: syntax error near unexpected token\n", 2),
 				shell->excode = 2);
 		tmp = tmp->next;
 	}

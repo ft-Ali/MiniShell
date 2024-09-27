@@ -6,7 +6,7 @@
 /*   By: jpointil <jpointil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 13:59:28 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/27 17:52:26 by jpointil         ###   ########.fr       */
+/*   Updated: 2024/09/27 18:23:30 by jpointil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,6 @@ int	main(int c, char **v, char **envp)
 		if (input)
 		{
 			add_history(input);
-			expander(input, shell.env);
 			expanded = expander(input, shell.env);
 			lex = lexer(&shell, expanded);
 			(free(expanded), parser(&shell, &shell.cmd, lex));
