@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jpointil <jpointil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 13:40:08 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/27 17:10:14 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/09/27 17:31:40 by jpointil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ char	*get_custom_env(t_env *env, char *var_name)
 // 	if (!input)
 // 		return (0);
 //    else if (input[0] == '$' && (input[1] == '\0' || (!ft_isalnum(input[1])
-			// && input[1] != '_')))
+// && input[1] != '_')))
 //     {
 //         *result = ft_strjoin_free_n(*result, "$");
 //         return (1);
@@ -64,7 +64,7 @@ char	*get_custom_env(t_env *env, char *var_name)
 //     else if (input[0] == '$' && quote != '\'')
 //     {
 //         while (input[start] && (ft_isalnum(input[start])
-		// || input[start] == '_'))
+// || input[start] == '_'))
 //             start++;
 //         variable_name = ft_substr(input, 1, start - 1);
 //         variable_value = get_custom_env(env, variable_name);

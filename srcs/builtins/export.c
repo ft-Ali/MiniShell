@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jpointil <jpointil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 14:06:07 by jules             #+#    #+#             */
-/*   Updated: 2024/09/23 16:53:39 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/09/27 17:36:51 by jpointil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int	is_valid_identifier(const char *str)
+int	check_id(const char *str)
 {
 	int	i;
 
@@ -28,10 +28,10 @@ int	is_valid_identifier(const char *str)
 	return (1);
 }
 
-void	handle_identifier(t_env *env, char *arg, t_shell *shell)
+void	handle_id(t_env *env, char *arg, t_shell *shell)
 {
 	trim_spaces(arg);
-	if (is_valid_identifier(arg))
+	if (check_id(arg))
 		add_or_update_env(&env, arg, "", shell);
 	else
 		ft_putstr_fd("export: not a valid identifier\n", STDERR_FILENO);
@@ -42,13 +42,13 @@ void	handle_assignment(t_env *env, char *arg, char *equal_sign,
 {
 	trim_spaces(arg);
 	trim_spaces(equal_sign + 1);
-	if (is_valid_identifier(arg))
+	if (check_id(arg))
 		add_or_update_env(&env, arg, equal_sign + 1, shell);
 	else
 		ft_putstr_fd("export: not a valid identifier\n", STDERR_FILENO);
 }
 
-bool	process_arg(t_env *env, char *arg, char *next_arg, t_shell *shell)
+bool	export_args(t_env *env, char *arg, char *next_arg, t_shell *shell)
 {
 	char	*equal_sign;
 	char	*joined_arg;
@@ -73,7 +73,7 @@ bool	process_arg(t_env *env, char *arg, char *next_arg, t_shell *shell)
 		*equal_sign = '=';
 	}
 	else
-		handle_identifier(env, arg, shell);
+		handle_id(env, arg, shell);
 	return (free_joined(joined_arg), skip_next);
 }
 
@@ -87,7 +87,7 @@ void	bi_export(t_shell *shell, t_cmd *cmd)
 	i = 1;
 	while (cmd->commands[i])
 	{
-		skip = process_arg(shell->env, cmd->commands[i], cmd->commands[i + 1],
+		skip = export_args(shell->env, cmd->commands[i], cmd->commands[i + 1],
 				shell);
 		if (skip)
 			i++;

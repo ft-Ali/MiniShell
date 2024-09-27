@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jpointil <jpointil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 14:13:43 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/27 17:05:56 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/09/27 17:50:10 by jpointil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,30 +24,29 @@ char	*expand_char(char *result, char *input, int pos)
 	return (joined_result);
 }
 
-char *expand_var(char *input, int pos, t_env *env)
+char	*expand_var(char *input, int pos, t_env *env)
 {
-    char    *result;
-    char    quote;
-    int     var_len;
+	char	*result;
+	char	quote;
+	int		var_len;
 
-    quote = '\0';
-    if (input == NULL)
-        return (NULL);
-    result = ft_strdup("");
-
-    while (pos < (int)ft_strlen(input))
-    {
-        handle_quotes(input, &pos, &quote);
-        var_len = handle_variable_expansion(input + pos, &result, quote, env);
-        if (var_len > 0)
-        {
-            pos += var_len;
-            continue;
-        }
-        result = expand_char(result, input, pos);
-        pos++;
-    }
-    return (result);
+	quote = '\0';
+	if (input == NULL)
+		return (NULL);
+	result = ft_strdup("");
+	while (pos < (int)ft_strlen(input))
+	{
+		handle_quotes(input, &pos, &quote);
+		var_len = handle_variable_expansion(input + pos, &result, quote, env);
+		if (var_len > 0)
+		{
+			pos += var_len;
+			continue ;
+		}
+		result = expand_char(result, input, pos);
+		pos++;
+	}
+	return (result);
 }
 
 size_t	count_char(char *str)
@@ -66,39 +65,28 @@ size_t	count_char(char *str)
 	return (c);
 }
 
-
-
-void backtoascii(char *input)
+void	re_invert_quote(char *input)
 {
-    int i = 0;
+	int	i;
 
-    while (input[i])
-    {
-        if (input[i] < 0)  // If marked as non-expandable, restore to positive ASCII
-            input[i] *= -1;
-        i++;
-    }
+	i = 0;
+	while (input[i])
+	{
+		if (input[i] < 0)
+			input[i] *= -1;
+		i++;
+	}
 }
 
-
-
-char *expander(char *input, t_env *env)
+char	*expander(char *input, t_env *env)
 {
-    char *expanded_input;
-    char *trimmed_input;
+	char	*expanded_input;
+	char	*trimmed_input;
 
-    // Step 1: Expand variables in the input
-    expanded_input = expand_var(input, 0, env);
-
-    // Step 2: Mark characters inside quotes as non-expandable
-    renegentrecote(expanded_input);
-
-    // Step 3: Trim unnecessary quotes, preserving needed ones
-    trimmed_input = trimquotes(expanded_input);
-
-    // Step 4: Restore marked characters inside single quotes
-    backtoascii(trimmed_input);
-
-    free(expanded_input);
-    return (trimmed_input);
+	expanded_input = expand_var(input, 0, env);
+	invert_quote(expanded_input);
+	trimmed_input = trimquotes(expanded_input);
+	re_invert_quote(trimmed_input);
+	free(expanded_input);
+	return (trimmed_input);
 }

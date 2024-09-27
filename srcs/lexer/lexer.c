@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jpointil <jpointil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 16:38:16 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/27 16:33:05 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/09/27 17:32:39 by jpointil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,7 @@ static void	process_input(t_shell *shell, t_lex **lex, char *string)
 					&& string[index] <= 13)))
 			index++;
 		length = 0;
-		// if ((string[index] == '\'') || (string[index] == '\"'))
-		// 	process_quote(string, &index, &length, &quote_state);
-		// else
-			process_word(string, &index, &length);
+		process_word(string, &index, &length);
 		if (length > 0)
 			add_new_word(shell, lex, string, (int [2]){index, length});
 		if (is_token(string, index) != FALSE)

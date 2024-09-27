@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jpointil <jpointil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 13:59:41 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/27 17:17:59 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/09/27 17:34:26 by jpointil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,10 +177,10 @@ int					handle_variable_expansion(char *exp, char **result,
 						char quote, t_env *env);
 char				*expand_var(char *input, int pos, t_env *env);
 void				handle_quotes(char *exp, int *pos, char *quote);
-void				renegentrecote(char *input);
+void				invert_quote(char *input);
 char				*trimquotes(char *str);
 size_t				count_char(char *str);
-void				backtoascii(char *input);
+void				re_invert_quote(char *input);
 int					handle_variable_expansion_core(char *input, char **result,
 						t_env *env);
 int					handle_special_cases(char *input, char **result);

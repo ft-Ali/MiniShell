@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jpointil <jpointil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 09:42:09 by jules             #+#    #+#             */
-/*   Updated: 2024/09/27 17:16:56 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/09/27 17:51:40 by jpointil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ char	*ft_strjoin_char(char *s, char c)
 	free(s);
 	return (result);
 }
+
 char	*trimquotes(char *str)
 {
 	char	*new;
@@ -75,7 +76,6 @@ char	*trimquotes(char *str)
 		return (NULL);
 	while (str[i])
 	{
-		// Skip quotes
 		if (str[i] != '\'' && str[i] != '\"')
 		{
 			new[j] = str[i];
@@ -87,25 +87,28 @@ char	*trimquotes(char *str)
 	return (new);
 }
 
-void	renegentrecote(char *input)
+void	invert_quote(char *input)
 {
-	int flag = 0;
-	char quote = '\0';
-	int i = -1;
+	int		flag;
+	char	quote;
+	int		i;
 
+	flag = 0;
+	quote = '\0';
+	i = -1;
 	while (input[++i])
 	{
 		if ((input[i] == '\"' || input[i] == '\'') && (!flag))
 		{
-			quote = input[i]; // Set active quote type
+			quote = input[i];
 			flag = 1;
 		}
 		else if (flag && input[i] != quote && input[i] > 0)
-			input[i] *= -1; // Mark non-expandable
+			input[i] *= -1;
 		else if (flag == 1 && input[i] == quote)
 		{
 			flag = 0;
-			quote = '\0'; // Reset quote
+			quote = '\0';
 		}
 	}
 }
