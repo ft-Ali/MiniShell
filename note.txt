@@ -1,0 +1,6 @@
+mettre le trimquote a la fin du lexer et le modifier pour qu'il gere une t_lex
+
+voir pour tout mettre dans une fonction principale qui inverse trim et remet
+
+chager le lexer pour qu'il arrete de creer des tokens tant que les quotes 
+ne sont pas fermees
