@@ -6,7 +6,7 @@
 /*   By: jpointil <jpointil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 14:44:58 by jpointil          #+#    #+#             */
-/*   Updated: 2024/09/26 14:12:27 by jpointil         ###   ########.fr       */
+/*   Updated: 2024/09/27 19:46:03 by jpointil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void	free_env(t_env **env)
 		tmp = next;
 	}
 	*env = NULL;
+	return ;
 }
 
 void	free_shell(t_shell *shell)

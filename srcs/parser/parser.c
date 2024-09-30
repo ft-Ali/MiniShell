@@ -6,7 +6,7 @@
 /*   By: jpointil <jpointil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 12:04:22 by jpointil          #+#    #+#             */
-/*   Updated: 2024/09/27 18:16:28 by jpointil         ###   ########.fr       */
+/*   Updated: 2024/09/27 19:58:26 by jpointil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,18 @@ void	lex_loop(t_shell *shell, t_lex *lex, t_cmd *cmd)
 	}
 }
 
+void	check_redirection_error(t_shell *shell, t_lex *tmp)
+{
+	if ((tmp->token == GREATER || tmp->token == D_GREATER || tmp->token == LOWER
+			|| tmp->token == D_LOWER) && (!tmp->next
+			|| tmp->next->token != WORD))
+	{
+		shell->excode = 2;
+		free_lex(tmp);
+		exit_shell(shell, "Error: syntax error near unexpected token");
+	}
+}
+
 void	syntax_analyser(t_shell *shell, t_lex *lex)
 {
 	t_lex	*tmp;
@@ -50,21 +62,20 @@ void	syntax_analyser(t_shell *shell, t_lex *lex)
 		return ;
 	tmp = lex;
 	if (tmp->token == PIPE)
-		(reset_loop(shell),
-			ft_putstr_fd("Error: syntax error near unexpected token\n", 2),
-			shell->excode = 2);
+	{
+		shell->excode = 2;
+		free_lex(lex);
+		exit_shell(shell, "Error: syntax error near unexpected token");
+	}
 	while (tmp)
 	{
 		if (tmp->token == PIPE && (!tmp->next || tmp->next->token == PIPE))
-			(reset_loop(shell),
-				ft_putstr_fd("Error: syntax error near unexpected token\n", 2),
-				shell->excode = 2);
-		if ((tmp->token == GREATER || tmp->token == D_GREATER
-				|| tmp->token == LOWER || tmp->token == D_LOWER) && (!tmp->next
-				|| tmp->next->token != WORD))
-			(reset_loop(shell),
-				ft_putstr_fd("Error: syntax error near unexpected token\n", 2),
-				shell->excode = 2);
+		{
+			shell->excode = 2;
+			free_lex(lex);
+			exit_shell(shell, "Error: syntax error near unexpected token");
+		}
+		check_redirection_error(shell, tmp);
 		tmp = tmp->next;
 	}
 }
