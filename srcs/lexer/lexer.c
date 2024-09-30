@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jpointil <jpointil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 16:38:16 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/30 15:14:19 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/09/30 17:26:10 by jpointil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,14 @@
 static void	process_word(char *string, int *index, int *length, int flag)
 {
 	int	s_quote;
-	int d_quote;
+	int	d_quote;
 
 	s_quote = -2;
 	d_quote = -1;
 	while (string[*index])
 	{
-		if ((flag = is_quote(string[*index])))
+		flag = is_quote(string[*index]);
+		if (flag)
 		{
 			if (flag == 1)
 				d_quote *= -1;
@@ -73,7 +74,7 @@ static void	process_input(t_shell *shell, t_lex **lex, char *string)
 		length = 0;
 		process_word(string, &index, &length, 0);
 		if (length > 0)
-			add_new_word(shell, lex, string, (int[2]){index, length});
+			add_new_word(shell, lex, string, (int [2]){index, length});
 		if (is_token(string, index) != FALSE)
 		{
 			add_new_token(shell, lex, is_token(string, index));
@@ -100,11 +101,11 @@ t_lex	*lexer(t_shell *shell, char *string)
 	}
 	get_shell_sig(shell);
 	process_input(shell, &lex, string);
-	trimquotes(lex, 0, 0, lex);
-	// if (!lex)
-	// {
-	// 	free_lex(lex);
-	// 	exit_shell(shell, A_ERR);
-	// }
+	lex = trimquote_process(lex);
+	if (!lex)
+	{
+		free_lex(lex);
+		exit_shell(shell, A_ERR);
+	}
 	return (lex);
 }

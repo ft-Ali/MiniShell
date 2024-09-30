@@ -6,7 +6,7 @@
 /*   By: jpointil <jpointil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 09:55:05 by jules             #+#    #+#             */
-/*   Updated: 2024/09/26 14:16:17 by jpointil         ###   ########.fr       */
+/*   Updated: 2024/09/30 17:28:11 by jpointil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,8 @@ void	print_lexer_list(t_lex *head)
 	current = head;
 	while (current != NULL)
 	{
-		printf("Token: %d\n", current->token);
-		printf("Word: %s\n", current->word);
+		printf(RED "Token: %d\n" RESET, current->token);
+		printf(RED "Word: %s\n" RESET, current->word);
 		printf("\n");
 		current = current->next;
 	}

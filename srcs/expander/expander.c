@@ -6,7 +6,7 @@
 /*   By: jpointil <jpointil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 14:13:43 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/30 13:52:03 by jpointil         ###   ########.fr       */
+/*   Updated: 2024/09/30 17:06:27 by jpointil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,17 +76,9 @@ size_t	count_char(char *str)
 char	*expander(char *input, t_env *env)
 {
 	char	*expanded_input;
-	//char	*trimmed_input;
 
 	expanded_input = expand_var(input, 0, env);
 	if (!expanded_input)
 		return (NULL);
-	//invert_quote(expanded_input);
-	//trimmed_input = trimquotes(expanded_input);
-	//if (!trimmed_input)
-	//	return (NULL);
-	//re_invert_quote(trimmed_input);
-	//free(expanded_input);
-	//return (trimmed_input);
 	return (expanded_input);
 }
