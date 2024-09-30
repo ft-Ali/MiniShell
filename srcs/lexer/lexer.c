@@ -6,7 +6,7 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 16:38:16 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/30 14:54:31 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/09/30 15:14:19 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,11 @@ t_lex	*lexer(t_shell *shell, char *string)
 	}
 	get_shell_sig(shell);
 	process_input(shell, &lex, string);
-	// trimquote(lex, 0, 0, NULL. lex);
+	trimquotes(lex, 0, 0, lex);
+	// if (!lex)
+	// {
+	// 	free_lex(lex);
+	// 	exit_shell(shell, A_ERR);
+	// }
 	return (lex);
 }

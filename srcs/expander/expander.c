@@ -6,7 +6,7 @@
 /*   By: jpointil <jpointil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 14:13:43 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/30 12:19:14 by jpointil         ###   ########.fr       */
+/*   Updated: 2024/09/30 13:52:03 by jpointil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,6 @@ size_t	count_char(char *str)
 	}
 	return (c);
 }
-
-
 
 char	*expander(char *input, t_env *env)
 {

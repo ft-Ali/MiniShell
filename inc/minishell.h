@@ -6,7 +6,7 @@
 /*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 13:59:41 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/30 13:56:27 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/09/30 15:14:41 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,7 +178,7 @@ int					handle_variable_expansion(char *exp, char **result,
 char				*expand_var(char *input, int pos, t_env *env);
 void				handle_quotes(char *exp, int *pos, char *quote);
 void				invert_quote(t_lex *lex, int flag, int i, char quote);
-// void				trimquote(t_lex *lex, int i, int j, char *new_word);
+void				trimquotes(t_lex *lex, int i, int j, t_lex *tmp);
 size_t				count_char(char *str);
 void				re_invert_quote(t_lex *lex, int i);
 int					handle_variable_expansion_core(char *input, char **result,
