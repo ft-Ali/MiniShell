@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpointil <jpointil@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 13:59:41 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/30 12:20:44 by jpointil         ###   ########.fr       */
+/*   Updated: 2024/09/30 13:56:27 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,7 +178,7 @@ int					handle_variable_expansion(char *exp, char **result,
 char				*expand_var(char *input, int pos, t_env *env);
 void				handle_quotes(char *exp, int *pos, char *quote);
 void				invert_quote(t_lex *lex, int flag, int i, char quote);
-void				trimquote(t_lex *lex, int i, int j, char *new_word);
+// void				trimquote(t_lex *lex, int i, int j, char *new_word);
 size_t				count_char(char *str);
 void				re_invert_quote(t_lex *lex, int i);
 int					handle_variable_expansion_core(char *input, char **result,
@@ -294,4 +294,7 @@ void				wait_child(t_shell *shell);
 void				free_envp(char **envp);
 // int					check_cmd_skip(t_shell *shell, t_cmd *cmd, int i);
 char				*get_custom_env(t_env *env, char *var_name);
+void				invert_quote(t_lex *lex, int flag, int i, char quote);
+void				re_invert_quote(t_lex *lex, int i);
+void				trimquote(t_lex *lex, int i, int j, t_lex *tmp);
 #endif
