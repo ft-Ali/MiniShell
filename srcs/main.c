@@ -6,7 +6,7 @@
 /*   By: jpointil <jpointil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 13:59:28 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/30 17:28:25 by jpointil         ###   ########.fr       */
+/*   Updated: 2024/10/01 11:02:14 by jpointil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ int	main(int c, char **v, char **envp)
 			expanded = expander(input, shell.env);
 			lex = lexer(&shell, expanded);
 			(free(expanded), parser(&shell, &shell.cmd, lex));
+			print_parser(shell.cmd);
 			exec(&shell, shell.cmd);
 			free(input);
 			free_loop(&shell);

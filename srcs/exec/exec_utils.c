@@ -6,7 +6,7 @@
 /*   By: jpointil <jpointil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 15:01:16 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/27 16:56:13 by jpointil         ###   ########.fr       */
+/*   Updated: 2024/10/01 10:59:13 by jpointil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,5 +83,5 @@ void	execute_child(t_shell *shell, t_cmd *cmd, t_fd *fds)
 		if (dup2(fds->output, STDOUT_FILENO) == -1)
 			(close_all_fds(fds), exit_shell(shell, ""));
 	close_all_fds(fds);
-	exec_cmd(shell, cmd, fds);
+	exec_cmd(shell, cmd, fds, NULL);
 }

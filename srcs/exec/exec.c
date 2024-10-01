@@ -6,7 +6,7 @@
 /*   By: jpointil <jpointil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 14:10:03 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/27 16:57:11 by jpointil         ###   ########.fr       */
+/*   Updated: 2024/10/01 10:59:36 by jpointil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,15 +57,16 @@ char	*find_cmd_path(t_shell *shell, char *cmd)
 	return (NULL);
 }
 
-void	exec_cmd(t_shell *shell, t_cmd *cmd, t_fd *fds)
+void	exec_cmd(t_shell *shell, t_cmd *cmd, t_fd *fds, char **envp)
 {
-	char	**envp;
-
 	if (!cmd || !cmd->commands[0])
 		return ;
 	envp = env_list_to_envp(shell->env, 0, 0);
 	if (!cmd || !cmd->commands || cmd->commands[0][0] == '\0')
+	{
+		free_envp(envp);
 		exit_shell(shell, "");
+	}
 	cmd->cmd_path = get_cmd_path(shell, cmd, fds);
 	if (!cmd->cmd_path)
 	{
@@ -78,9 +79,10 @@ void	exec_cmd(t_shell *shell, t_cmd *cmd, t_fd *fds)
 	{
 		shell->excode = 0;
 		shell->tmpexcode = 0;
-		ft_free_split(envp);
+		free_envp(envp);
 		exit_shell(shell, "Error : execve");
 	}
+	free_envp(envp);
 }
 
 void	exec(t_shell *shell, t_cmd *cmd_list)
