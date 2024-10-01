@@ -6,7 +6,7 @@
 /*   By: jpointil <jpointil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 12:04:22 by jpointil          #+#    #+#             */
-/*   Updated: 2024/09/27 19:58:26 by jpointil         ###   ########.fr       */
+/*   Updated: 2024/09/30 18:04:49 by jpointil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	lex_loop(t_shell *shell, t_lex *lex, t_cmd *cmd)
 		{
 			if (cmd->commands)
 			{
-				cmd->next = (t_cmd *)calloc(1, sizeof(t_cmd));
+				cmd->next = (t_cmd *)ft_calloc(1, sizeof(t_cmd));
 				if (!cmd->next)
 					exit_shell(shell, A_ERR);
 				cmd->next->prev = cmd;
@@ -84,7 +84,7 @@ t_cmd	*rec_parse(t_shell *shell, t_lex *lex, t_cmd *prev)
 {
 	t_cmd	*cmd;
 
-	cmd = (t_cmd *)calloc(1, sizeof(t_cmd));
+	cmd = (t_cmd *)ft_calloc(1, sizeof(t_cmd));
 	if (!cmd)
 		exit_shell(shell, A_ERR);
 	cmd->prev = prev;

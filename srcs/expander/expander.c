@@ -6,7 +6,7 @@
 /*   By: jpointil <jpointil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 14:13:43 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/30 17:06:27 by jpointil         ###   ########.fr       */
+/*   Updated: 2024/09/30 17:58:54 by jpointil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,6 @@ char	*expand_var(char *input, int pos, t_env *env)
 	if (input == NULL)
 		return (NULL);
 	result = ft_strdup("");
-	if (!result)
-		return (NULL);
 	while (pos < (int)ft_strlen(input))
 	{
 		handle_quotes(input, &pos, &quote);

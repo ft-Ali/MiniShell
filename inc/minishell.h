@@ -6,7 +6,7 @@
 /*   By: jpointil <jpointil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 13:59:41 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/30 16:45:51 by jpointil         ###   ########.fr       */
+/*   Updated: 2024/10/01 11:02:50 by jpointil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -260,7 +260,8 @@ void				print_lexer_list(t_lex *head);
 
 char				*find_cmd_path(t_shell *shell, char *cmd);
 void				exec(t_shell *shell, t_cmd *cmd);
-void				exec_cmd(t_shell *shell, t_cmd *cmd, t_fd *fds);
+void				exec_cmd(t_shell *shell, t_cmd *cmd, t_fd *fds,
+						char **envp);
 int					handle_input_redir(t_redir *redir, int fd_in,
 						t_shell *shell);
 int					handle_output_redir(t_redir *redir, int fd_out,
