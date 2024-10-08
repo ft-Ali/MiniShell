@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpointil <jpointil@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 15:01:16 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/10/01 10:59:13 by jpointil         ###   ########.fr       */
+/*   Updated: 2024/10/03 18:30:06 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	child_builtins(t_shell *shell, t_fd *fds)
 		(close_all_fds(fds), exit_shell(shell, "Error : dup2"));
 }
 
-char	*get_cmd_path(t_shell *shell, t_cmd *cmd, t_fd *fds)
+char	*get_cmd_path(t_shell *shell, t_cmd *cmd, t_fd *fds, char **envp)
 {
 	if (ft_strchr(cmd->commands[0], '/') != NULL)
 	{
@@ -45,6 +45,7 @@ char	*get_cmd_path(t_shell *shell, t_cmd *cmd, t_fd *fds)
 			ft_putstr_fd(cmd->commands[0], STDOUT_FILENO);
 			ft_putstr_fd(": Is a directory\n", STDOUT_FILENO);
 			shell->excode = 126;
+			free_envp(envp);
 			close_all_fds(fds);
 			exit_shell(shell, "");
 		}

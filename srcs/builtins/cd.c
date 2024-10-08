@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jpointil <jpointil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 11:12:28 by jules             #+#    #+#             */
-/*   Updated: 2024/09/26 14:47:22 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/10/03 14:15:01 by jpointil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,18 +45,22 @@ void	update_pwd(t_shell *shell, char *old_pwd)
 	free(pwdd);
 }
 
-void	exec_cd(t_shell *shell, char *dir)
+void	exec_cd(t_shell *shell, char *dir, char *old_pwd)
 {
-	char	*old_pwd;
 	t_env	*env_copy;
 
+	old_pwd = ft_strdup("");
 	env_copy = shell->env;
 	while (env_copy)
 	{
 		if (ft_strictcmp(env_copy->key, "PWD"))
 		{
-			old_pwd = ft_strdup(env_copy->value);
-			break ;
+			if (env_copy->value)
+			{
+				free(old_pwd);
+				old_pwd = ft_strdup(env_copy->value);
+				break ;
+			}
 		}
 		env_copy = env_copy->next;
 	}
@@ -87,7 +91,7 @@ void	cd_home(t_shell *shell)
 		shell->excode = 1;
 		return ;
 	}
-	exec_cd(shell, env_copy->value);
+	exec_cd(shell, env_copy->value, NULL);
 }
 
 void	bi_cd(t_shell *shell, t_cmd *cmd)
@@ -104,6 +108,6 @@ void	bi_cd(t_shell *shell, t_cmd *cmd)
 	{
 		if (!dir_check(shell, cmd))
 			return ;
-		exec_cd(shell, cmd->commands[1]);
+		exec_cd(shell, cmd->commands[1], NULL);
 	}
 }

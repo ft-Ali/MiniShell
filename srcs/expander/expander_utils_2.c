@@ -3,20 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   expander_utils_2.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpointil <jpointil@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 17:09:58 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/27 19:13:56 by jpointil         ###   ########.fr       */
+/*   Updated: 2024/10/03 16:36:46 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-// Fonction pour gérer les cas spéciaux comme $ seul ou $?
+void	init_norm(t_norm *norm)
+{
+	norm->isfree = false;
+	norm->variable_value = NULL;
+	norm->temp = NULL;
+	norm->variable_name = NULL;
+	norm->start = 1;
+}
+
+char	*expansion_core_util(char *temp, char **result, char *variable_value)
+{
+	temp = ft_strjoin_free_n(*result, variable_value);
+	*result = temp;
+	return (*result);
+}
+
 int	handle_special_cases(char *input, char **result)
 {
 	if (input[0] == '$' && (input[1] == '\0' || (!ft_isalnum(input[1])
-				&& input[1] != '_')))
+				&& input[1] != '_' && input[1] != '?')))
 	{
 		*result = ft_strjoin_free_n(*result, "$");
 		return (1);
@@ -24,48 +39,48 @@ int	handle_special_cases(char *input, char **result)
 	return (0);
 }
 
-// Fonction pour gérer l'expansion des variables
-int	handle_variable_expansion_core(char *input, char **result, t_env *env)
+int	handle_variable_expansion_core(char *input, char **result, t_shell *shell,
+		t_norm *norm)
 {
-	char	*variable_name;
-	char	*variable_value;
-	char	*temp;
-	int		start;
-
-	start = 1;
-	while (input[start] && (ft_isalnum(input[start]) || input[start] == '_'))
-		start++;
-	variable_name = ft_substr(input, 1, start - 1);
-	if (!variable_name)
+	while (input[norm->start] && (ft_isalnum(input[norm->start])
+			|| input[norm->start] == '_' || input[norm->start] == '?'))
+		norm->start++;
+	norm->variable_name = ft_substr(input, 1, norm->start - 1);
+	if (!norm->variable_name)
 		return (0);
-	variable_value = get_custom_env(env, variable_name);
-	free(variable_name);
-	if (variable_value)
+	if (input[norm->start - 1] == '?')
 	{
-		temp = ft_strjoin(*result, variable_value);
-		free(*result);
-		*result = temp;
+		norm->variable_value = ft_itoa(shell->excode);
+		norm->isfree = true;
 	}
 	else
+		norm->variable_value = get_custom_env(shell->env, norm->variable_name);
+	free(norm->variable_name);
+	if (norm->variable_value)
+		expansion_core_util(norm->temp, result, norm->variable_value);
+	else
 	{
-		temp = ft_strjoin_free_n(*result, "");
-		*result = temp;
+		norm->temp = ft_strjoin_free_n(*result, "");
+		*result = norm->temp;
 	}
-	return (start);
+	if (norm->variable_value && norm->isfree)
+		free(norm->variable_value);
+	return (norm->start);
 }
 
-// Fonction principale pour gérer l'expansion des variables
 int	handle_variable_expansion(char *input, char **result, char quote,
-		t_env *env)
+		t_shell *shell)
 {
-	int	special_case_len;
+	int		special_case_len;
+	t_norm	norm;
 
+	init_norm(&norm);
 	if (!input)
 		return (0);
 	special_case_len = handle_special_cases(input, result);
 	if (special_case_len > 0)
 		return (special_case_len);
 	if (input[0] == '$' && quote != '\'')
-		return (handle_variable_expansion_core(input, result, env));
+		return (handle_variable_expansion_core(input, result, shell, &norm));
 	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpointil <jpointil@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 14:10:03 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/10/01 10:59:36 by jpointil         ###   ########.fr       */
+/*   Updated: 2024/10/03 18:25:09 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,18 +42,17 @@ char	*find_cmd_path(t_shell *shell, char *cmd)
 	while (paths[i])
 	{
 		full_path = ft_strjoin(paths[i], "/");
-		free(paths[i]);
 		full_path = strjoin_free(full_path, cmd);
 		if (access(full_path, X_OK) == 0)
 		{
-			free(paths);
+			ft_free_split(paths);
 			return (full_path);
 		}
 		shell->tmpexcode = 126;
 		free(full_path);
 		i++;
 	}
-	free(paths);
+	ft_free_split(paths);
 	return (NULL);
 }
 
@@ -67,7 +66,7 @@ void	exec_cmd(t_shell *shell, t_cmd *cmd, t_fd *fds, char **envp)
 		free_envp(envp);
 		exit_shell(shell, "");
 	}
-	cmd->cmd_path = get_cmd_path(shell, cmd, fds);
+	cmd->cmd_path = get_cmd_path(shell, cmd, fds, envp);
 	if (!cmd->cmd_path)
 	{
 		free_envp(envp);
@@ -80,7 +79,7 @@ void	exec_cmd(t_shell *shell, t_cmd *cmd, t_fd *fds, char **envp)
 		shell->excode = 0;
 		shell->tmpexcode = 0;
 		free_envp(envp);
-		exit_shell(shell, "Error : execve");
+		exit_shell(shell, "Error : execve\n");
 	}
 	free_envp(envp);
 }

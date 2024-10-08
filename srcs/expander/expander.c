@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpointil <jpointil@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 14:13:43 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/09/30 17:58:54 by jpointil         ###   ########.fr       */
+/*   Updated: 2024/10/03 16:36:12 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char	*expand_char(char *result, char *input, int pos)
 	return (joined_result);
 }
 
-char	*expand_var(char *input, int pos, t_env *env)
+char	*expand_var(char *input, int pos, t_shell *shell)
 {
 	char	*result;
 	char	quote;
@@ -43,7 +43,7 @@ char	*expand_var(char *input, int pos, t_env *env)
 	while (pos < (int)ft_strlen(input))
 	{
 		handle_quotes(input, &pos, &quote);
-		var_len = handle_variable_expansion(input + pos, &result, quote, env);
+		var_len = handle_variable_expansion(input + pos, &result, quote, shell);
 		if (var_len > 0)
 		{
 			pos += var_len;
@@ -71,11 +71,17 @@ size_t	count_char(char *str)
 	return (c);
 }
 
-char	*expander(char *input, t_env *env)
+char	*expander(char *input, t_shell *shell)
 {
 	char	*expanded_input;
 
-	expanded_input = expand_var(input, 0, env);
+	if (ft_strictcmp(input, "\"\"") || ft_strictcmp(input, "''"))
+	{
+		shell->excode = 127;
+		printf("%s: command not found\n", input);
+		return (NULL);
+	}
+	expanded_input = expand_var(input, 0, shell);
 	if (!expanded_input)
 		return (NULL);
 	return (expanded_input);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prints.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpointil <jpointil@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 09:55:05 by jules             #+#    #+#             */
-/*   Updated: 2024/10/01 11:02:04 by jpointil         ###   ########.fr       */
+/*   Updated: 2024/10/03 18:47:16 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,10 @@ void	print_tokens(t_lex *lexer)
 // 	t_redir	*current_redir;
 
 // 	if (!cmd)
+// 	{
+// 		printf("Empty cmd\n");
 // 		return ;
+// 	}
 // 	while (cmd)
 // 	{
 // 		if (cmd->commands)

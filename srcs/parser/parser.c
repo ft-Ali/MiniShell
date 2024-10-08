@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpointil <jpointil@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 12:04:22 by jpointil          #+#    #+#             */
-/*   Updated: 2024/09/30 18:04:49 by jpointil         ###   ########.fr       */
+/*   Updated: 2024/10/03 18:48:29 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	lex_loop(t_shell *shell, t_lex *lex, t_cmd *cmd)
 	}
 }
 
-void	check_redirection_error(t_shell *shell, t_lex *tmp)
+int	check_redirection_error(t_shell *shell, t_lex *tmp)
 {
 	if ((tmp->token == GREATER || tmp->token == D_GREATER || tmp->token == LOWER
 			|| tmp->token == D_LOWER) && (!tmp->next
@@ -50,22 +50,22 @@ void	check_redirection_error(t_shell *shell, t_lex *tmp)
 	{
 		shell->excode = 2;
 		free_lex(tmp);
-		exit_shell(shell, "Error: syntax error near unexpected token");
+		printf("Error: syntax error near unexpected token\n");
+		return (0);
 	}
+	return (1);
 }
 
-void	syntax_analyser(t_shell *shell, t_lex *lex)
+int	syntax_analyser(t_shell *shell, t_lex *lex, t_lex *tmp)
 {
-	t_lex	*tmp;
-
 	if (!lex)
-		return ;
-	tmp = lex;
+		return (0);
 	if (tmp->token == PIPE)
 	{
 		shell->excode = 2;
 		free_lex(lex);
-		exit_shell(shell, "Error: syntax error near unexpected token");
+		printf("Error: syntax error near unexpected token\n");
+		return (0);
 	}
 	while (tmp)
 	{
@@ -73,11 +73,14 @@ void	syntax_analyser(t_shell *shell, t_lex *lex)
 		{
 			shell->excode = 2;
 			free_lex(lex);
-			exit_shell(shell, "Error: syntax error near unexpected token");
+			printf("Error: syntax error near unexpected token\n");
+			return (0);
 		}
-		check_redirection_error(shell, tmp);
+		if (!check_redirection_error(shell, tmp))
+			return (0);
 		tmp = tmp->next;
 	}
+	return (1);
 }
 
 t_cmd	*rec_parse(t_shell *shell, t_lex *lex, t_cmd *prev)
@@ -94,7 +97,8 @@ t_cmd	*rec_parse(t_shell *shell, t_lex *lex, t_cmd *prev)
 
 void	parser(t_shell *shell, t_cmd **cmd, t_lex *lex)
 {
-	syntax_analyser(shell, lex);
+	if (!syntax_analyser(shell, lex, lex))
+		return ;
 	*cmd = rec_parse(shell, lex, NULL);
 	free_lex(lex);
 }

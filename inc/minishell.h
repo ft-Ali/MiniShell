@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpointil <jpointil@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 13:59:41 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/10/01 11:02:50 by jpointil         ###   ########.fr       */
+/*   Updated: 2024/10/04 13:02:03 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,15 @@ typedef enum e_struct
 	S,
 	PA
 }					t_struct;
+
+typedef struct s_norm
+{
+	char			*variable_name;
+	char			*variable_value;
+	char			*temp;
+	bool			isfree;
+	int				start;
+}					t_norm;
 
 typedef struct s_path
 {
@@ -171,17 +180,18 @@ char				*ft_strjoin_char(char *s, char c);
 
 /*------------- EXPANDER -------------*/
 
-char				*expander(char *str, t_env *env);
+char				*expander(char *input, t_shell *shell);
 char				*expand_char(char *result, char *input, int pos);
-int					handle_variable_expansion(char *exp, char **result,
-						char quote, t_env *env);
-char				*expand_var(char *input, int pos, t_env *env);
+int					handle_variable_expansion(char *input, char **result,
+						char quote, t_shell *shell);
+char				*expand_var(char *input, int pos, t_shell *shell);
 void				handle_quotes(char *exp, int *pos, char *quote);
 t_lex				*trimquote_process(t_lex *lex);
 size_t				count_char(char *str);
 int					handle_variable_expansion_core(char *input, char **result,
-						t_env *env);
+						t_shell *shell, t_norm *norm);
 int					handle_special_cases(char *input, char **result);
+void				init_norm(t_norm *norm);
 
 /*------------- LEXER -------------*/
 
@@ -202,7 +212,7 @@ void				append_command(t_shell *shell, t_cmd *cmd, char *word);
 void				handle_redirections(t_shell *shell, t_lex **lex, t_cmd *cmd,
 						t_redir **redir_tail);
 t_redir				*add_redir_node(t_shell *shell, t_token token, char *file);
-void				syntax_analyser(t_shell *shell, t_lex *lex);
+int					syntax_analyser(t_shell *shell, t_lex *lex, t_lex *tmp);
 void				lex_loop(t_shell *shell, t_lex *lex, t_cmd *cmd);
 
 /*--------------- ENV ------------------*/
@@ -281,7 +291,8 @@ void				init_fds_and_redirections(t_shell *shell,
 						t_cmd *current_cmd, t_fd *fds);
 int					is_builtin_command(const char *command);
 int					is_dir(const char *path);
-char				*get_cmd_path(t_shell *shell, t_cmd *cmd, t_fd *fds);
+char				*get_cmd_path(t_shell *shell, t_cmd *cmd, t_fd *fds,
+						char **envp);
 
 /*--------------- FDS ------------------*/
 
@@ -293,5 +304,5 @@ void				wait_child(t_shell *shell);
 void				free_envp(char **envp);
 // int					check_cmd_skip(t_shell *shell, t_cmd *cmd, int i);
 char				*get_custom_env(t_env *env, char *var_name);
-
+void				init_sig_heredoc(void);
 #endif

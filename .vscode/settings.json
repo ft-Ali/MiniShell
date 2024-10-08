@@ -1,22 +1,6 @@
 {
-	"files.associations": {
-		"minishell.h": "c",
-		"stdbool.h": "c",
-		"ioctl.h": "c",
-		"expander.h": "c"
-	},
-	"C_Cpp.errorSquiggles": "disabled",
-	"makefile.configureOnOpen": false
-	"files.exclude": {
-		"**/*.o": true 
-	
-	}
+    "files.associations": {
+        "readline.h": "c",
+        "minishell.h": "c"
+    }
 }
-
-
-/* {
-	"files.associations": {
-		"ft_printf.h": "c"
-	}
-}
- */

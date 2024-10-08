@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpointil <jpointil@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 13:59:28 by alsiavos          #+#    #+#             */
-/*   Updated: 2024/10/01 11:02:14 by jpointil         ###   ########.fr       */
+/*   Updated: 2024/10/08 11:24:02 by alsiavos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,15 +72,16 @@ int	main(int c, char **v, char **envp)
 	((void)v, init_shell(&shell), init_sig(), load_env(&shell, envp));
 	while (1)
 	{
+		get_shell_sig(&shell); // rajoute post correction
 		input = readline(CYAN "$ ->" RESET);
 		if (input)
 		{
 			add_history(input);
-			expanded = expander(input, shell.env);
+			expanded = expander(input, &shell);
 			lex = lexer(&shell, expanded);
 			(free(expanded), parser(&shell, &shell.cmd, lex));
-			print_parser(shell.cmd);
-			exec(&shell, shell.cmd);
+			if (shell.cmd)
+				exec(&shell, shell.cmd);
 			free(input);
 			free_loop(&shell);
 		}

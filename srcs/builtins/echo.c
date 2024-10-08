@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alsiavos <alsiavos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jpointil <jpointil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 13:20:42 by jpointil          #+#    #+#             */
-/*   Updated: 2024/09/27 16:36:33 by alsiavos         ###   ########.fr       */
+/*   Updated: 2024/10/03 15:05:01 by jpointil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	bi_echo(t_shell *shell, t_cmd *cmd, int fd_out, t_fd *fd)
 	{
 		while (cmd->commands[i])
 		{
-			ft_putstr_fd_e(cmd->commands[i], fd_out, shell);
+			ft_putstr_fd(cmd->commands[i], fd_out);
 			if (cmd->commands[i] && cmd->commands[i + 1])
 				ft_putstr_fd(" ", fd_out);
 			i++;
