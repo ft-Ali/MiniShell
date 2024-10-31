@@ -15,7 +15,7 @@
 - **Entrée** : Sortie de Readline
 - **Sortie** : Liste chaînée tokenisée
 - **Objectif** : Diviser la sortie de Readline en tokens à l'aide de macros définies.
-- **Tokens utilisés** : WORD, REDIRECTION, PIPE, AND, SEMI, PARENTHESIS
+- **Tokens utilisés** : WORD, REDIRECTION, PIPE
 
 #### Syntax Analyzer :
 - **Entrée** : Liste chaînée tokenisée
